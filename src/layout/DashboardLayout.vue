@@ -16,16 +16,16 @@
 
         <sidebar-item
           :link="{
-            name: 'Icons',
-            icon: 'ni ni-planet text-blue',
-            path: '/icons',
+            name: 'Products',
+            icon: 'ni ni-basket text-orange',
+            path: '/products',
           }"
         />
         <sidebar-item
           :link="{
-            name: 'Maps',
+            name: 'Waiters',
             icon: 'ni ni-pin-3 text-orange',
-            path: '/maps',
+            path: '/waiters',
           }"
         />
         <sidebar-item

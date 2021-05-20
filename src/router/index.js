@@ -4,8 +4,8 @@ import DashboardLayout from "@/layout/DashboardLayout";
 import AuthLayout from "@/layout/AuthLayout";
 
 import Dashboard from "../views/Dashboard.vue";
-import Icons from "../views/Icons.vue";
-import Maps from "../views/Maps.vue";
+import Products from "../views/Products.vue";
+import Waiters from "../views/Waiters.vue";
 import Profile from "../views/UserProfile.vue";
 import Tables from "../views/Tables.vue";
 
@@ -24,14 +24,14 @@ const routes = [
         components: { default: Dashboard },
       },
       {
-        path: "/icons",
-        name: "icons",
-        components: { default: Icons },
+        path: "/products",
+        name: "products",
+        components: { default: Products },
       },
       {
-        path: "/maps",
-        name: "maps",
-        components: { default: Maps },
+        path: "/waiters",
+        name: "waiters",
+        components: { default: Waiters },
       },
       {
         path: "/profile",

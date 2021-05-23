@@ -30,9 +30,9 @@
         />
         <sidebar-item
           :link="{
-            name: 'User Profile',
+            name: 'Orders',
             icon: 'ni ni-single-02 text-yellow',
-            path: '/profile',
+            path: '/orders',
           }"
         />
         <sidebar-item

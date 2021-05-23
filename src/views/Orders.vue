@@ -75,11 +75,11 @@
         <div class="col">
           <div class="card shadow">
             <div class="card-header bg-transparent">
-              <h3 class="mb-0">Products</h3>
-              <FilterProducts/>
+              <h3 class="mb-0">Orders</h3>
+              <FilterOrders/>
             </div>
             <div class="card-body">
-              <ProductCard/>
+              <OrdersCards/>
             </div>
           </div>
         </div>
@@ -87,35 +87,37 @@
     </div>
   </div>
 </template>
-
 <script>
-import FilterProducts from "@/components/FilterProducts.vue";
-import ProductCard from "@/components/ProductCard.vue";
+import FilterOrders from '@/components/FilterOrders'
+import OrdersCards from '@/components/OrdersCards'
 
 export default {
-  name: 'Waiters',
+  name: "orders",
   components: {
-    FilterProducts,
-    ProductCard
+    FilterOrders,
+    OrdersCards
   },
   data() {
     return {
-      
+      model: {
+        username: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        address: "",
+        city: "",
+        country: "",
+        zipCode: "",
+        about: "",
+      },
     };
-  },
-  methods: {
-    onCopy(el) {
-      var test = document.getElementById(el);
-      test.select();
-      document.execCommand("copy");
-    },
   },
 };
 </script>
-
-<style scoped>
-.card-header {
-  display: flex;
-  justify-content: space-between;
-}
+<style>
+  .card-header {
+    display:flex;
+    justify-content: space-between;
+  }
+  
 </style>

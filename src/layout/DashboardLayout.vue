@@ -23,9 +23,9 @@
         />
         <sidebar-item
           :link="{
-            name: 'Waiters',
+            name: 'Staff',
             icon: 'ni ni-pin-3 text-orange',
-            path: '/waiters',
+            path: '/staff',
           }"
         />
         <sidebar-item

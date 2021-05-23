@@ -13,8 +13,11 @@
         {{ item.completed }}
       </div>
     </div>
-    <button id="edit" class="btn draw-border">Edit</button>
-    <button class="btn draw-border">Delete</button>
+    <div class="buttons">
+      <button id="edit" class="btn draw-border">Edit</button>
+      <button class="btn draw-border">Delete</button>
+    </div>
+    
   </div>
 </div>
 </template>
@@ -48,13 +51,12 @@ export default {
 .card {
     width: 21%;
     margin: 2%;
-    background-color: #222831;
-    height: 28.5rem;
+    height: 24.5rem;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.7);
+    background: linear-gradient(87deg, rgba(45, 206, 137, .7) 0, rgba(45, 206, 204, .7) 100%) !important;
     color: white;
 }
 
@@ -67,16 +69,13 @@ export default {
   height: 160px;
   width: 160px;
   border-radius: 50%;
-  border: 5px solid #272133;
   margin-top: 20px;
-  box-shadow: 0 10px 50px rgba(235, 25, 110, 1);
 }
 
 
 .draw-border {
-  box-shadow: inset 0 0 0 4px #58cdd1;
+  box-shadow: inset 0 0 0 2px white;
   color: #58afd1;
-  -webkit-transition: color 0.25s 0.0833333333s;
   transition: color 0.25s 0.0833333333s;
   position: relative;
 }
@@ -95,35 +94,34 @@ export default {
 }
 
 .draw-border::before {
-  border-bottom-width: 4px;
-  border-left-width: 4px;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+  border-radius: 5px;
 }
 
 .draw-border::after {
-  border-top-width: 4px;
-  border-right-width: 4px;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-radius: 5px;
 }
 
 .draw-border:hover {
-  color: #ffe593;
+  color: white;
 }
 
 .draw-border:hover::before,
 .draw-border:hover::after {
-  border-color: #eb196e;
-  -webkit-transition: border-color 0s, width 0.25s, height 0.25s;
+  border-color: white;
   transition: border-color 0s, width 0.25s, height 0.25s;
   width: 100%;
   height: 100%;
 }
 
 .draw-border:hover::before {
-  -webkit-transition-delay: 0s, 0s, 0.25s;
   transition-delay: 0s, 0s, 0.25s;
 }
 
 .draw-border:hover::after {
-  -webkit-transition-delay: 0s, 0.25s, 0s;
   transition-delay: 0s, 0.25s, 0s;
 }
 
@@ -137,69 +135,18 @@ export default {
   letter-spacing: 0.05rem;
   margin: .3em;
   width: 10rem;
+  margin-top: 30px;
+  color: white;
 }
 
-#edit {
-    margin-top: 30px;
+.buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-.btn:focus {
-  outline: 2px dotted #55d7dc;
-}
-
-
-.social-icons {
-  padding: 0;
-  list-style: none;
-  margin: 1em;
-}
-
-.social-icons li {
-  display: inline-block;
-  margin: 0.15em;
-  position: relative;
-  font-size: 1em;
-}
-
-.social-icons i {
-  color: #fff;
-  position: absolute;
-  top: 0.95em;
-  left: 0.96em;
-  transition: all 265ms ease-out;
-}
-
-.social-icons a {
-  display: inline-block;
-}
-
-.social-icons a:before {
-  transform: scale(1);
-  -ms-transform: scale(1);
-  -webkit-transform: scale(1);
-  content: " ";
-  width: 45px;
-  height: 45px;
-  border-radius: 100%;
-  display: block;
-  background: linear-gradient(45deg, #ff003c, #c648c8);
-  transition: all 265ms ease-out;
-}
-
-.social-icons a:hover:before {
-  transform: scale(0);
-  transition: all 265ms ease-in;
-}
-
-.social-icons a:hover i {
-  transform: scale(2.2);
-  -ms-transform: scale(2.2);
-  -webkit-transform: scale(2.2);
-  color: #ff003c;
-  background: -webkit-linear-gradient(45deg, #ff003c, #c648c8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 265ms ease-in;
+.btn {
+  width: 45%;
 }
 
 .grid-container {

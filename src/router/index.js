@@ -5,7 +5,7 @@ import AuthLayout from "@/layout/AuthLayout";
 
 import Dashboard from "../views/Dashboard.vue";
 import Products from "../views/Products.vue";
-import Waiters from "../views/Waiters.vue";
+import Staff from "../views/Staff.vue";
 import Profile from "../views/UserProfile.vue";
 import Tables from "../views/Tables.vue";
 
@@ -29,9 +29,9 @@ const routes = [
         components: { default: Products },
       },
       {
-        path: "/waiters",
-        name: "waiters",
-        components: { default: Waiters },
+        path: "/staff",
+        name: "staff",
+        components: { default: Staff },
       },
       {
         path: "/profile",

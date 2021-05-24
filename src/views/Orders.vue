@@ -80,6 +80,12 @@
             </div>
             <div class="card-body">
               <OrdersCards/>
+                  <div
+                    class="card-footer d-flex justify-content-end"
+                    :class="type === 'dark' ? 'bg-transparent' : ''"
+                  >
+                    <base-pagination total="40"></base-pagination>
+                  </div>
             </div>
           </div>
         </div>
@@ -88,8 +94,8 @@
   </div>
 </template>
 <script>
-import FilterOrders from '@/components/FilterOrders'
-import OrdersCards from '@/components/OrdersCards'
+import FilterOrders from '@/components/Filters/FilterOrders'
+import OrdersCards from '@/components/Cards/OrdersCards'
 
 export default {
   name: "orders",

@@ -44,6 +44,13 @@
         />
         <sidebar-item
           :link="{
+            name: 'Users',
+            icon: 'ni ni-bullet-list-67 text-red',
+            path: '/users',
+          }"
+        />
+        <sidebar-item
+          :link="{
             name: 'Login',
             icon: 'ni ni-key-25 text-info',
             path: '/login',

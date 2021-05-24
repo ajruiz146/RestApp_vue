@@ -69,27 +69,37 @@
         </div>
       </div>
     </base-header>
-
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
-          <projects-table title="Light Table"></projects-table>
-        </div>
-      </div>
-      <div class="row mt-5">
-        <div class="col">
-          <projects-table type="dark" title="Dark Table"></projects-table>
+          <div class="card shadow">
+            <div class="card-header bg-transparent">
+              <h3 class="mb-0">Products</h3>
+              <FilterTables/>
+            </div>
+            <div class="card-body">
+              <TablesCard/>
+              <div
+                class="card-footer d-flex justify-content-end"
+                :class="type === 'dark' ? 'bg-transparent' : ''"
+              >
+                <base-pagination total="40"></base-pagination>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import ProjectsTable from "./Tables/ProjectsTable";
+import FilterTables from "@/components/Filters/FilterTables";
+import TablesCard from "@/components/Cards/TablesCard";
 export default {
   name: "tables",
   components: {
-    ProjectsTable,
+    FilterTables,
+    TablesCard
   },
 };
 </script>

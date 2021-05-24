@@ -8,6 +8,7 @@ import Products from "../views/Products.vue";
 import Staff from "../views/Staff.vue";
 import Orders from "../views/Orders.vue";
 import Tables from "../views/Tables.vue";
+import Users from "../views/Users.vue";
 
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
@@ -42,6 +43,11 @@ const routes = [
         path: "/tables",
         name: "tables",
         components: { default: Tables },
+      },
+      {
+        path: "/users",
+        name: "users",
+        components: { default: Users },
       },
     ],
   },

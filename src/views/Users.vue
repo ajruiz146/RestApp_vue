@@ -76,6 +76,7 @@
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <h3 class="mb-0">Orders</h3>
+              <UserCreate/>
               <FilterUsers/>
             </div>
             <div class="card-body">
@@ -96,12 +97,14 @@
 <script>
 import FilterUsers from '@/components/Filters/FilterUsers'
 import UsersCards from '@/components/Cards/UsersCards'
+import UserCreate from '@/components/Create/UserCreate'
 
 export default {
   name: "orders",
   components: {
     FilterUsers,
-    UsersCards
+    UsersCards,
+    UserCreate
   },
   data() {
     return {

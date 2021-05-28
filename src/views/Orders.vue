@@ -76,6 +76,7 @@
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <h3 class="mb-0">Orders</h3>
+              <OrderCreate/>
               <FilterOrders/>
             </div>
             <div class="card-body">
@@ -96,12 +97,14 @@
 <script>
 import FilterOrders from '@/components/Filters/FilterOrders'
 import OrdersCards from '@/components/Cards/OrdersCards'
+import OrderCreate from '@/components/Create/OrderCreate'
 
 export default {
   name: "orders",
   components: {
     FilterOrders,
-    OrdersCards
+    OrdersCards,
+    OrderCreate
   },
   data() {
     return {

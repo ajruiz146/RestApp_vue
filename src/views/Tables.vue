@@ -75,6 +75,7 @@
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <h3 class="mb-0">Products</h3>
+              <TablesCreate/>
               <FilterTables/>
             </div>
             <div class="card-body">
@@ -95,11 +96,13 @@
 <script>
 import FilterTables from "@/components/Filters/FilterTables";
 import TablesCard from "@/components/Cards/TablesCard";
+import TablesCreate from "@/components/Create/TablesCreate";
 export default {
   name: "tables",
   components: {
     FilterTables,
-    TablesCard
+    TablesCard,
+    TablesCreate
   },
 };
 </script>

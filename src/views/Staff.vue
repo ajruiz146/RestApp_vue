@@ -76,6 +76,7 @@
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <h3 class="mb-0">Staff</h3>
+              <StaffCreate/>
               <FilterStaff/>
             </div>
             <div class="card-body">
@@ -97,6 +98,7 @@
 import { Loader } from "google-maps";
 import axios from "axios";
 import StaffCards from "@/components/Cards/StaffCards.vue";
+import StaffCreate from "@/components/Create/StaffCreate.vue";
 import FilterStaff from "@/components/Filters/FilterStaff.vue";
 
 const loader = new Loader("YOUR_API_KEY");
@@ -104,7 +106,8 @@ export default {
   name: 'Waiters',
   components: {
     StaffCards,
-    FilterStaff
+    FilterStaff,
+    StaffCreate
   },
   data() {
     return {

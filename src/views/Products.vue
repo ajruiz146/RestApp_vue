@@ -76,6 +76,7 @@
           <div class="card shadow">
             <div class="card-header bg-transparent">
               <h3 class="mb-0">Products</h3>
+              <ProductCreate/>
               <FilterProducts/>
             </div>
             <div class="card-body">
@@ -97,12 +98,13 @@
 <script>
 import FilterProducts from "@/components/Filters/FilterProducts.vue";
 import ProductCard from "@/components/Cards/ProductCard.vue";
-
+import ProductCreate from "@/components/Create/ProductCreate.vue";
 export default {
   name: 'Waiters',
   components: {
     FilterProducts,
-    ProductCard
+    ProductCard,
+    ProductCreate
   },
   data() {
     return {

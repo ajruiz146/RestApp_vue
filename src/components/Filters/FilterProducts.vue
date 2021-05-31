@@ -16,8 +16,8 @@
 
         <select class="form-select form-select-sm" name="" id="">
             <option value="">Order by</option>
-            <option value="">Name Asc</option>
-            <option value="">Name Desc</option>
+            <option value="na">Name Asc</option>
+            <option value="nd">Name Desc</option>
         </select>
     </div>
     

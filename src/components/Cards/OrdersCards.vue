@@ -41,8 +41,8 @@
             <div class="dropdown">
               <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
               <div id="myDropdown" class="dropdown-content">
-                <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil"></i></a>
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)"><i data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
+                <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
               </div>
             </div>
           </td>
@@ -76,6 +76,64 @@
     </div>
   </div>
   <!-- Modals -->
+  <!-- Update -->
+  <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="orderUpdateTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+              <div class="form-group">
+                  <input type="hidden" class="form-control" id="update-order-id">
+              </div>
+              <div class="form-group">
+                  <label for="update-order-table">Table</label>
+                  <select id="update-order-table" class="form-select">
+                    <option v-bind:value="item.table_number" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                  <label for="update-order-user">User</label>
+                  <select id="update-order-user" class="form-select">
+                    <option v-bind:value="item.name" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
+                </select>
+              </div>
+              <div class="card-body" style="padding:0;">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Product</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr   
+                    v-for="item in products" 
+                    :key="item._id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.price }}</td>
+                      <td>
+                        <input type="number" id="products-input" class="products-input-update" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="updateOrder()" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- Create -->
   <div class="modal fade" id="ordersCreate" tabindex="-1" role="dialog" aria-labelledby="ordersCreateTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -93,13 +151,13 @@
               </div>
               <div class="form-group">
                   <label for="create-order-table">Table</label>
-                  <select id="create-order-table">
+                  <select id="create-order-table" class="form-select">
                     <option value="client" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
                 </select>
               </div>
               <div class="form-group">
                   <label for="create-order-user">User</label>
-                  <select id="create-order-user">
+                  <select id="create-order-user" class="form-select">
                     <option value="client" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
               </div>
@@ -196,7 +254,6 @@ export default {
         },  
       })
       .then(response => {
-        console.log(response)
         this.page = response.data.current
         this.totalPages = response.data.pages
         this.data = response.data.object
@@ -215,6 +272,33 @@ export default {
         this.getOrders();
       })
     },
+    updateOrder: function() {
+      this.countProductsUpdate()
+      let id = $("#update-order-id").val()
+      axios
+      .put(process.env.VUE_APP_API + "order/" + id, {
+        table: this.tableSelected,
+        user: this.userSelected,
+        total: this.total,
+        products: this.obtainProducts
+      })
+      .then(() => {
+        this.getOrders();
+      })
+    },
+    updateModal: function(id, user, table, products) {
+      $("#update-order-id").val(id)
+      $("#update-order-table").val(table.table_number);
+      $("#update-order-user").val(user.name);
+      let inputClear = document.getElementsByClassName("products-input-update")
+      for(let i = 0; i < inputClear.length; i ++) {
+        for(let j = 0; j < products.length; j ++) {  
+          if(inputClear[i].dataset.name == products[j].name) {
+            inputClear[i].value = products[j].amount
+          }
+        } 
+      }
+    },
     updateDeleteModal: function(id, email) {
       $("#delete-order-id").val(id)
       $("#delete-order-text").text("Are you sure to delete order of " + email)
@@ -230,16 +314,14 @@ export default {
     getTables: function() {
       axios
       .get(process.env.VUE_APP_API + "table",)
-      .then(response => {
-        console.log(response)
+      .then((response) => {
         this.tables = response.data
       })
     },
     getProducts: function() {
       axios
       .post(process.env.VUE_APP_API + "product")
-      .then(response => {
-        console.log(response)
+      .then((response) => {
         this.products = response.data
       })
     },
@@ -263,12 +345,30 @@ export default {
       this.userSelected = $("#create-order-user :selected").data("id");
       this.tableSelected = $("#create-order-table :selected").data("id");
     },
+    countProductsUpdate: function() {
+      let products = [];
+      let allProducts = document.getElementsByClassName("products-input-update");
+      var total = 0;
+      for(let i = 0; i < allProducts.length; i++) {
+        if(allProducts[i].value > 0) {
+          let product = new Object();
+          product.name = allProducts[i].dataset.name,
+          product.zone = allProducts[i].dataset.zone,
+          product.price = allProducts[i].dataset.price,
+          product.amount = allProducts[i].value
+          total += (parseInt(allProducts[i].dataset.price) * allProducts[i].value)
+          products.push(product)
+        }
+      }
+      this.obtainProducts = products;
+      this.total = total;
+      this.userSelected = $("#update-order-user :selected").data("id");
+      this.tableSelected = $("#update-order-table :selected").data("id");
+    },
     getUsers: function() {
       axios
       .post(process.env.VUE_APP_API + "user")
       .then(response => {
-        console.log(response)
-        console.log(response)
         this.users = response.data
       })
     }
@@ -285,8 +385,12 @@ export default {
 </script>
 
 <style scoped>
+.modal-body {
+  padding-top: 0;
+}
+
 input[type="number"] {
-  width: 100px;
+  width:50px;
 }
 
 th {

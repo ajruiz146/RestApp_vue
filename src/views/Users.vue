@@ -73,38 +73,20 @@
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">Orders</h3>
-              <UserCreate/>
-              <FilterUsers/>
-            </div>
-            <div class="card-body">
-              <UsersCards/>
-              <div
-                class="card-footer d-flex justify-content-end"
-                :class="type === 'dark' ? 'bg-transparent' : ''"
-              >
-                <base-pagination total="40"></base-pagination>
-              </div>
-            </div>
-          </div>
+          <UsersCards/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import FilterUsers from '@/components/Filters/FilterUsers'
+
 import UsersCards from '@/components/Cards/UsersCards'
-import UserCreate from '@/components/Create/UserCreate'
 
 export default {
   name: "orders",
   components: {
-    FilterUsers,
-    UsersCards,
-    UserCreate
+    UsersCards
   },
   data() {
     return {

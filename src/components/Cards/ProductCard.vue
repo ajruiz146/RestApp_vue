@@ -190,7 +190,7 @@
             </li>
         </ul>
         </nav>
-    </div>
+      </div>
     </div>
 </div>
 
@@ -201,8 +201,8 @@
 <script>
 import axios from "axios";
 import $ from "jquery";
-import paginate from '@/mixins/paginate'
-import filters from '@/mixins/filters'
+import paginate from '@/mixins/paginate-products'
+import filters from '@/mixins/filters-products'
 
 export default {
   name: "ProductCards",

@@ -87,7 +87,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form>
+            <form id="form-user-create">
               <div class="form-group">
                   <input type="hidden" class="form-control" id="edit-user-id">
               </div>
@@ -120,7 +120,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="updateUser()" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="updateUser()" id="update-user-save" type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
@@ -136,7 +136,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form>
+            <form id="form-user-create">
               <div class="form-group">
                   <input type="hidden" class="form-control" id="create-user-id">
               </div>
@@ -160,7 +160,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="createUser()" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="createUser()" type="button" id="create-user-save" class="btn btn-primary">Save user</button>
         </div>
       </div>
     </div>
@@ -183,7 +183,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="deleteUser()" type="button" class="btn btn-primary">Delete User</button>
+            <button @click="deleteUser()" id="delete-user-save" type="button" class="btn btn-primary">Delete User</button>
         </div>
       </div>
     </div>

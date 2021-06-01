@@ -87,7 +87,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form>
+            <form id="form-update-orders">
               <div class="form-group">
                   <input type="hidden" class="form-control" id="update-order-id">
               </div>
@@ -129,7 +129,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="updateOrder()" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="updateOrder()" type="button" id="update-order-save" class="btn btn-primary">Update Order</button>
         </div>
       </div>
     </div>
@@ -145,7 +145,7 @@
             </button>
         </div>
         <div class="modal-body">
-            <form>
+            <form id="form-create-orders">
               <div class="form-group">
                   <input type="hidden" class="form-control" id="create-user-id">
               </div>
@@ -187,7 +187,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="createOrder()" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="createOrder()" id="createOrderSave" type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="deleteOrder()" type="button" class="btn btn-primary">Delete Order</button>
+            <button @click="deleteOrder()" id="delete-orders-save" type="button" class="btn btn-primary">Delete Order</button>
         </div>
       </div>
     </div>

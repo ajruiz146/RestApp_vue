@@ -73,52 +73,24 @@
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">Orders</h3>
-              <OrderCreate/>
-              <FilterOrders/>
-            </div>
-            <div class="card-body">
-              <OrdersCards/>
-                  <div
-                    class="card-footer d-flex justify-content-end"
-                    :class="type === 'dark' ? 'bg-transparent' : ''"
-                  >
-                    <base-pagination total="40"></base-pagination>
-                  </div>
-            </div>
-          </div>
+          <OrdersCards/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import FilterOrders from '@/components/Filters/FilterOrders'
+
 import OrdersCards from '@/components/Cards/OrdersCards'
-import OrderCreate from '@/components/Create/OrderCreate'
 
 export default {
   name: "orders",
   components: {
-    FilterOrders,
     OrdersCards,
-    OrderCreate
   },
   data() {
     return {
-      model: {
-        username: "",
-        email: "",
-        firstName: "",
-        lastName: "",
-        address: "",
-        city: "",
-        country: "",
-        zipCode: "",
-        about: "",
-      },
+
     };
   },
 };

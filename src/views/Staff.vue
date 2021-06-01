@@ -73,22 +73,7 @@
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">Staff</h3>
-              <StaffCreate/>
-              <FilterStaff/>
-            </div>
-            <div class="card-body">
-              <StaffCards/>
-              <div
-                class="card-footer d-flex justify-content-end"
-                :class="type === 'dark' ? 'bg-transparent' : ''"
-              >
-                <base-pagination total="40"></base-pagination>
-              </div>
-            </div>
-          </div>
+          <StaffCards/>
         </div>
       </div>
     </div>
@@ -98,16 +83,12 @@
 import { Loader } from "google-maps";
 import axios from "axios";
 import StaffCards from "@/components/Cards/StaffCards.vue";
-import StaffCreate from "@/components/Create/StaffCreate.vue";
-import FilterStaff from "@/components/Filters/FilterStaff.vue";
 
 const loader = new Loader("YOUR_API_KEY");
 export default {
   name: 'Waiters',
   components: {
     StaffCards,
-    FilterStaff,
-    StaffCreate
   },
   data() {
     return {

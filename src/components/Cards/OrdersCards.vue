@@ -1,106 +1,95 @@
 <template>
-
-<div class="card shadow">
-  <div class="card-header bg-transparent">
-    <h3 class="mb-0">Orders</h3>
-    <div class="create-button">
+  <div class="card shadow">
+    <div class="card-header bg-transparent">
+      <h3 class="mb-0">Orders</h3>
+      <div class="create-button">
         <i data-toggle="modal" data-target="#ordersCreate" class="ni ni-fat-add reset-form"></i>
-    </div>
-    <div class="filters">
-      <select @change="onChangeOrder($event)" class="form-select form-select-sm" name="" id="">
+      </div>
+      <div class="filters">
+        <select @change="onChangeOrder($event)" class="form-select form-select-sm" name="" id="">
           <option value="">Order by</option>
-          <option value="ea">Email Asc</option>
-          <option value="ed">Email Desc</option>
           <option value="da">Date Asc</option>
           <option value="dd">Date Desc</option>
           <option value="pa">Price Asc</option>
           <option value="pd">Price Desc</option>
-      </select>
-    </div>
-  </div>
-  <div class="card-body">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Client Mail</th>
-          <th scope="col">Date</th>
-          <th scope="col">Table</th>
-          <th scope="col">Total Price</th>
-          <th scope="col">Options</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr   
-        v-for="item in data" 
-        :key="item._id">
-          <td>{{ item.user.email }}</td>
-          <td>{{ item.date }}</td>
-          <td>{{ item.table.table_number }}</td>
-          <td>{{ item.total }}</td>
-          <td>
-            <div class="dropdown">
-              <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)" class="reset-form"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket reset-form"></i></a>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div
-      class="card-footer d-flex justify-content-end"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
-    <div class="pagination">
-      <div class="pagination justify-content-center mt-5">
-        <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" @click="pageDown()">&lt;</a>
-            </li>
-            <li 
-            v-for="index in totalPages" :key="index"
-            :class="index == page ? 'page-item active' : 'page-item'"
-            >
-                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" @click="pageUp()">&gt;</a>
-            </li>
-        </ul>
-        </nav>
+        </select>
       </div>
     </div>
+    <div class="card-body">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Client Mail</th>
+            <th scope="col">Date</th>
+            <th scope="col">Table</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in data" :key="item._id">
+            <td>{{ item.user.email }}</td>
+            <td>{{ item.date.substring(0, 10) }}</td>
+            <td>{{ item.table.table_number }}</td>
+            <td>{{ item.total }}</td>
+            <td>
+              <div class="dropdown">
+                <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
+                <div id="myDropdown" class="dropdown-content">
+                  <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
+                  <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)" class="reset-form"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket reset-form"></i></a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''">
+        <div class="pagination">
+          <div class="pagination justify-content-center mt-5">
+            <nav aria-label="...">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" @click="pageDown()">&lt;</a>
+                </li>
+                <li v-for="index in totalPages" :key="index" :class="index == page ? 'page-item active' : 'page-item'">
+                  <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" @click="pageUp()">&gt;</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <!-- Modals -->
-  <!-- Update -->
-  <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="orderUpdateTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
+    <!-- Modals -->
+    <!-- Update -->
+    <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="orderUpdateTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-        <div class="modal-body">
+          </div>
+          <div class="modal-body">
             <form id="form-update-orders">
               <div class="form-group">
-                  <input type="hidden" class="form-control" id="update-order-id">
+                <input type="hidden" class="form-control" id="update-order-id">
               </div>
               <div class="form-group">
-                  <label for="update-order-table">Table</label>
-                  <select id="update-order-table" class="form-select">
-                    <option v-bind:value="item.table_number" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
+                <label for="update-order-table">Table</label>
+                <select id="update-order-table" class="form-select">
+                  <option v-bind:value="item.table_number" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
                 </select>
               </div>
               <div class="form-group">
-                  <label for="update-order-user">User</label>
-                  <select id="update-order-user" class="form-select">
-                    <option v-bind:value="item.name" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
+                <label for="update-order-user">User</label>
+                <select id="update-order-user" class="form-select">
+                  <option v-bind:value="item.name" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
               </div>
               <div class="card-body" style="padding:0;">
@@ -113,9 +102,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr   
-                    v-for="item in products" 
-                    :key="item._id">
+                    <tr v-for="item in products" :key="item._id">
                       <td>{{ item.name }}</td>
                       <td>{{ item.price }}</td>
                       <td>
@@ -126,39 +113,39 @@
                 </table>
               </div>
             </form>
-        </div>
-        <div class="modal-footer">
+          </div>
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button @click="updateOrder()" type="button" id="update-order-save" class="btn btn-primary save-button">Update Order</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Create -->
-  <div class="modal fade" id="ordersCreate" tabindex="-1" role="dialog" aria-labelledby="ordersCreateTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
+    <!-- Create -->
+    <div class="modal fade" id="ordersCreate" tabindex="-1" role="dialog" aria-labelledby="ordersCreateTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-        <div class="modal-body">
+          </div>
+          <div class="modal-body">
             <form id="form-create-orders">
               <div class="form-group">
-                  <input type="hidden" class="form-control" id="create-user-id">
+                <input type="hidden" class="form-control" id="create-user-id">
               </div>
               <div class="form-group">
-                  <label for="create-order-table">Table</label>
-                  <select id="create-order-table" class="form-select">
-                    <option value="client" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
+                <label for="create-order-table">Table</label>
+                <select id="create-order-table" class="form-select">
+                  <option value="client" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
                 </select>
               </div>
               <div class="form-group">
-                  <label for="create-order-user">User</label>
-                  <select id="create-order-user" class="form-select">
-                    <option value="client" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
+                <label for="create-order-user">User</label>
+                <select id="create-order-user" class="form-select">
+                  <option value="client" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
               </div>
               <div class="card-body" style="padding:0;">
@@ -171,9 +158,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr   
-                    v-for="item in products" 
-                    :key="item._id">
+                    <tr v-for="item in products" :key="item._id">
                       <td>{{ item.name }}</td>
                       <td>{{ item.price }}</td>
                       <td>
@@ -184,41 +169,38 @@
                 </table>
               </div>
             </form>
-        </div>
-        <div class="modal-footer">
+          </div>
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button @click="createOrder()" id="createOrderSave" type="button" class="btn btn-primary save-button">Save changes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- Delete -->
-  <div class="modal fade" id="ordersDelete" tabindex="-1" role="dialog" aria-labelledby="ordersDeleteTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
+    <!-- Delete -->
+    <div class="modal fade" id="ordersDelete" tabindex="-1" role="dialog" aria-labelledby="ordersDeleteTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">Delete user</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-        <div class="modal-body">
+          </div>
+          <div class="modal-body">
             <div class="form-group">
-                <input type="hidden" class="form-control" id="delete-order-id">
+              <input type="hidden" class="form-control" id="delete-order-id">
             </div>
             <h4 id="delete-order-text"></h4>
-        </div>
-        <div class="modal-footer">
+          </div>
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button @click="deleteOrder()" id="delete-orders-save" type="button" class="btn btn-primary save-button">Delete Order</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
-
 </template>
 
 
@@ -231,13 +213,11 @@ import filters from '@/mixins/filters-orders'
 export default {
   data() {
     return {
-      data: '',
       page: 1,
-      totalPages: null,
-      tables: null,
-      products: null,
-      field: null,
-      order: null
+      data: [],
+      tables: [],
+      products: [],
+      totalPages: [],
     };
   },
   methods: {
@@ -373,7 +353,6 @@ export default {
       })
     }
   },
-  
   mixins: [paginate, filters],
   mounted() {
     this.getOrders();

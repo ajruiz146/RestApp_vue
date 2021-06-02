@@ -14,21 +14,25 @@ export default {
         nameAsc() {
             this.field = 'name';
             this.order = 'asc';
+            this.page = 1;
             this.getUsers();
         },
         nameDesc() {
             this.field = 'name';
             this.order = 'desc';
+            this.page = 1;
             this.getUsers();
         },
         emailAsc() {
             this.field = 'email';
             this.order = 'asc';
+            this.page = 1;
             this.getUsers();
         },
         emailDesc() {
             this.field = 'email';
             this.order = 'desc';
+            this.page = 1;
             this.getUsers();
         },
     }

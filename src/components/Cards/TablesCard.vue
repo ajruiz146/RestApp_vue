@@ -1,66 +1,52 @@
 <template>
-<div class="wrapper">
-  <div class="card" 
-  v-for="item in data.data" 
-  :key="item.id"
-  >
-    <div class="title">Expert</div>
-    <div class="icon">
-      <svg enable-background="new 0 0 512 512" height="512px" id="Layer_1" version="1.1" viewBox="0 0 512 512" width="512px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M285.928,113.067c62.492,0,113.327,50.827,113.327,113.327c0,0.344-0.041,0.705-0.066,1.049  c-0.049,0.836-0.107,1.672-0.123,2.525l-0.426,17.133l17.159,0.065c41.53,0.115,75.313,34.005,75.313,75.535  c0,41.415-33.718,75.305-75.157,75.518l-3.664,0.016H104.977c-46.244-0.049-83.872-37.693-83.872-83.929  c0-35.825,22.806-67.714,56.737-79.356l9.444-3.229l1.664-9.838c4.115-24.282,24.97-41.907,49.588-41.907  c7.846,0,15.428,1.82,22.536,5.394l15.306,7.689l7.386-15.444C202.531,138.398,242.635,113.067,285.928,113.067 M285.928,96.277  c-51.778,0-96.358,30.315-117.303,74.092c-9.059-4.558-19.256-7.182-30.086-7.182c-33.233,0-60.762,24.184-66.14,55.893  C32.82,232.657,4.316,270.104,4.316,314.307c0,55.597,45.063,100.669,100.644,100.718h311.084v-0.016  c50.777-0.263,91.856-41.481,91.856-92.308c0-50.909-41.177-92.177-92.053-92.324c0.033-1.344,0.197-2.639,0.197-3.984  C416.044,154.532,357.79,96.277,285.928,96.277L285.928,96.277z" fill="#37404D"/></svg>
+  <div class="card shadow">
+    <div class="card-header bg-transparent">
+      <h3 class="mb-0">Tables</h3>
+      <div class="create-button">
+        <i class="ni ni-fat-add"></i>
+      </div>
+      <div class="filters">
+        <select class="form-select form-select-sm">
+          <option value="">Select type</option>
+          <option value="">Bar</option>
+          <option value="">Kitchen</option>
+        </select>
+      </div>
     </div>
-    <div class="features">
-      <ul>
-        <li><span>10</span> Edits</li>
-        <li><span>10GB</span> Storage</li>
-        <li><span>9</span> Pages</li>
-        <li><span>5</span> Hour free support</li>
-      </ul>
-    </div>
-    <div class="buttons">
-      <a data-toggle="modal" data-target="#tableEdit" href="#" class="btn">Edit</a>
-      <a href="#" class="btn">Delete</a>
+    <div class="card-body">
+      <div class="wrapper">
+        <div class="row tables">
+          <!-- Inicio Card -->
+          <!-- Esta es la carta de Staff por si quieres reutilizar partes, Te he traido abajo también el css -->
+          <div class="card" style="width: 18rem">
+            <div class="card-img-top" />
+            <div class="profile-thumb-block">
+              <img :src="'https://randomuser.me/api/portraits/men/' + Math.floor(Math.random() * 100) + '.jpg'" alt="profile-image" class="profile"/>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Manolito Gafotas</h5>
+              <p class="card-text">Waiter</p>
+              <div class="cards-buttons">
+                <a href="javascript:void(0)"><img src="img/icons/icon_edit.svg" alt="icon-edit"></a>
+                <a href="javascript:void(0)"><img src="img/icons/icon_trash.svg" alt="icon-delete"></a>
+              </div>
+            </div>
+          </div>
+          <!-- Fin Card -->
+        </div>
+      </div>
     </div>
   </div>
-  <div class="modal fade" id="tableEdit" tabindex="-1" role="dialog" aria-labelledby="productEditTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Edit table</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="createProduct()" type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
-    </div>
-</div>
-
 </template>
 
 <script>
+
 import axios from "axios";
 
 export default {
-  name: 'WaitersCards',
   data() {
     return {
-      data: ''
+      data: []
     };
   },
   mounted() {
@@ -74,87 +60,137 @@ export default {
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
 
-*, *:before, *:after {
-  box-sizing: border-box;
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #741922;
+    border-color: #741922;
 }
 
-body {
-  background: #383A3F;
-  font-family: "Varela Round", sans-serif;
+.page-link {
+  cursor: pointer;
 }
 
-.card {
-  background: #1F2124;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  border-radius: 5px;
-  margin: 50px 20px 20px 20px;
-  width: 21%;
-  margin: 2%;
-  padding: 20px;
+.pagination {
+  margin: 0 auto;
+}
+
+.ni-fat-add {
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #741922;
+}
+
+.ni-fat-add {
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+.ni-bold-down {
+  cursor: pointer;
+}
+
+select {
+  margin: 0 3px;
+}
+
+.filters {
+  display: flex;
+}
+
+/* Card Staff Css */
+
+.tables .card-img-top {
+  height: 110px;
+  width: 100%;
+  overflow: hidden;
+  background-color: #19746b;
+}
+
+.tables .card {
+  overflow: hidden;
+    height: 380px;
+    margin: 0.7em 0.7em;
+    padding: 0;
+    box-shadow: 1px 1px 4px rgb(128 128 128 / 29%);
+    flex: 1 0 300px;
+    max-width: 366px;
+}
+
+.tables .card-body {
+  position: relative;
+  z-index: 100;
+}
+
+.tables .card-body::before {
+  content: "";
+  display: block;
+  width: 114%;
+  height: 25%;
+  position: absolute;
+  top: -23px;
+  left: 2px;
+  transform: rotate(-7deg);
+  background: white;
+  z-index: -1;
+}
+
+.tables .profile {
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  max-width: 100px;
+  opacity: 1;
+  box-shadow: 3px 3px 20px rgb(0 0 0 / 50%);
+  border: 2px solid rgba(255, 255, 255, 1);
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+  z-index: 101;
+}
+
+.tables .card-title {
+  font-size: 25px;
+  padding-top: 22px;
   text-align: center;
-  color: white;
-  float: left;
-  }
+}
 
-  .title {
-    font-size: 25px;
-  }
+.tables .card-text {
+  text-align: center;
+}
 
-  .icon {
-    margin: 50px 0;
+.tables .cards-buttons {
+  position: absolute;
+  bottom: 23px;
+  left: 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.tables .cards-buttons .edit {
+  background-color:#898989;
+}
+
+.tables .cards-buttons .delete {
+  background-color:#898989;
+}
+
+.tables .cards-buttons a img {
+  width: 30px;
+  height: 30px;
+}
+
+.tables .text-black {
+  color: black;
+  font-size: 24px;
+}
+
+@media screen and (max-width: 710px) {
+  .tables .card {
+    min-width: none;
+    max-width: none;
     width: 100%;
   }
-
-  .icon svg path {
-    fill: #F6B352
-  }
-  .icon svg {
-    width: 100px;
-    height: 100px;
-  }
-
-  .features ul {
-    padding: 0;
-    margin: 20px 0 50px 0;
-    list-style-type: none;
-  }
-
-  .features ul li {
-    margin: 10px 0;
-    font-size: 14px;
-  }
-
-  .features ul li span {
-    border-bottom: 2px dotted #F6B352;
-  }
-
-  .btn {
-    width: 45%;
-    display: block;
-    background: #F6B352;
-    color: white;
-    padding: 15px 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    box-shadow: rgba(0,0,0,0.9);
-    transition: all 200ms ease-in-out;
-    text-decoration: none;
-  }
-
-  .btn :hover {
-    background: #F68657;
-  }
-
-  .buttons {
-    display: flex;
-    justify-content: center;
-  }
-
-  @media screen and (max-width: 738px) {
-    .card {
-      margin: 10px 20px;
-      width: calc(100% - 40px);
-    }
-  }
-
+}
 </style>

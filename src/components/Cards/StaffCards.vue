@@ -24,15 +24,10 @@
     <div class="card-body">
       <div class="wrapper">
         <div class="row staff">
-          <!-- inicio card -->
           <div class="card" style="width: 18rem" v-for="item in staff" :key="item._id">
             <div class="card-img-top" />
             <div class="profile-thumb-block">
-              <img
-                v-bind:src="'https://randomuser.me/api/portraits/men/' + Math.floor(Math.random() * 100) + '.jpg'"
-                alt="profile-image"
-                class="profile"
-              />
+              <img v-bind:src="'https://randomuser.me/api/portraits/men/' + Math.floor(Math.random() * 100) + '.jpg'" alt="profile-image" class="profile"/>
             </div>
             <div class="card-body">
               <h5 class="card-title">{{ item.name }}</h5>
@@ -43,31 +38,24 @@
               </div>
             </div>
           </div>
-        <!-- fin card -->
         </div>
       </div>
     </div>
-    <div
-      class="card-footer d-flex justify-content-end"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
+    <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''">
       <div class="pagination">
         <div class="pagination justify-content-center mt-5">
           <nav aria-label="...">
-          <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" @click="pageDown()">&lt;</a>
-            </li>
-            <li 
-            v-for="index in totalPages" :key="index"
-            :class="index == page ? 'page-item active' : 'page-item'"
-            >
-              <a class="page-link" @click="searchPage(index)">{{ index }}</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" @click="pageUp()">&gt;</a>
-            </li>
-          </ul>
+            <ul class="pagination">
+              <li class="page-item">
+                  <a class="page-link" @click="pageDown()">&lt;</a>
+              </li>
+              <li v-for="index in totalPages" :key="index" :class="index == page ? 'page-item active' : 'page-item'">
+                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+              </li>
+              <li class="page-item">
+                  <a class="page-link" @click="pageUp()">&gt;</a>
+              </li>
+            </ul>
           </nav>
         </div>
       </div>
@@ -78,42 +66,42 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-              </button>
+            </button>
           </div>
           <div class="modal-body">
-              <form id="form-staff-create">
-                <div class="form-group">
-                    <label for="modal-name">Name</label>
-                    <input type="text" class="form-control" id="create-staff-name">
-                </div>
-                <div class="form-group">
-                    <label for="modal-price">Last name</label>
-                    <input type="text" class="form-control" id="create-staff-lastName">
-                </div>
-                <div class="form-group">
-                    <label for="modal-description">Email</label>
-                    <input type="email" class="form-control" id="create-staff-email">
-                </div>
-                <div class="form-group">
-                    <label for="modal-image_url">Password</label>
-                    <input type="password" class="form-control" id="create-staff-password">
-                </div>
-                <div class="form-group">
-                    <label for="modal-price">Role</label>
-                    <select id="create-staff-role" class="form-select">
-                      <option value="waiter">Waiter</option>
-                      <option value="bar">Bar</option>
-                      <option value="kitchen">Kitchen</option>
-                  </select>
-                </div>
-              </form>
+            <form id="form-staff-create">
+              <div class="form-group">
+                <label for="modal-name">Name</label>
+                <input type="text" class="form-control" id="create-staff-name">
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Last name</label>
+                <input type="text" class="form-control" id="create-staff-lastName">
+              </div>
+              <div class="form-group">
+                <label for="modal-description">Email</label>
+                <input type="email" class="form-control" id="create-staff-email">
+              </div>
+              <div class="form-group">
+                <label for="modal-image_url">Password</label>
+                <input type="password" class="form-control" id="create-staff-password">
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Role</label>
+                <select id="create-staff-role" class="form-select">
+                  <option value="waiter">Waiter</option>
+                  <option value="bar">Bar</option>
+                  <option value="kitchen">Kitchen</option>
+                </select>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button @click="createStaff()" id="createOrderSave" type="button" class="btn btn-primary save-button">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="createStaff()" id="createOrderSave" type="button" class="btn btn-primary save-button">Save changes</button>
           </div>
         </div>
       </div>
@@ -123,46 +111,46 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-              </button>
+            </button>
           </div>
           <div class="modal-body">
-              <form id="form-staff-update">
-                <div class="form-group">
-                    <input type="hidden" class="form-control" id="update-staff-id">
-                </div>
-                <div class="form-group">
-                    <label for="modal-name">Name</label>
-                    <input type="text" class="form-control" id="update-staff-name">
-                </div>
-                <div class="form-group">
-                    <label for="modal-price">Last name</label>
-                    <input type="text" class="form-control" id="update-staff-lastName">
-                </div>
-                <div class="form-group">
-                    <label for="modal-description">Email</label>
-                    <input type="email" class="form-control" id="update-staff-email">
-                </div>
-                <div class="form-group">
-                    <label for="modal-image_url">Password</label>
-                    <input type="password" class="form-control" id="update-staff-password">
-                </div>
-                <div class="form-group">
-                    <label for="modal-price">Role</label>
-                    <select id="update-staff-role" class="form-select">
-                      <option value="bar">Bar</option>
-                      <option value="waiter">Waiter</option>
-                      <option value="client">Client</option>
-                      <option value="kitchen">Kitchen</option>
-                  </select>
-                </div>
-              </form>
+            <form id="form-staff-update">
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="update-staff-id">
+              </div>
+              <div class="form-group">
+                <label for="modal-name">Name</label>
+                <input type="text" class="form-control" id="update-staff-name">
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Last name</label>
+                <input type="text" class="form-control" id="update-staff-lastName">
+              </div>
+              <div class="form-group">
+                <label for="modal-description">Email</label>
+                <input type="email" class="form-control" id="update-staff-email">
+              </div>
+              <div class="form-group">
+                <label for="modal-image_url">Password</label>
+                <input type="password" class="form-control" id="update-staff-password">
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Role</label>
+                <select id="update-staff-role" class="form-select">
+                  <option value="bar">Bar</option>
+                  <option value="waiter">Waiter</option>
+                  <option value="client">Client</option>
+                  <option value="kitchen">Kitchen</option>
+                </select>
+              </div>
+            </form>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button @click="updateStaff()" id="createOrderSave" type="button" class="btn btn-primary save-button">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="updateStaff()" id="createOrderSave" type="button" class="btn btn-primary save-button">Save changes</button>
           </div>
         </div>
       </div>
@@ -171,21 +159,17 @@
 </template>
 
 <script>
-import axios from "axios";
+
 import $ from "jquery";
-import paginate from '@/mixins/paginate-staff'
+import axios from "axios";
 import filters from '@/mixins/filters-staff'
+import paginate from '@/mixins/paginate-staff'
 
 export default {
   data() {
     return {
-      staff: null,
       page: 1,
-      totalPages: null,
-      field: null,
-      order: null,
-      fieldWhere: null,
-      value: null
+      staff: [],
     };
   },
   methods: {

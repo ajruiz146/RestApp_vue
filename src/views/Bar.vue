@@ -19,7 +19,7 @@
 
 <script>
 
-import BarOrders from "@/components/Bar/BarOrders.vue";
+import BarOrders from "@/components/OrdersControl/BarOrders.vue";
 
 export default {
   components: {

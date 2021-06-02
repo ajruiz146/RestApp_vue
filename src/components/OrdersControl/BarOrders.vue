@@ -1,89 +1,60 @@
 <template>
     <div class="card shadow">
-
-  <div class="card-body">
-    
-      <div class="orders-container">
-          
-          <div class="pendings-list lists">
-            <ol class="rectangle-list">
-                <h1>Pending</h1>
-                <li class="list-li" v-for="item in pendings" :key="item.id">
-                    <a href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
-                        <div class="products-interior" v-for="product in item.products" :key="product.id">
-                            <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
-                        </div>     
-                    </a>
-                </li>
-            </ol>
-          </div>
-          <div class="delivered-list lists">
-            <ol class="rectangle-list delivered">
-                <h1>Delivered</h1>
-                <li class="list-li" v-for="item in delivereds" :key="item.id">
-                    <a href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
-                        <div class="products-interior" v-for="product in item.products" :key="product.id">
-                            <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
-                        </div>     
-                    </a>
-                </li>
-            </ol>
-          </div>
-      </div>
-
-    <div
-      class="card-footer d-flex justify-content-end"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
-    <div class="pagination">
-      <div class="pagination justify-content-center mt-5">
-        <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" @click="pageDown()">&lt;</a>
-            </li>
-            <li 
-            v-for="index in totalPages" :key="index"
-            :class="index == page ? 'page-item active' : 'page-item'"
-            >
-                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" @click="pageUp()">&gt;</a>
-            </li>
-        </ul>
-        </nav>
-      </div>
+        <div class="card-body">        
+            <div class="orders-container">
+                <div class="pendings-list lists">
+                    <ol class="rectangle-list">
+                        <h1>Pending</h1>
+                        <li class="list-li" v-for="item in pendings" :key="item.id">
+                            <a href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
+                                <div class="products-interior" v-for="product in item.products" :key="product.id">
+                                    <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                </div>     
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+                <div class="delivered-list lists">
+                    <ol class="rectangle-list delivered">
+                        <h1>Delivered</h1>
+                        <li class="list-li" v-for="item in delivereds" :key="item.id">
+                            <a href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
+                                <div class="products-interior" v-for="product in item.products" :key="product.id">
+                                    <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                </div>     
+                            </a>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''"></div>
+        </div>
+        <div class="hide-left-sidebar"></div>
     </div>
-    </div>
-  </div>
-
-  <div class="hide-left-sidebar"></div>
-</div>
 </template>
 
 <script>
 import axios from "axios";
-//import $ from "jquery";
 
 export default {
   data() {
     return {
-        pendings: null,
-        delivereds: null
+        pendings: [],
+        delivereds: []
     };
   },
   methods: {
     getPending: function() {
       axios
-      .get(process.env.VUE_APP_API + "order/kitchen/pending")
+      .get(process.env.VUE_APP_API + "order/bar/pending")
       .then((response) => {
+          console.log(response)
         this.pendings = response.data
       }) 
     },
     getDelivered: function() {
       axios
-      .get(process.env.VUE_APP_API + "order/kitchen/delivered")
+      .get(process.env.VUE_APP_API + "order/bar/delivered")
       .then((response) => {
         this.delivereds = response.data
       }) 
@@ -91,8 +62,8 @@ export default {
     updateOrders: function(id, delivered) {
         delivered = !delivered
         axios
-        .put(process.env.VUE_APP_API + "order/kitchen/toggle/" + id, {
-            kitchen_delivered: delivered
+        .put(process.env.VUE_APP_API + "order/bar/toggle/" + id, {
+            bar_delivered: delivered
         })
         .then(() => {
             this.getPending()
@@ -104,6 +75,11 @@ export default {
     this.getPending();
     this.getDelivered();
   },
+  beforeMount() {
+    if(!localStorage.token) {
+      this.$router.push("/login")
+    }
+  }
 };
 </script>
 
@@ -217,4 +193,3 @@ export default {
         }
     }
 </style>
-

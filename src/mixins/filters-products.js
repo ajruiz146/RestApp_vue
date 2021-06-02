@@ -25,41 +25,49 @@ export default {
         nameAsc() {
             this.field = 'name';
             this.order = 'asc';
+            this.page = 1;
             this.getProducts();
         },
         nameDesc() {
             this.field = 'name';
             this.order = 'desc';
+            this.page = 1;
             this.getProducts();
         },
         priceAsc() {
             this.field = 'price';
             this.order = 'asc';
+            this.page = 1;
             this.getProducts();
         },
         priceDesc() {
             this.field = 'price';
             this.order = 'desc';
+            this.page = 1;
             this.getProducts();
         },
         starters() {
             this.fieldWhere = 'category'
             this.value = 'Entrantes'
+            this.page = 1;
             this.getProducts();
         },
         principals() {
             this.fieldWhere = 'category'
             this.value = 'Platos'
+            this.page = 1;
             this.getProducts();
         },
         drinks() {
             this.fieldWhere = 'category'
             this.value = 'Bebidas'
+            this.page = 1;
             this.getProducts();
         },
         dessert() {
             this.fieldWhere = 'category'
             this.value = 'Postres'
+            this.page = 1;
             this.getProducts();
         }
     }

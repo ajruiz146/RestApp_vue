@@ -23,36 +23,43 @@ export default {
         nameAsc() {
             this.field = 'name';
             this.order = 'asc';
+            this.page = 1;
             this.getStaff();
         },
         nameDesc() {
             this.field = 'name';
             this.order = 'desc';
+            this.page = 1;
             this.getStaff();
         },
         roleAsc() {
             this.field = 'role';
             this.order = 'asc';
+            this.page = 1;
             this.getStaff();
         },
         roleDesc() {
             this.field = 'role';
             this.order = 'desc';
+            this.page = 1;
             this.getStaff();
         },
         kitchen() {
             this.fieldWhere = 'role'
             this.value = 'kitchen'
+            this.page = 1;
             this.getStaff();
         },
         waiter() {
             this.fieldWhere = 'role'
             this.value = 'waiter'
+            this.page = 1;
             this.getStaff();
         },
         bar() {
             this.fieldWhere = 'role'
             this.value = 'bar'
+            this.page = 1;
             this.getStaff();
         }
     }

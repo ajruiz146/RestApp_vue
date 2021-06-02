@@ -1,201 +1,185 @@
 <template>
-
-<div class="card shadow">
-  <div class="card-header bg-transparent">
-    <h3 class="mb-0">Products</h3>
-    <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#productCreate"></i>
-        <div class="filters">
+  <div class="card shadow">
+    <div class="card-header bg-transparent">
+      <h3 class="mb-0">Products</h3>
+      <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#productCreate"></i>
+      <div class="filters">
         <select class="form-select form-select-sm" @change="onChangeFilter($event)" name="" id="">
-            <option value="">Select type</option>
-            <option value="s">Starters</option>
-            <option value="p">Principal</option>
-            <option value="d">Drinks</option>
-            <option value="de">Dessert</option>
-            
+          <option value="">Select type</option>
+          <option value="s">Starters</option>
+          <option value="p">Principal</option>
+          <option value="d">Drinks</option>
+          <option value="de">Dessert</option>
         </select>
         <select class="form-select form-select-sm" @change="onChangeOrder($event)" name="" id="">
-            <option value="">Order by</option>
-            <option value="na">Name Asc</option>
-            <option value="nd">Name Desc</option>
-            <option value="pa">Price Asc</option>
-            <option value="pd">Price Desc</option>
+          <option value="">Order by</option>
+          <option value="na">Name Asc</option>
+          <option value="nd">Name Desc</option>
+          <option value="pa">Price Asc</option>
+          <option value="pd">Price Desc</option>
         </select>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="wrapper wrapper-products" v-if="data">
-      <div class="card" 
-      v-for="item in data" 
-      :key="item.id"
-      >
-        <div class="title">{{ item.name }}</div>
-        <div class="icon">
-          <img class="product-image" v-bind:src="item.image_url" alt=""/>
-        </div>
-        <div class="buttons">
-          <a @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category)" id="editButton" data-toggle="modal" data-target="#productEdit" href="#" class="btn reset-form">Edit</a>
-          <a @click="deleteModal(item.id, item.name)" href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#productDelete">Delete</a>
-        </div>
       </div>
     </div>
-    <div
-      class="card-footer d-flex justify-content-end"
-      :class="type === 'dark' ? 'bg-transparent' : ''"
-    >
+    <div class="card-body">
+      <div class="wrapper wrapper-products" v-if="data">
+        <div class="card" v-for="item in data" :key="item.id">
+          <div class="title">{{ item.name }}</div>
+          <div class="icon">
+            <img class="product-image" v-bind:src="item.image_url" alt=""/>
+          </div>
+          <div class="buttons">
+            <a @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category)" id="editButton" data-toggle="modal" data-target="#productEdit" href="#" class="btn reset-form">Edit</a>
+            <a @click="deleteModal(item.id, item.name)" href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#productDelete">Delete</a>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''"></div>
     </div>
-  </div>
-  <div class="pagination">
-    <div class="pagination justify-content-center mt-5">
-      <nav aria-label="...">
-      <ul class="pagination">
-          <li class="page-item">
-              <a class="page-link" @click="pageDown()">&lt;</a>
-          </li>
-          <li 
-          v-for="index in totalPages" :key="index"
-          :class="index == page ? 'page-item active' : 'page-item'"
-          >
-              <a class="page-link" @click="searchPage(index)">{{ index }}</a>
-          </li>
-          <li class="page-item">
-              <a class="page-link" @click="pageUp()">&gt;</a>
-          </li>
-      </ul>
-      </nav>
+    <div class="pagination">
+      <div class="pagination justify-content-center mt-5">
+        <nav aria-label="...">
+          <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" @click="pageDown()">&lt;</a>
+            </li>
+            <li v-for="index in totalPages" :key="index" :class="index == page ? 'page-item active' : 'page-item'">
+                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" @click="pageUp()">&gt;</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
-  </div>
     <!-- Modals --> 
     <!-- Create -->
-      <div class="modal fade" id="productCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Create product</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="form-product-create">
-              <div class="form-group">
-                  <label for="modal-name">Product Name</label>
-                  <input type="text" class="form-control" id="create-name">
-              </div>
-              <div class="form-group">
-                  <label for="modal-price">Product Price</label>
-                  <input type="text" class="form-control" id="create-price">
-              </div>
-              <div class="form-group">
-                  <label for="modal-description">Product Description</label>
-                  <input type="text" class="form-control" id="create-description">
-              </div>
-              <div class="form-group">
-                  <label for="modal-image_url">Product Image</label>
-                  <input type="file" class="form-control" id="create-image_url">
-              </div>
-              <div class="form-group">
-                  <label for="modal-price">Product Category</label>
-                  <select id="create-product-select" class="form-select">
-                      <option value="Sin Categoría">Select category</option>
-                      <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
-                        {{ category.name }}
-                      </option> 
-                  </select>
-              </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="createProduct()" type="button" id="create-product-save" class="btn btn-primary save-button">Create product</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Update -->
-  <div class="modal fade" id="productEdit" tabindex="-1" role="dialog" aria-labelledby="productEditTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
+    <div class="modal fade" id="productCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Create product</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true">&times;</span>
             </button>
-        </div>
-        <div class="modal-body">
-            <form id="form-product-update">
+          </div>
+          <div class="modal-body">
+            <form id="form-product-create">
               <div class="form-group">
-                  <input type="hidden" class="form-control" id="modal-id">
+                <label for="modal-name">Product Name</label>
+                <input type="text" class="form-control" id="create-name">
               </div>
               <div class="form-group">
-                  <input type="hidden" class="form-control" id="modal-previous-img">
+                <label for="modal-price">Product Price</label>
+                <input type="text" class="form-control" id="create-price">
               </div>
               <div class="form-group">
-                  <input type="hidden" class="form-control" id="modal-category">
+                <label for="modal-description">Product Description</label>
+                <input type="text" class="form-control" id="create-description">
               </div>
               <div class="form-group">
-                  <label for="modal-name">Product Name</label>
-                  <input type="text" class="form-control" id="modal-name">
+                <label for="modal-image_url">Product Image</label>
+                <input type="file" class="form-control" id="create-image_url">
               </div>
               <div class="form-group">
-                  <label for="modal-price">Product Price</label>
-                  <input type="text" class="form-control" id="modal-price">
-              </div>
-              <div class="form-group">
-                  <label for="modal-description">Product Description</label>
-                  <input type="text" class="form-control" id="modal-description">
-              </div>
-              <div class="form-group">
-                  <label for="modal-image_url">Product Image</label>
-                  <input type="file" class="form-control" id="modal-image_url">
-              </div>
-              <div class="form-group">
-                  <label for="modal-price">Product Category</label>
-                  <select id="update-product-select" class="form-select" v-model="selected">
-                    <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
-                      {{ category.name }}
-                    </option> 
+                <label for="modal-price">Product Category</label>
+                <select id="create-product-select" class="form-select">
+                  <option value="Sin Categoría">Select category</option>
+                  <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
+                    {{ category.name }}
+                  </option> 
                 </select>
               </div>
             </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="createProduct()" type="button" id="create-product-save" class="btn btn-primary save-button">Create product</button>
+          </div>
         </div>
-        <div class="modal-footer">
+      </div>
+    </div>
+    <!-- Update -->
+    <div class="modal fade" id="productEdit" tabindex="-1" role="dialog" aria-labelledby="productEditTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="form-product-update">
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="modal-id">
+              </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="modal-previous-img">
+              </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="modal-category">
+              </div>
+              <div class="form-group">
+                <label for="modal-name">Product Name</label>
+                <input type="text" class="form-control" id="modal-name">
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Product Price</label>
+                <input type="text" class="form-control" id="modal-price">
+              </div>
+              <div class="form-group">
+                <label for="modal-description">Product Description</label>
+                <input type="text" class="form-control" id="modal-description">
+              </div>
+              <div class="form-group">
+                <label for="modal-image_url">Product Image</label>
+                <input type="file" class="form-control" id="modal-image_url">
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Product Category</label>
+                <select id="update-product-select" class="form-select" v-model="selected">
+                  <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
+                    {{ category.name }}
+                  </option> 
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button @click="updateProduct()" id="update-product-save" type="button" class="btn btn-primary save-button">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Delete -->
+    <div class="modal fade" id="productDelete" tabindex="-1" role="dialog" aria-labelledby="productDeleteTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h4 id="title-delete">Are you sure about delete </h4>
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="delete-id">
+          </div>
+          <div class="form-group">
+            <input type="hidden" class="form-control" id="delete-name">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="deleteProduct()" type="button" id="delete-product-save" class="btn btn-primary save-button">Delete product</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Delete -->
-  <div class="modal fade" id="productDelete" tabindex="-1" role="dialog" aria-labelledby="productDeleteTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h4 id="title-delete">Are you sure about delete </h4>
-        </div>
-        <div class="form-group">
-          <input type="hidden" class="form-control" id="delete-id">
-        </div>
-        <div class="form-group">
-          <input type="hidden" class="form-control" id="delete-name">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button @click="deleteProduct()" type="button" id="delete-product-save" class="btn btn-primary save-button">Delete product</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-</div>
-
-
-
 </template>
 
 <script>
@@ -209,27 +193,18 @@ export default {
   mixins: [paginate, filters],
   data() {
     return {
-      data: null,
-      fullData: null,
       page: 1,
-      totalPages: null,
-      field: null,
-      order: null,
-      fieldWhere: null,
-      value: null,
-      categories: null
+      data: [],
     }
   },
   methods: {
     getProducts: function() {
       axios.post(process.env.VUE_APP_API + "product", {
         page: this.page,
-        
         sort: {
           field: this.field,
           order: this.order
         },
-        
         where: {
           field: this.fieldWhere,
           value: this.value

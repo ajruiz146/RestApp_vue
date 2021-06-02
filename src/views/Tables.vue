@@ -72,37 +72,20 @@
     <div class="container-fluid mt--7">
       <div class="row">
         <div class="col">
-          <div class="card shadow">
-            <div class="card-header bg-transparent">
-              <h3 class="mb-0">Products</h3>
-              <TablesCreate/>
-              <FilterTables/>
-            </div>
-            <div class="card-body">
-              <TablesCard/>
-              <div
-                class="card-footer d-flex justify-content-end"
-                :class="type === 'dark' ? 'bg-transparent' : ''"
-              >
-                <base-pagination total="40"></base-pagination>
-              </div>
-            </div>
-          </div>
+          <TablesCard/>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
-import FilterTables from "@/components/Filters/FilterTables";
+
 import TablesCard from "@/components/Cards/TablesCard";
-import TablesCreate from "@/components/Create/TablesCreate";
+
 export default {
   name: "tables",
   components: {
-    FilterTables,
     TablesCard,
-    TablesCreate
   },
 };
 </script>

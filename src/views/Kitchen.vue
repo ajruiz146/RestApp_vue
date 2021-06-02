@@ -19,7 +19,7 @@
 
 <script>
 
-import KitchenOrders from "@/components/Kitchen/KitchenOrders.vue";
+import KitchenOrders from "@/components/OrdersControl/KitchenOrders.vue";
 
 export default {
   components: {

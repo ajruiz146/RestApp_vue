@@ -3,7 +3,7 @@
 <div class="card shadow">
   <div class="card-header bg-transparent">
     <h3 class="mb-0">Products</h3>
-    <i class="ni ni-fat-add" data-toggle="modal" data-target="#productCreate"></i>
+    <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#productCreate"></i>
         <div class="filters">
         <select class="form-select form-select-sm" @change="onChangeFilter($event)" name="" id="">
             <option value="">Select type</option>
@@ -33,165 +33,165 @@
           <img class="product-image" v-bind:src="item.image_url" alt=""/>
         </div>
         <div class="buttons">
-          <a @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category)" id="editButton" data-toggle="modal" data-target="#productEdit" href="#" class="btn">Edit</a>
+          <a @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category)" id="editButton" data-toggle="modal" data-target="#productEdit" href="#" class="btn reset-form">Edit</a>
           <a @click="deleteModal(item.id, item.name)" href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#productDelete">Delete</a>
         </div>
       </div>
-
-      <div class="modal fade" id="productEdit" tabindex="-1" role="dialog" aria-labelledby="productEditTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                  <div class="form-group">
-                      <input type="hidden" class="form-control" id="modal-id">
-                  </div>
-                  <div class="form-group">
-                      <input type="hidden" class="form-control" id="modal-previous-img">
-                  </div>
-                  <div class="form-group">
-                      <input type="hidden" class="form-control" id="modal-category">
-                  </div>
-                  <div class="form-group">
-                      <label for="modal-name">Product Name</label>
-                      <input type="text" class="form-control" id="modal-name">
-                  </div>
-                  <div class="form-group">
-                      <label for="modal-price">Product Price</label>
-                      <input type="text" class="form-control" id="modal-price">
-                  </div>
-                  <div class="form-group">
-                      <label for="modal-description">Product Description</label>
-                      <input type="text" class="form-control" id="modal-description">
-                  </div>
-                  <div class="form-group">
-                      <label for="modal-image_url">Product Image</label>
-                      <input type="file" class="form-control" id="modal-image_url">
-                  </div>
-                  <div class="form-group">
-                      <label for="modal-price">Product Category</label>
-                      <select id="update-product-select" v-model="selected">
-                        <option disabled :v-bind:value="lastCategory" selected>{{ lastCategory }}</option>
-                        <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
-                          {{ category.name }}
-                        </option> 
-                    </select>
-                  </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button @click="updateProduct()" type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-        <div class="modal fade" id="productDelete" tabindex="-1" role="dialog" aria-labelledby="productDeleteTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-              <h4 id="title-delete">Are you sure about delete </h4>
-            </div>
-              <div class="form-group">
-                <input type="hidden" class="form-control" id="delete-id">
-              </div>
-              <div class="form-group">
-                  <input type="hidden" class="form-control" id="delete-name">
-              </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button @click="deleteProduct()" type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
+    </div>
     <div
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
     </div>
   </div>
-   <div class="modal fade" id="productCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Create product</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-                <div class="form-group">
-                    <label for="modal-name">Product Name</label>
-                    <input type="text" class="form-control" id="create-name">
-                </div>
-                <div class="form-group">
-                    <label for="modal-price">Product Price</label>
-                    <input type="text" class="form-control" id="create-price">
-                </div>
-                <div class="form-group">
-                    <label for="modal-description">Product Description</label>
-                    <input type="text" class="form-control" id="create-description">
-                </div>
-                <div class="form-group">
-                    <label for="modal-image_url">Product Image</label>
-                    <input type="file" class="form-control" id="create-image_url">
-                </div>
-                
-                <div class="form-group">
-                    <label for="modal-price">Product Category</label>
-                    <select id="create-product-select">
-                        <option value="Sin Categoría">Select category</option>
-                        <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
-                          {{ category.name }}
-                        </option> 
-                    </select>
-                </div>
-                
-            </form>
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button @click="createProduct()" type="button" class="btn btn-primary">Create product</button>
-          </div>
+  <div class="pagination">
+    <div class="pagination justify-content-center mt-5">
+      <nav aria-label="...">
+      <ul class="pagination">
+          <li class="page-item">
+              <a class="page-link" @click="pageDown()">&lt;</a>
+          </li>
+          <li 
+          v-for="index in totalPages" :key="index"
+          :class="index == page ? 'page-item active' : 'page-item'"
+          >
+              <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+          </li>
+          <li class="page-item">
+              <a class="page-link" @click="pageUp()">&gt;</a>
+          </li>
+      </ul>
+      </nav>
+    </div>
+  </div>
+    <!-- Modals --> 
+    <!-- Create -->
+      <div class="modal fade" id="productCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Create product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="form-product-create">
+              <div class="form-group">
+                  <label for="modal-name">Product Name</label>
+                  <input type="text" class="form-control" id="create-name">
+              </div>
+              <div class="form-group">
+                  <label for="modal-price">Product Price</label>
+                  <input type="text" class="form-control" id="create-price">
+              </div>
+              <div class="form-group">
+                  <label for="modal-description">Product Description</label>
+                  <input type="text" class="form-control" id="create-description">
+              </div>
+              <div class="form-group">
+                  <label for="modal-image_url">Product Image</label>
+                  <input type="file" class="form-control" id="create-image_url">
+              </div>
+              <div class="form-group">
+                  <label for="modal-price">Product Category</label>
+                  <select id="create-product-select" class="form-select">
+                      <option value="Sin Categoría">Select category</option>
+                      <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
+                        {{ category.name }}
+                      </option> 
+                  </select>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="createProduct()" type="button" id="create-product-save" class="btn btn-primary save-button">Create product</button>
         </div>
       </div>
     </div>
-    <div class="pagination">
-      <div class="pagination justify-content-center mt-5">
-        <nav aria-label="...">
-        <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" @click="pageDown()">&lt;</a>
-            </li>
-            <li 
-            v-for="index in totalPages" :key="index"
-            :class="index == page ? 'page-item active' : 'page-item'"
-            >
-                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" @click="pageUp()">&gt;</a>
-            </li>
-        </ul>
-        </nav>
+  </div>
+  <!-- Update -->
+  <div class="modal fade" id="productEdit" tabindex="-1" role="dialog" aria-labelledby="productEditTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="form-product-update">
+              <div class="form-group">
+                  <input type="hidden" class="form-control" id="modal-id">
+              </div>
+              <div class="form-group">
+                  <input type="hidden" class="form-control" id="modal-previous-img">
+              </div>
+              <div class="form-group">
+                  <input type="hidden" class="form-control" id="modal-category">
+              </div>
+              <div class="form-group">
+                  <label for="modal-name">Product Name</label>
+                  <input type="text" class="form-control" id="modal-name">
+              </div>
+              <div class="form-group">
+                  <label for="modal-price">Product Price</label>
+                  <input type="text" class="form-control" id="modal-price">
+              </div>
+              <div class="form-group">
+                  <label for="modal-description">Product Description</label>
+                  <input type="text" class="form-control" id="modal-description">
+              </div>
+              <div class="form-group">
+                  <label for="modal-image_url">Product Image</label>
+                  <input type="file" class="form-control" id="modal-image_url">
+              </div>
+              <div class="form-group">
+                  <label for="modal-price">Product Category</label>
+                  <select id="update-product-select" class="form-select" v-model="selected">
+                    <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
+                      {{ category.name }}
+                    </option> 
+                </select>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="updateProduct()" id="update-product-save" type="button" class="btn btn-primary save-button">Save changes</button>
+        </div>
       </div>
     </div>
+  </div>
+  <!-- Delete -->
+  <div class="modal fade" id="productDelete" tabindex="-1" role="dialog" aria-labelledby="productDeleteTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 id="title-delete">Are you sure about delete </h4>
+        </div>
+        <div class="form-group">
+          <input type="hidden" class="form-control" id="delete-id">
+        </div>
+        <div class="form-group">
+          <input type="hidden" class="form-control" id="delete-name">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button @click="deleteProduct()" type="button" id="delete-product-save" class="btn btn-primary save-button">Delete product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 
 
@@ -210,7 +210,6 @@ export default {
   data() {
     return {
       data: null,
-      lastCategory: null,
       fullData: null,
       page: 1,
       totalPages: null,
@@ -237,8 +236,6 @@ export default {
         }
       })
       .then((respuesta) => {
-        console.log(this.field + " | " + this.value + " | " + this.page);
-        console.log("Respuesta", respuesta)
         this.data = respuesta.data.object
         this.totalPages = respuesta.data.pages
         this.page = respuesta.data.current
@@ -250,7 +247,6 @@ export default {
       if($("#modal-image_url").val() != "") {
         this.uploadFile()
       } else {
-        console.log("No entreases")
         let img = $("#modal-previous-img").val()
         let imgAux = img.split("/");
         this.updateProductValues(imgAux[imgAux.length - 1])
@@ -264,7 +260,6 @@ export default {
       axios
         .post(process.env.VUE_APP_API + "upload", formData)
         .then((result) => {
-          console.log(result)
           filename = result.data.filename
           this.updateProductValues(filename)
         }, (error) => (console.log(error)));
@@ -276,7 +271,6 @@ export default {
       let description = $('#modal-description').val();
       let category = $("#update-product-select").val();
       
-      console.log(filename)
       axios
         .put(process.env.VUE_APP_API + "product/" + id, { 
           id: id,
@@ -298,7 +292,7 @@ export default {
       $("#modal-price").val(price);
       $("#modal-description").val(description);
       $("#modal-previous-img").val(image_url);
-      this.lastCategory = category;
+      $("#update-product-select").val(category);
     },
     deleteModal: function(id, name) {
       $("#delete-id").val(id);
@@ -340,6 +334,7 @@ export default {
       let price = $('#create-price').val();
       let description = $('#create-description').val();
       let category = $("#create-product-select").val();
+      
       axios
         .post(process.env.VUE_APP_API + "product/create", {
           name: name,
@@ -348,9 +343,8 @@ export default {
           image_url: filename,
           category: category
         })
-        .then((response) => {
+        .then(() => {
           this.getProducts()
-          console.log(response)
         }, (error) => {
           console.log(error);
         });

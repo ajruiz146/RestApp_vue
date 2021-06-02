@@ -18,18 +18,75 @@
         <div class="row tables">
           <!-- Inicio Card -->
           <!-- Esta es la carta de Staff por si quieres reutilizar partes, Te he traido abajo también el css -->
-          <div class="card" style="width: 18rem">
-            <div class="card-img-top" />
-            <div class="profile-thumb-block">
-              <img :src="'https://randomuser.me/api/portraits/men/' + Math.floor(Math.random() * 100) + '.jpg'" alt="profile-image" class="profile"/>
-            </div>
+          <div class="card need-waiter" style="width: 18rem">
             <div class="card-body">
-              <h5 class="card-title">Manolito Gafotas</h5>
-              <p class="card-text">Waiter</p>
-              <div class="cards-buttons">
-                <a href="javascript:void(0)"><img src="img/icons/icon_edit.svg" alt="icon-edit"></a>
-                <a href="javascript:void(0)"><img src="img/icons/icon_trash.svg" alt="icon-delete"></a>
-              </div>
+              <h2 class="card-title">12</h2>
+            </div>
+          </div>
+
+          <div class="card need-waiter" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">3</h2>
+            </div>
+          </div>
+
+          <div class="card need-waiter" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">7</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">1</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">2</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">3</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">8</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">6</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">9</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">4</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">5</h2>
+            </div>
+          </div>
+
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h2 class="card-title">6</h2>
             </div>
           </div>
           <!-- Fin Card -->
@@ -98,99 +155,50 @@ select {
   display: flex;
 }
 
-/* Card Staff Css */
-
-.tables .card-img-top {
-  height: 110px;
-  width: 100%;
-  overflow: hidden;
-  background-color: #19746b;
-}
+/* Cards Tables Css */
 
 .tables .card {
   overflow: hidden;
-    height: 380px;
+    height: 300px;
     margin: 0.7em 0.7em;
     padding: 0;
     box-shadow: 1px 1px 4px rgb(128 128 128 / 29%);
-    flex: 1 0 300px;
-    max-width: 366px;
+    flex: 0 0 200px;
+}
+
+.tables .need-waiter {
+    animation: shadow-alert 2s infinite;
 }
 
 .tables .card-body {
   position: relative;
   z-index: 100;
-}
-
-.tables .card-body::before {
-  content: "";
-  display: block;
-  width: 114%;
-  height: 25%;
-  position: absolute;
-  top: -23px;
-  left: 2px;
-  transform: rotate(-7deg);
-  background: white;
-  z-index: -1;
-}
-
-.tables .profile {
-  border-radius: 50%;
-  position: absolute;
-  top: 30px;
-  left: 50%;
-  max-width: 100px;
-  opacity: 1;
-  box-shadow: 3px 3px 20px rgb(0 0 0 / 50%);
-  border: 2px solid rgba(255, 255, 255, 1);
-  -webkit-transform: translate(-50%, 0%);
-  transform: translate(-50%, 0%);
-  z-index: 101;
+  background: url("../../../public/img/theme/table_texture.jpg") no-repeat center center;
+  background-size: cover;
 }
 
 .tables .card-title {
-  font-size: 25px;
-  padding-top: 22px;
+  font-size: 150px;
   text-align: center;
+  color: #741922;
+  text-shadow: 1px 1px 1px #0000005c;
 }
 
-.tables .card-text {
-  text-align: center;
-}
-
-.tables .cards-buttons {
-  position: absolute;
-  bottom: 23px;
-  left: 0;
-  display: flex;
-  width: 100%;
-  justify-content: space-around;
-}
-
-.tables .cards-buttons .edit {
-  background-color:#898989;
-}
-
-.tables .cards-buttons .delete {
-  background-color:#898989;
-}
-
-.tables .cards-buttons a img {
-  width: 30px;
-  height: 30px;
-}
-
-.tables .text-black {
-  color: black;
-  font-size: 24px;
+@keyframes shadow-alert {
+  0% {
+      box-shadow: 0px 0px 10px #741922;
+  }
+  20% {
+      box-shadow: 0px 0px 20px #741922;
+  }
+  100% {
+      box-shadow: 0px 0px 10px #741922;
+  }
 }
 
 @media screen and (max-width: 710px) {
   .tables .card {
-    min-width: none;
-    max-width: none;
-    width: 100%;
+    width: 50%;
   }
 }
 </style>

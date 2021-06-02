@@ -19,3 +19,8 @@ window.onclick = function(event){
         }
     }
 }
+
+if($(".hide-left-sidebar").length) {
+    $("#sidenav-main").css("display", "none")
+    $(".main-content").css("margin-left", "0")
+}

@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
+  <div id="wrapper-main" class="wrapper" :class="{ 'nav-open': $sidebar.showSidebar }">
     <side-bar
       :background-color="sidebarBackground"
       short-title="Argon"
@@ -49,6 +49,7 @@
             path: '/users',
           }"
         />
+        
         <sidebar-item
           :link="{
             name: 'Login',
@@ -63,6 +64,11 @@
             path: '/register',
           }"
         />
+        <br>
+        <a href="#/kitchen" target="_blank">Kitchen</a>
+        <a href="#/bar" target="_blank">Bar</a>
+        <br>  
+        
       </template>
     </side-bar>
     <div class="main-content" :data="sidebarBackground">

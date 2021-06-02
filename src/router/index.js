@@ -9,6 +9,8 @@ import Staff from "../views/Staff.vue";
 import Orders from "../views/Orders.vue";
 import Tables from "../views/Tables.vue";
 import Users from "../views/Users.vue";
+import Kitchen from "../views/Kitchen.vue";
+import Bar from "../views/Bar.vue";
 
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
@@ -49,6 +51,16 @@ const routes = [
         name: "users",
         components: { default: Users },
       },
+      {
+        path: "/kitchen",
+        name: "kitchen",
+        components: { default: Kitchen },
+      },
+      {
+        path: "/bar",
+        name: "bar",
+        components: { default: Bar },
+      },
     ],
   },
   {
@@ -75,5 +87,7 @@ const router = createRouter({
   linkActiveClass: "active",
   routes,
 });
+
+
 
 export default router;

@@ -1,0 +1,220 @@
+<template>
+    <div class="card shadow">
+
+  <div class="card-body">
+    
+      <div class="orders-container">
+          
+          <div class="pendings-list lists">
+            <ol class="rectangle-list">
+                <h1>Pending</h1>
+                <li class="list-li" v-for="item in pendings" :key="item.id">
+                    <a href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
+                        <div class="products-interior" v-for="product in item.products" :key="product.id">
+                            <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                        </div>     
+                    </a>
+                </li>
+            </ol>
+          </div>
+          <div class="delivered-list lists">
+            <ol class="rectangle-list delivered">
+                <h1>Delivered</h1>
+                <li class="list-li" v-for="item in delivereds" :key="item.id">
+                    <a href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
+                        <div class="products-interior" v-for="product in item.products" :key="product.id">
+                            <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                        </div>     
+                    </a>
+                </li>
+            </ol>
+          </div>
+      </div>
+
+    <div
+      class="card-footer d-flex justify-content-end"
+      :class="type === 'dark' ? 'bg-transparent' : ''"
+    >
+    <div class="pagination">
+      <div class="pagination justify-content-center mt-5">
+        <nav aria-label="...">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" @click="pageDown()">&lt;</a>
+            </li>
+            <li 
+            v-for="index in totalPages" :key="index"
+            :class="index == page ? 'page-item active' : 'page-item'"
+            >
+                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" @click="pageUp()">&gt;</a>
+            </li>
+        </ul>
+        </nav>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="hide-left-sidebar"></div>
+</div>
+</template>
+
+<script>
+import axios from "axios";
+//import $ from "jquery";
+
+export default {
+  data() {
+    return {
+        pendings: null,
+        delivereds: null
+    };
+  },
+  methods: {
+    getPending: function() {
+      axios
+      .get(process.env.VUE_APP_API + "order/bar/pending")
+      .then((response) => {
+          console.log(response)
+        this.pendings = response.data
+      }) 
+    },
+    getDelivered: function() {
+      axios
+      .get(process.env.VUE_APP_API + "order/bar/delivered")
+      .then((response) => {
+        this.delivereds = response.data
+      }) 
+    },
+    updateOrders: function(id, delivered) {
+        delivered = !delivered
+        axios
+        .put(process.env.VUE_APP_API + "order/bar/toggle/" + id, {
+            bar_delivered: delivered
+        })
+        .then(() => {
+            this.getPending()
+            this.getDelivered()
+        }) 
+    }
+  },
+  mounted() {
+    this.getPending();
+    this.getDelivered();
+  },
+};
+</script>
+
+<style scoped>
+    
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+    
+    * {
+        font-family: 'Montserrat', sans-serif;
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .orders-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .lists {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+
+    ol {
+        counter-reset: li; /* Initiate a counter */
+        list-style: none; /* Remove default numbering */
+        *list-style: decimal; /* Keep using default numbering for IE6/7 */
+        font: 15px 'trebuchet MS', 'lucida sans';
+        padding: 0;
+        margin-bottom: 4em;
+        text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    }
+
+    ol ol {
+        margin: 0 0 0 2em; /* Add some left margin for inner lists */
+    }
+
+    .rectangle-list a{
+    position: relative;
+    display: block;
+    padding: 1em 3em 1em 3em;
+    *padding: .4em;
+    margin: .5em 0 .5em 2.5em;
+    background: #ddd;
+    color: #444;
+    text-decoration: none;
+    transition: all .3s ease-out;
+    font-size: 1.5em;
+  }
+
+    .rectangle-list a:hover{
+        background: #eee;
+    }
+
+    .rectangle-list a:before{
+        content: counter(li);
+        counter-increment: li;
+        position: absolute;
+        left: -2.5em;
+        top: 50%;
+        margin-top: -1em;
+        background: #dc3545;
+        color: white;
+        height: 2em;
+        width: 2em;
+        line-height: 2em;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .delivered a:before {
+        background: #2dce89;
+    }
+    .rectangle-list a:after{
+        position: absolute;
+        content: '';
+        border: .5em solid transparent;
+        left: -1em;
+        top: 50%;
+        margin-top: -.5em;
+        transition: all .3s ease-out;
+    }
+
+    .rectangle-list a:hover:after{
+        left: -.5em;
+        border-left-color: #2dce89;
+    }
+
+    .delivered a:hover:after{
+        left: -.5em;
+        border-left-color: #fa8072;
+    }
+
+    .products-interior {
+        font-size: 1.2em;
+    }
+
+    @media screen and (max-width: 1170px) {
+        .orders-container {
+            flex-direction: column;
+            align-items: center;
+        }
+        .lists {
+            min-width: 400px;
+        }
+    }
+</style>

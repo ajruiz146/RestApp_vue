@@ -4,7 +4,7 @@
   <div class="card-header bg-transparent">
     <h3 class="mb-0">Orders</h3>
     <div class="create-button">
-        <i data-toggle="modal" data-target="#ordersCreate" class="ni ni-fat-add"></i>
+        <i data-toggle="modal" data-target="#ordersCreate" class="ni ni-fat-add reset-form"></i>
     </div>
     <div class="filters">
       <select @change="onChangeOrder($event)" class="form-select form-select-sm" name="" id="">
@@ -42,7 +42,7 @@
               <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
               <div id="myDropdown" class="dropdown-content">
                 <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
-                <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)" class="reset-form"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket reset-form"></i></a>
               </div>
             </div>
           </td>
@@ -129,7 +129,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="updateOrder()" type="button" id="update-order-save" class="btn btn-primary">Update Order</button>
+            <button @click="updateOrder()" type="button" id="update-order-save" class="btn btn-primary save-button">Update Order</button>
         </div>
       </div>
     </div>
@@ -187,7 +187,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="createOrder()" id="createOrderSave" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="createOrder()" id="createOrderSave" type="button" class="btn btn-primary save-button">Save changes</button>
         </div>
       </div>
     </div>
@@ -210,7 +210,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="deleteOrder()" id="delete-orders-save" type="button" class="btn btn-primary">Delete Order</button>
+            <button @click="deleteOrder()" id="delete-orders-save" type="button" class="btn btn-primary save-button">Delete Order</button>
         </div>
       </div>
     </div>

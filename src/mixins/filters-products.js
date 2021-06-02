@@ -48,7 +48,6 @@ export default {
             this.getProducts();
         },
         principals() {
-            console.log("entra")
             this.fieldWhere = 'category'
             this.value = 'Platos'
             this.getProducts();

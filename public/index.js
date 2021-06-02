@@ -1,29 +1,21 @@
-//Orders
-$("#createOrderSave").on( "click", function() {
-    $("#ordersCreate").modal('hide');
-    $('#form-create-orders').trigger("reset");
+$(".save-button").on( "click", function() {
+    console.log("Entra")
+    $(".modal").modal('hide');
 });
 
-$("#update-order-save").on( "click", function() {
-    $("#orderUpdate").modal('hide');
-    $('#form-update-orders').trigger("reset");
+$(".reset-form").on( "click", function() {
+    $("form").trigger("reset");
 });
 
-$("#delete-orders-save").on( "click", function() {
-    $("#ordersDelete").modal('hide');
-});
-//Users
-$("#delete-user-save").on( "click", function() {
-    $("#userDelete").modal('hide');
-});
-
-$("#create-user-save").on( "click", function() {
-    $("#userCreate").modal('hide');
-    $('#form-user-create').trigger("reset");
-});
-
-$("#update-user-save").on( "click", function() {
-    $("#userEdit").modal('hide');
-    $('#form-user-create').trigger("reset");
-});
-//Products
+window.onclick = function(event){
+    if(!event.target.matches('.drop-button')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0;  i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')){
+                openDropdown.classList.remove('show');
+            }
+        }
+    }
+}

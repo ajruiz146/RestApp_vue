@@ -2,9 +2,9 @@
 
 <div class="card shadow">
   <div class="card-header bg-transparent">
-    <h3 class="mb-0">Orders</h3>
+    <h3 class="mb-0">Users</h3>
     <div class="create-button">
-        <i class="ni ni-fat-add" data-toggle="modal" data-target="#userCreate"></i>
+        <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#userCreate"></i>
     </div>
     <div class="filters">
 
@@ -40,7 +40,7 @@
             <div class="dropdown">
               <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
               <div id="myDropdown" class="dropdown-content">
-                <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil"></i></a>
+                <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="reset-form"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil reset-form"></i></a>
                 <a href="javascript:void(0)" data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)"><i data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
               </div>
             </div>
@@ -52,10 +52,10 @@
       class="card-footer d-flex justify-content-end"
       :class="type === 'dark' ? 'bg-transparent' : ''"
     >
-    <div class="pagination">
-      <div class="pagination justify-content-center mt-5">
-        <nav aria-label="...">
-        <ul class="pagination">
+      <div class="pagination">
+        <div class="pagination justify-content-center mt-5">
+          <nav aria-label="...">
+          <ul class="pagination">
             <li class="page-item">
                 <a class="page-link" @click="pageDown()">&lt;</a>
             </li>
@@ -63,15 +63,15 @@
             v-for="index in totalPages" :key="index"
             :class="index == page ? 'page-item active' : 'page-item'"
             >
-                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+              <a class="page-link" @click="searchPage(index)">{{ index }}</a>
             </li>
             <li class="page-item">
                 <a class="page-link" @click="pageUp()">&gt;</a>
             </li>
-        </ul>
-        </nav>
+          </ul>
+          </nav>
+        </div>
       </div>
-    </div>
     </div>
   </div>
   <!-- Modals -->
@@ -109,7 +109,7 @@
               </div>
               <div class="form-group">
                   <label for="modal-price">Role</label>
-                  <select id="edit-user-role">
+                  <select id="edit-user-role" class="form-select">
                     <option value="client">Client</option>
                     <option value="waiter">Waiter</option>
                     <option value="bar">Bar</option>
@@ -120,7 +120,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="updateUser()" id="update-user-save" type="button" class="btn btn-primary">Save changes</button>
+            <button @click="updateUser()" id="update-user-save" type="button" class="btn btn-primary save-button">Save changes</button>
         </div>
       </div>
     </div>
@@ -160,7 +160,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="createUser()" type="button" id="create-user-save" class="btn btn-primary">Save user</button>
+            <button @click="createUser()" type="button" id="create-user-save" class="btn btn-primary save-button">Save user</button>
         </div>
       </div>
     </div>
@@ -183,7 +183,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button @click="deleteUser()" id="delete-user-save" type="button" class="btn btn-primary">Delete User</button>
+            <button @click="deleteUser()" id="delete-user-save" type="button" class="btn btn-primary save-button">Delete User</button>
         </div>
       </div>
     </div>
@@ -325,21 +325,21 @@ th {
   margin: 0 auto;
 }
 
-  .ni-fat-add {
-    vertical-align: middle;
-    margin-bottom: 3px;
-  }
-  
-  .ni-bold-down {
-    cursor: pointer;
-  }
-  
-  select {
-      margin: 0 3px;
-  }
-  .filters {
-      display: flex;
-  }  
+.ni-fat-add {
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+.ni-bold-down {
+  cursor: pointer;
+}
+
+select {
+    margin: 0 3px;
+}
+.filters {
+    display: flex;
+}  
 
 
   /*Botón*/

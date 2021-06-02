@@ -261,6 +261,11 @@ export default {
   mounted() {
     this.getStaff();
   },
+  beforeMount() {
+    if(!localStorage.token) {
+      this.$router.push("/login")
+    }
+  }
 };
 </script>
 

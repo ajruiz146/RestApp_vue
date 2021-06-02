@@ -357,6 +357,11 @@ export default {
     this.getProducts();
     this.getCategories();
   },
+  beforeMount() {
+    if(!localStorage.token) {
+      this.$router.push("/login")
+    }
+  }
 };
 </script>
 

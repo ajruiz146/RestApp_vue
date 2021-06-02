@@ -301,6 +301,11 @@ export default {
   mounted() {
     this.getUsers()
   },
+  beforeMount() {
+    if(!localStorage.token) {
+      this.$router.push("/login")
+    }
+  }
 };
 </script>
 

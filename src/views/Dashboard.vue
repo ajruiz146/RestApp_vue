@@ -250,6 +250,11 @@ export default {
       this.bigLineChart.activeIndex = index;
     },
   },
+  beforeMount() {
+    if(!localStorage.token) {
+      this.$router.push("/login")
+    }
+  },
   mounted() {
     chart = new Chart(
       document.getElementById(this.salesChartID).getContext("2d"),

@@ -50,25 +50,11 @@
           }"
         />
         
-        <sidebar-item
-          :link="{
-            name: 'Login',
-            icon: 'ni ni-key-25 text-info',
-            path: '/login',
-          }"
-        />
-        <sidebar-item
-          :link="{
-            name: 'Register',
-            icon: 'ni ni-circle-08 text-pink',
-            path: '/register',
-          }"
-        />
         <br>
         <a href="#/kitchen" target="_blank">Kitchen</a>
         <a href="#/bar" target="_blank">Bar</a>
         <br>  
-        
+        <a @click="logout()" href="javascript:void(0)" target="">Logout</a>
       </template>
     </side-bar>
     <div class="main-content" :data="sidebarBackground">
@@ -102,6 +88,10 @@ export default {
         this.$sidebar.displaySidebar(false);
       }
     },
+    logout: function() {
+      this.$router.push("/login")
+      localStorage.removeItem('token');
+    }
   },
 };
 </script>

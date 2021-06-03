@@ -114,7 +114,7 @@
         </div>
 
         <div class="col-xl-4">
-          <card header-classes="bg-transparent">
+          <card header-classes="bg-transparent" style="padding-bottom: 30px;">
             <template v-slot:header>
               <div class="row align-items-center">
                 <div class="col">

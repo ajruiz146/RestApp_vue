@@ -54,18 +54,6 @@
               <i class="ni ni-single-02"></i>
               <span>My profile</span>
             </router-link>
-            <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-settings-gear-65"></i>
-              <span>Settings</span>
-            </router-link>
-            <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-calendar-grid-58"></i>
-              <span>Activity</span>
-            </router-link>
-            <router-link to="/profile" class="dropdown-item">
-              <i class="ni ni-support-16"></i>
-              <span>Support</span>
-            </router-link>
             <div class="dropdown-divider"></div>
             <a href="#!" class="dropdown-item">
               <i class="ni ni-user-run"></i>
@@ -100,6 +88,19 @@
         </ul>
         <!--Divider-->
         <hr class="my-3" />
+        <div class="special-links">
+          <li class="nav-item">
+            <a href="#/kitchen" class="nav-link" target="_blank">Kitchen</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#/bar" class="nav-link" target="_blank">Bar</a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#/qr" class="nav-link" target="_blank">QR Codes</a>
+          </li>
+        </div>
       </div>
     </div>
   </nav>
@@ -145,3 +146,37 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .special-links {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .special-links .nav-item a {
+    background: #741922;
+    border-radius: calc(0.375rem - 1px);
+    margin: 0;
+    padding: .3em;
+    margin: 5px 0;
+    color: white;
+    text-align: center;
+    font-size: .9em !important;
+  }
+
+  .special-links .nav-item a:hover {
+    background: #551319 !important;
+  }
+
+  .special-links .nav-item a:after {
+    content: "";
+    width: 15px;
+    height: 15px;
+    position: relative;
+    left: 10px;
+    top: 1.5px;
+    display: inline-block;
+    background-image: url(../../../public/img/icons/foreign_white.svg);
+  }
+</style>

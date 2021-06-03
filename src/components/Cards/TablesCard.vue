@@ -18,75 +18,9 @@
         <div class="row tables">
           <!-- Inicio Card -->
           <!-- Esta es la carta de Staff por si quieres reutilizar partes, Te he traido abajo también el css -->
-          <div class="card need-waiter" style="width: 18rem">
+          <div :class="table.need_waiter ?  'card need-waiter' : 'card'" style="width: 18rem" v-for="table in tables" :key="table._id">
             <div class="card-body">
-              <h2 class="card-title">12</h2>
-            </div>
-          </div>
-
-          <div class="card need-waiter" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">3</h2>
-            </div>
-          </div>
-
-          <div class="card need-waiter" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">7</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">1</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">2</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">3</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">8</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">6</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">9</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">4</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">5</h2>
-            </div>
-          </div>
-
-          <div class="card" style="width: 18rem">
-            <div class="card-body">
-              <h2 class="card-title">6</h2>
+              <h2 class="card-title">{{ table.table_number }}</h2>
             </div>
           </div>
           <!-- Fin Card -->
@@ -103,13 +37,21 @@ import axios from "axios";
 export default {
   data() {
     return {
-      data: []
+      tables: []
     };
   },
-  mounted() {
+  methods: {
+    getTables: function() {
     axios
-      .get('https://jsonplaceholder.typicode.com/todos')
-      .then(response => (this.data = response))
+      .get(process.env.VUE_APP_API + "table")
+      .then((response) => {
+        console.log(response)
+        this.tables = response.data
+      })
+    }
+  },
+  mounted() {
+    this.getTables()
   },
 };
 </script>
@@ -163,7 +105,7 @@ select {
     margin: 0.7em 0.7em;
     padding: 0;
     box-shadow: 1px 1px 4px rgb(128 128 128 / 29%);
-    flex: 0 0 200px;
+    flex: 1 0 289px;
 }
 
 .tables .need-waiter {
@@ -175,12 +117,15 @@ select {
   z-index: 100;
   background: url("../../../public/img/theme/table_texture.jpg") no-repeat center center;
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tables .card-title {
-  font-size: 150px;
+  font-size: 100px;
   text-align: center;
-  color: #741922;
+  color: #172b4d;
   text-shadow: 1px 1px 1px #0000005c;
 }
 

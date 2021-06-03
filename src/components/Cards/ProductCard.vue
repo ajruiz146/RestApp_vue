@@ -22,14 +22,24 @@
     </div>
     <div class="card-body">
       <div class="wrapper wrapper-products" v-if="data">
-        <div class="card" v-for="item in data" :key="item.id">
-          <div class="title">{{ item.name }}</div>
-          <div class="icon">
-            <img class="product-image" v-bind:src="item.image_url" alt=""/>
-          </div>
-          <div class="buttons">
-            <a @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category)" id="editButton" data-toggle="modal" data-target="#productEdit" href="#" class="btn reset-form">Edit</a>
-            <a @click="deleteModal(item.id, item.name)" href="javascript:void(0)" class="btn" data-toggle="modal" data-target="#productDelete">Delete</a>
+        <div class="row staff">
+          <div class="card" style="width: 18rem" v-for="item in data" :key="item._id">
+            <div class="card-img-top" />
+            <div class="profile-thumb-block">
+              <img v-bind:src="item.image_url" alt="profile-image" class="profile"/>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <div class="flex-price-cat">
+                <p class="card-text">{{ item.price }} $</p>
+                <p class="card-text">{{ item.category}}</p>
+              </div>
+              <p class="card-text">{{ item.description }}</p>
+              <div class="cards-buttons">
+                <a href="javascript:void(0)" @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category)" id="editButton" data-toggle="modal" data-target="#productEdit"><img src="img/icons/icon_edit_red.svg" alt="icon-edit"></a>
+                <a href="javascript:void(0)" @click="deleteModal(item.id, item.name)" data-toggle="modal" data-target="#productDelete"><img src="img/icons/icon_trash_red.svg" alt="icon-delete"></a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -332,10 +342,17 @@ export default {
     this.getProducts();
     this.getCategories();
   },
-  beforeMount() {
-    if(!localStorage.token) {
-      this.$router.push("/login")
-    }
+  beforeCreate() {
+    axios
+    .post(process.env.VUE_APP_API + "user/myUser",{}, {
+      headers: {
+      "x-access-token": localStorage.token
+    }}).then((response) => {
+      console.log(response)
+      if(response.data.role != "client") {
+        this.$router.push("/login")
+      }
+    }) 
   }
 };
 </script>
@@ -374,6 +391,7 @@ select {
 *, *:before, *:after {
   box-sizing: border-box;
 }
+/*
 
 body {
   background: #383A3F;
@@ -469,5 +487,105 @@ body {
       width: calc(100% - 40px);
     }
   }
+*/
+.staff .card-img-top {
+  height: 110px;
+  width: 100%;
+  overflow: hidden;
+  background-color: #172b4d !important;
+}
 
+.staff .card {
+  overflow: hidden;
+    height: 380px;
+    margin: 0.7em 0.7em;
+    padding: 0;
+    box-shadow: 1px 1px 4px rgb(128 128 128 / 29%);
+    flex: 1 0 300px;
+    max-width: 366px;
+}
+
+.staff .card-body {
+  position: relative;
+  z-index: 100;
+}
+
+.staff .card-body::before {
+  content: "";
+  display: block;
+  width: 114%;
+  height: 25%;
+  position: absolute;
+  top: -23px;
+  left: 2px;
+  transform: rotate(-7deg);
+  background: white;
+  z-index: -1;
+}
+
+.staff .profile {
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  max-width: 100px;
+  height: 100px;
+  opacity: 1;
+  object-fit: cover;
+  box-shadow: 3px 3px 20px rgb(0 0 0 / 50%);
+  border: 2px solid rgba(255, 255, 255, 1);
+  -webkit-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+  z-index: 101;
+}
+
+.staff .card-title {
+  font-size: 25px;
+  padding-top: 22px;
+  text-align: center;
+}
+
+.staff .card-text {
+  text-align: center;
+}
+
+.staff .cards-buttons {
+  position: absolute;
+  bottom: 23px;
+  left: 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.staff .cards-buttons .edit {
+  background-color:#898989;
+}
+
+.staff .cards-buttons .delete {
+  background-color:#898989;
+}
+
+.staff .cards-buttons a img {
+  width: 30px;
+  height: 30px;
+}
+
+.staff .text-black {
+  color: black;
+  font-size: 24px;
+}
+
+.staff .flex-price-cat {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+@media screen and (max-width: 710px) {
+  .staff .card {
+    min-width: none;
+    max-width: none;
+    width: 100%;
+  }
+}
 </style>

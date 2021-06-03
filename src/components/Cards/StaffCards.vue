@@ -34,8 +34,8 @@
               <p class="card-text">{{ item.email }}</p>
               <p class="card-text">{{ item.role}}</p>
               <div class="cards-buttons">
-                <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#staffUpdate" class="reset-form"><img src="img/icons/icon_edit.svg" alt="icon-edit"></a>
-                <a href="javascript:void(0)" @click="updateModalDelete(item._id, item.name, item.role)" data-toggle="modal" data-target="#staffDelete"><img @click="updateModalDelete(item._id, item.name)" data-toggle="modal" data-target="#staffDelete" src="img/icons/icon_trash.svg" alt="icon-delete"></a>
+                <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#staffUpdate" class="reset-form"><img src="img/icons/icon_edit_red.svg" alt="icon-edit"></a>
+                <a href="javascript:void(0)" @click="updateModalDelete(item._id, item.name, item.role)" data-toggle="modal" data-target="#staffDelete"><img @click="updateModalDelete(item._id, item.name)" data-toggle="modal" data-target="#staffDelete" src="img/icons/icon_trash_red.svg" alt="icon-delete"></a>
               </div>
             </div>
           </div>
@@ -334,7 +334,7 @@ select {
   height: 110px;
   width: 100%;
   overflow: hidden;
-  background-color: #19746b;
+  background-color: #172b4d !important;
 }
 
 .staff .card {

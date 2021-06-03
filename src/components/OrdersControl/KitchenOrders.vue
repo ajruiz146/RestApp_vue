@@ -8,7 +8,7 @@
                         <li class="list-li" v-for="item in pendings" :key="item.id">
                             <a href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
-                                    <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                    <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
                             </a>
                         </li>
@@ -20,7 +20,7 @@
                         <li class="list-li" v-for="item in delivereds" :key="item.id">
                             <a href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
-                                    <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                    <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
                             </a>
                         </li>

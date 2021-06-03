@@ -31,10 +31,11 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">{{ item.name }}</h5>
+              <p class="card-text">{{ item.email }}</p>
               <p class="card-text">{{ item.role}}</p>
               <div class="cards-buttons">
                 <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#staffUpdate" class="reset-form"><img src="img/icons/icon_edit.svg" alt="icon-edit"></a>
-                <a href="javascript:void(0)"><img src="img/icons/icon_trash.svg" alt="icon-delete"></a>
+                <a href="javascript:void(0)" @click="updateModalDelete(item._id, item.name, item.role)" data-toggle="modal" data-target="#staffDelete"><img @click="updateModalDelete(item._id, item.name)" data-toggle="modal" data-target="#staffDelete" src="img/icons/icon_trash.svg" alt="icon-delete"></a>
               </div>
             </div>
           </div>
@@ -155,6 +156,29 @@
         </div>
       </div>
     </div>
+    <!-- Delete -->
+    <div class="modal fade" id="staffDelete" tabindex="-1" role="dialog" aria-labelledby="staffDeleteTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Delete staff</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <input type="hidden" class="form-control" id="delete-staff-id">
+            </div>
+            <h4 id="delete-staff-text"></h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button @click="deleteStaff()" id="delete-user-save" type="button" class="btn btn-primary save-button">Delete User</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -233,12 +257,24 @@ export default {
         this.getStaff()
       })
     },
+    deleteStaff:function() {
+      let id = $("#delete-staff-id").val()
+      axios
+      .delete(process.env.VUE_APP_API + 'user/' + id)
+      .then(() => {
+        this.getStaff()
+      })
+    },
     updateModal: function(id, name, lastName, email, role) {
       $("#update-staff-id").val(id)
       $("#update-staff-name").val(name)
       $("#update-staff-lastName").val(lastName)
       $("#update-staff-email").val(email)
       $("#update-staff-role").val(role)
+    },
+    updateModalDelete: function(id, name, role){
+      $("#delete-staff-id").val(id)
+      $("#delete-staff-text").text("Are you sure to delete " + name + " with role " + role + "?")
     }
   },
   mixins: [paginate, filters],

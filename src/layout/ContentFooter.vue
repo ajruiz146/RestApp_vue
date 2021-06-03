@@ -5,10 +5,9 @@
         <div class="copyright text-center text-lg-left text-muted">
           © {{ year }}
           <a
-            href="https://www.creative-tim.com"
+            href="javascript:void(0)"
             class="font-weight-bold ml-1"
-            target="_blank"
-            >Creative Tim</a
+            >RestApp</a
           >
         </div>
       </div>
@@ -18,33 +17,29 @@
         >
           <li class="nav-item">
             <a
-              href="https://www.creative-tim.com"
+              href="javascript:void(0)"
               class="nav-link"
-              target="_blank"
-              >Creative Tim</a
+              >RestApp</a
             >
           </li>
           <li class="nav-item">
             <a
-              href="https://www.creative-tim.com/presentation"
+              href="javascript:void(0)"
               class="nav-link"
-              target="_blank"
               >About Us</a
             >
           </li>
           <li class="nav-item">
             <a
-              href="https://www.creative-tim.com/blog"
+              href="javascript:void(0)"
               class="nav-link"
-              target="_blank"
               >Blog</a
             >
           </li>
           <li class="nav-item">
             <a
-              href="https://www.creative-tim.com/license"
+              href="javascript:void(0)"
               class="nav-link"
-              target="_blank"
               >License</a
             >
           </li>

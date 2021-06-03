@@ -23,4 +23,13 @@ window.onclick = function(event){
 if($(".hide-left-sidebar").length) {
     $("#sidenav-main").css("display", "none")
     $(".main-content").css("margin-left", "0")
+    $('.navbar-collapse').attr('style', 'display: none !important');
+}
+
+if($(".router-link-exact-active").text() == "kitchen") {
+    $(".router-link-exact-active").text("RestApp")
+}
+
+if($(".router-link-exact-active").text() == "bar") {
+    $(".router-link-exact-active").text("RestApp")
 }

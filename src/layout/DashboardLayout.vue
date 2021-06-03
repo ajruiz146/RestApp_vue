@@ -53,6 +53,7 @@
         <br>
         <a href="#/kitchen" target="_blank">Kitchen</a>
         <a href="#/bar" target="_blank">Bar</a>
+        <a href="#/qr" target="_blank">Generate QR</a>
         <br>  
         <a @click="logout()" href="javascript:void(0)" target="">Logout</a>
       </template>

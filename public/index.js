@@ -33,3 +33,18 @@ if($(".router-link-exact-active").text() == "kitchen") {
 if($(".router-link-exact-active").text() == "bar") {
     $(".router-link-exact-active").text("RestApp")
 }
+
+if($(".router-link-exact-active").text() == "qr") {
+    $(".router-link-exact-active").text("RestApp")
+}
+
+$('#printPdf').click(function(){
+    $(".bg-gradient-success").css("display", "none")
+    $(".footer").css("display", "none")
+    window.print();
+
+    $(".bg-gradient-success").css("display", "block")
+    $(".footer").css("display", "block")
+    return false;
+});
+

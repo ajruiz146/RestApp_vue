@@ -11,6 +11,7 @@ import Tables from "../views/Tables.vue";
 import Users from "../views/Users.vue";
 import Kitchen from "../views/Kitchen.vue";
 import Bar from "../views/Bar.vue";
+import Qr from "../views/Qr.vue";
 
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
@@ -60,6 +61,11 @@ const routes = [
         path: "/bar",
         name: "bar",
         components: { default: Bar },
+      },
+      {
+        path: "/qr",
+        name: "qr",
+        components: { default: Qr },
       },
     ],
   },

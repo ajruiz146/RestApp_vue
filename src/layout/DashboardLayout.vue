@@ -10,7 +10,7 @@
           :link="{
             name: 'Dashboard',
             icon: 'ni ni-tv-2 text-primary',
-            src: '../../../img/brand/single.png',
+            src: '../../../img/icons/icon_dashboard.svg',
             path: '/dashboard',
           }"
         />
@@ -19,7 +19,7 @@
           :link="{
             name: 'Products',
             icon: 'ni ni-basket text-orange',
-            src: '../../../img/brand/single.png',
+            src: '../../../img/icons/icon_products.svg',
             path: '/products',
           }"
         />
@@ -27,7 +27,7 @@
           :link="{
             name: 'Staff',
             icon: 'ni ni-pin-3 text-orange',
-            src: '../../../img/brand/single.png',
+            src: '../../../img/icons/icon_staff.svg',
             path: '/staff',
           }"
         />
@@ -35,7 +35,7 @@
           :link="{
             name: 'Orders',
             icon: 'ni ni-single-02 text-yellow',
-            src: '../../../img/brand/single.png',
+            src: '../../../img/icons/icon_orders.svg',
             path: '/orders',
           }"
         />
@@ -43,7 +43,7 @@
           :link="{
             name: 'Tables',
             icon: 'ni ni-bullet-list-67 text-red',
-            src: '../../../img/brand/single.png',
+            src: '../../../img/icons/icon_tables.svg',
             path: '/tables',
           }"
         />
@@ -51,7 +51,7 @@
           :link="{
             name: 'Users',
             icon: 'ni ni-bullet-list-67 text-red',
-            src: '../../../img/brand/single.png',
+            src: '../../../img/icons/icon_users.svg',
             path: '/users',
           }"
         />

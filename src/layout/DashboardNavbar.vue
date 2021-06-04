@@ -26,7 +26,8 @@
               <span class="avatar avatar-sm rounded-circle">
                 <img
                   alt="Image placeholder"
-                  src="img/default.png"
+                  src="img/logo_white.png"
+                  class="nav-top-svg"
                 />
               </span>
               <div class="media-body ml-2 d-none d-lg-block">
@@ -77,3 +78,18 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.nav-top-svg {
+  background-color: #741922;
+  border-color: white;
+}
+
+.avatar {
+  background-color: #741922;
+}
+
+.media-body {
+  cursor: pointer;
+}
+</style>

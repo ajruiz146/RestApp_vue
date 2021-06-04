@@ -34,10 +34,22 @@ export default {
     }
     .header-text-container {
         position: relative;
-        top: -50px;
+        top: -65px;
     }
     .header-text-container h1{
         text-align: center;
         color: white !important;
+        font-size: 2.2em;
+    }
+
+    @media screen and (max-width: 768px) {
+      .header-text-container {
+        top: -30px;
+      }
+      .header-text-container h1{
+        text-align: center;
+        color: white !important;
+        font-size: 1.7em;
+      }
     }
 </style>

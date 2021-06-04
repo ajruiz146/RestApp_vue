@@ -40,4 +40,15 @@ export default {
         text-align: center;
         color: white !important;
     }
+
+    @media screen and (max-width: 768px) {
+      .header-text-container {
+        top: -30px;
+      }
+      .header-text-container h1{
+        text-align: center;
+        color: white !important;
+        font-size: 1.7em;
+      }
+    }
 </style>

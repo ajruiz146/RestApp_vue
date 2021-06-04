@@ -100,17 +100,16 @@ export default {
         clearInterval(this.timer);
     }
   },
-    created () {
-        
-    },
     mounted() {
         this.getPending();
-        this.timer = setInterval(this.getPending, 5000);
+        //this.timer = setInterval(this.getPending, 5000);
         this.getDelivered();
     },
+    /*
     beforeUnmount () {
       this.cancelAutoUpdate();
     },
+    */
     beforeMount() {
       /*
     if(!localStorage.token) {

@@ -343,6 +343,7 @@ export default {
     this.getCategories();
   },
   beforeCreate() {
+    /*
     axios
     .post(process.env.VUE_APP_API + "user/myUser",{}, {
       headers: {
@@ -352,7 +353,8 @@ export default {
       if(response.data.role != "client") {
         this.$router.push("/login")
       }
-    }) 
+    })
+    */
   }
 };
 </script>

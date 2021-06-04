@@ -4,10 +4,10 @@
       <div class="row">
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Total traffic"
+            title="Total incomes"
             type="gradient-red"
-            sub-title="350,897"
-            icon="ni ni-active-40"
+            :sub-title="totalIncomes + ' $'"
+            icon="ni ni-money-coins"
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
@@ -20,10 +20,10 @@
         </div>
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Total traffic"
-            type="gradient-orange"
-            sub-title="2,356"
-            icon="ni ni-chart-pie-35"
+            title="Total orders"
+            type="gradient-yellow"
+            :sub-title="totalOrders + ' orders'"
+            icon="ni ni-chart-bar-32"
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
@@ -36,10 +36,10 @@
         </div>
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Sales"
-            type="gradient-green"
-            sub-title="924"
-            icon="ni ni-money-coins"
+            title="total users"
+            type="gradient-purple"
+            :sub-title="totalUsers + ' users'"
+            icon="ni ni-single-02"
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
@@ -52,10 +52,10 @@
         </div>
         <div class="col-xl-3 col-lg-6">
           <stats-card
-            title="Performance"
+            title="total staff"
             type="gradient-info"
-            sub-title="49,65%"
-            icon="ni ni-chart-bar-32"
+            :sub-title="totalStaff +' members'"
+            icon="fa fa-users"
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
@@ -77,7 +77,7 @@
               <div class="row align-items-center">
                 <div class="col">
                   <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                  <h5 class="h3 text-white mb-0">Sales value</h5>
+                  <h5 class="h3 text-white mb-0">Last Months Incomes</h5>
                 </div>
                 <div class="col">
                   <ul class="nav nav-pills justify-content-end">
@@ -88,20 +88,11 @@
                         :class="{ active: bigLineChart.activeIndex === 0 }"
                         @click.prevent="initBigChart(0)"
                       >
-                        <span class="d-none d-md-block">Month</span>
+                        <span class="d-none d-md-block">Refresh</span>
                         <span class="d-md-none">M</span>
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a
-                        class="nav-link py-2 px-3"
-                        href="#"
-                        :class="{ active: bigLineChart.activeIndex === 1 }"
-                        @click.prevent="initBigChart(1)"
-                      >
-                        <span class="d-none d-md-block">Week</span>
-                        <span class="d-md-none">W</span>
-                      </a>
                     </li>
                   </ul>
                 </div>
@@ -121,7 +112,7 @@
                   <h6 class="text-uppercase text-muted ls-1 mb-1">
                     Performance
                   </h6>
-                  <h5 class="h3 mb-0">Total orders</h5>
+                  <h5 class="h3 mb-0">Total orders in lasts months</h5>
                 </div>
               </div>
             </template>
@@ -150,6 +141,7 @@
 // Charts
 import { ordersChart } from "@/components/Charts/Chart";
 import Chart from "chart.js";
+import axios from "axios";
 
 import PageVisitsTable from "./Dashboard/PageVisitsTable";
 import SocialTrafficTable from "./Dashboard/SocialTrafficTable";
@@ -166,13 +158,17 @@ export default {
       info: null,
       salesChartID: "salesChart",
       ordersChartID: "ordersChart",
+      lastMonthsIncomes: 100,
       bigLineChart: {
         allData: [
-          [0, 20, 10, 30, 15, 40, 20, 60, 60],
-          [0, 20, 5, 25, 10, 30, 15, 40, 40],
+          [10, 20, 10, 30, 15],
         ],
         activeIndex: 0,
       },
+      totalIncomes: null,
+      totalOrders: null,
+      totalStaff: null,
+      totalUsers: null,
     };
   },
   methods: {
@@ -183,10 +179,10 @@ export default {
         {
           type: "line",
           data: {
-            labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            labels: [this.lastMonthsIncomes[0]._id, this.lastMonthsIncomes[1]._id, this.lastMonthsIncomes[1]._id, "Aug", "Sep"],
             datasets: [
               {
-                label: "Performance",
+                label: "Incomes",
                 tension: 0.4,
                 borderWidth: 4,
                 borderColor: "#5e72e4",
@@ -248,14 +244,39 @@ export default {
         }
       );
       this.bigLineChart.activeIndex = index;
+      
+    },
+    getStatistics: function() {
+      axios
+      .get(process.env.VUE_APP_API + "statistics")
+      .then((response) => {
+        console.log(response)
+        this.totalIncomes = response.data.totalIncomes
+        this.totalOrders = response.data.totalOrders
+        this.totalStaff = response.data.totalStaff
+        this.totalUsers = response.data.totalUsers
+        this.lastMonthsIncomes = response.data.lastMonthsIncomes
+        this.lastMonthsOrders = response.data.lastMonthsOrders
+        
+        this.initBigChart(0)
+        this.bigLineChart.allData = [
+          [this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[1].total, this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[0].total],
+        ]
+        this.initBigChart(0)
+      })
+      
     },
   },
   beforeMount() {
+    /*
     if(!localStorage.token) {
       this.$router.push("/login")
     }
+    */
+   this.getStatistics();
   },
   mounted() {
+    //this.getStatistics();
     chart = new Chart(
       document.getElementById(this.salesChartID).getContext("2d"),
       {

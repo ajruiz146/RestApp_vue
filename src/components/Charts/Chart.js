@@ -1,4 +1,5 @@
 import Chart from "chart.js";
+import axios from "axios";
 
 export const ordersChart = {
   createChart(chartId) {
@@ -9,79 +10,88 @@ export const ordersChart = {
     const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
     gradientStroke.addColorStop(0, color);
     gradientStroke.addColorStop(1, chartColor);
-
-    new Chart(ctx, {
-      type: "bar",
-      data: {
-        labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [
-          {
-            label: "Sales",
-            tension: 0.4,
-            borderWidth: 0,
-            pointRadius: 0,
-            backgroundColor: "#fb6340",
-            data: [25, 20, 30, 22, 17, 29],
-            maxBarThickness: 10,
+    var lastMonthsOrders = null;
+    axios
+      .get(process.env.VUE_APP_API + "statistics")
+      .then((response) => {
+        console.log(response);
+        
+        lastMonthsOrders = response.data.lastMonthsOrders;
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: [lastMonthsOrders[0]._id, lastMonthsOrders[0]._id, lastMonthsOrders[0]._id, lastMonthsOrders[0]._id, lastMonthsOrders[0]._id],
+            datasets: [
+              {
+                label: "Sales",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 0,
+                backgroundColor: "#fb6340",
+                data: [lastMonthsOrders[0].count, lastMonthsOrders[0].count, lastMonthsOrders[0].count, lastMonthsOrders[0].count, lastMonthsOrders[1].count, lastMonthsOrders[0].count],
+                maxBarThickness: 10,
+              },
+            ],
           },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: false,
-        },
-        tooltips: {
-          enabled: true,
-          mode: "index",
-          intersect: false,
-        },
-        scales: {
-          yAxes: [
-            {
-              gridLines: {
-                borderDash: [2],
-                borderDashOffset: [2],
-                drawBorder: false,
-                drawTicks: false,
-                lineWidth: 0,
-                zeroLineWidth: 0,
-                zeroLineBorderDash: [2],
-                zeroLineBorderDashOffset: [2],
-              },
-              ticks: {
-                beginAtZero: true,
-                padding: 10,
-                fontSize: 13,
-                fontColor: "#8898aa",
-                fontFamily: "Open Sans",
-                callback: function (value) {
-                  if (!(value % 10)) {
-                    return value;
-                  }
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+              display: false,
+            },
+            tooltips: {
+              enabled: true,
+              mode: "index",
+              intersect: false,
+            },
+            scales: {
+              yAxes: [
+                {
+                  gridLines: {
+                    borderDash: [2],
+                    borderDashOffset: [2],
+                    drawBorder: false,
+                    drawTicks: false,
+                    lineWidth: 0,
+                    zeroLineWidth: 0,
+                    zeroLineBorderDash: [2],
+                    zeroLineBorderDashOffset: [2],
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    padding: 10,
+                    fontSize: 13,
+                    fontColor: "#8898aa",
+                    fontFamily: "Open Sans",
+                    callback: function (value) {
+                      if (!(value % 10)) {
+                        return value;
+                      }
+                    },
+                  },
                 },
-              },
+              ],
+              xAxes: [
+                {
+                  gridLines: {
+                    drawBorder: false,
+                    drawOnChartArea: false,
+                    drawTicks: false,
+                  },
+                  ticks: {
+                    padding: 20,
+                    fontSize: 13,
+                    fontColor: "#8898aa",
+                    fontFamily: "Open Sans",
+                  },
+                },
+              ],
             },
-          ],
-          xAxes: [
-            {
-              gridLines: {
-                drawBorder: false,
-                drawOnChartArea: false,
-                drawTicks: false,
-              },
-              ticks: {
-                padding: 20,
-                fontSize: 13,
-                fontColor: "#8898aa",
-                fontFamily: "Open Sans",
-              },
-            },
-          ],
-        },
-      },
-    });
+          },
+        });
+      })
+
+
   },
 };
 

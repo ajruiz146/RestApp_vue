@@ -287,9 +287,11 @@ export default {
     this.getUsers()
   },
   beforeMount() {
+    /*
     if(!localStorage.token) {
       this.$router.push("/login")
     }
+    */
   }
 };
 </script>

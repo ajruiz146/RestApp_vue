@@ -76,9 +76,11 @@ export default {
     this.getDelivered();
   },
   beforeMount() {
+      /*
     if(!localStorage.token) {
       this.$router.push("/login")
     }
+    */
   }
 };
 </script>

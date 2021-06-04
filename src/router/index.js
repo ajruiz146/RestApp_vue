@@ -17,7 +17,7 @@ import Profile from "../views/Profile.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 
-import axios from "axios";
+//import axios from "axios";
 
 const routes = [
   {
@@ -103,19 +103,21 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if(!localStorage.token) {
-    router.push("/login")
-  }
+  /*
   axios
   .post(process.env.VUE_APP_API + "user/myUser",{}, {
     headers: {
     "x-access-token": localStorage.token
   }}).then((response) => {
     console.log(response)
-    if(response.data.role != "bar") {
+    console.log(response)
+    if(response.data.role != "admin") {
       router.push("/login")
     }
   }) 
+  
+  */
+
   next();
 });
 

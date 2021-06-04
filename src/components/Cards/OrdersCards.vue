@@ -148,7 +148,7 @@
                   <option value="client" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
               </div>
-              <div class="card-body" style="padding:0;">
+              <div class="card-body" style="overflow-x:auto;">
                 <table class="table table-hover">
                   <thead>
                     <tr>
@@ -361,9 +361,11 @@ export default {
     this.getUsers();
   },
   beforeMount() {
+    /*
     if(!localStorage.token) {
       this.$router.push("/login")
     }
+    */
   }
 };
 </script>

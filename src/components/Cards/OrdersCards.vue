@@ -247,6 +247,10 @@ export default {
         user: this.userSelected,
         total: this.total,
         products: this.obtainProducts
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(() => {
         this.getOrders();

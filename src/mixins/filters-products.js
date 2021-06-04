@@ -48,25 +48,25 @@ export default {
         },
         starters() {
             this.fieldWhere = 'category'
-            this.value = 'Entrantes'
+            this.value = 'Starters'
             this.page = 1;
             this.getProducts();
         },
         principals() {
             this.fieldWhere = 'category'
-            this.value = 'Platos'
+            this.value = 'Main course'
             this.page = 1;
             this.getProducts();
         },
         drinks() {
             this.fieldWhere = 'category'
-            this.value = 'Bebidas'
+            this.value = 'Drinks'
             this.page = 1;
             this.getProducts();
         },
         dessert() {
             this.fieldWhere = 'category'
-            this.value = 'Postres'
+            this.value = 'Desserts'
             this.page = 1;
             this.getProducts();
         }

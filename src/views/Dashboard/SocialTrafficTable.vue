@@ -3,39 +3,27 @@
     <div class="card-header border-0">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0">Social traffic</h3>
+          <h3 class="mb-0">Top products</h3>
         </div>
         <div class="col text-right">
-          <base-button size="sm" type="primary">See all</base-button>
+          <base-button size="sm" @click="getTopProducts()" type="primary">Refresh</base-button>
         </div>
       </div>
     </div>
 
     <div class="table-responsive">
-      <base-table thead-classes="thead-light" :data="tableData">
+      <base-table thead-classes="thead-light" :data="topProducts">
         <template v-slot:columns>
           <th>Referral</th>
           <th>Visitors</th>
-          <th></th>
         </template>
 
         <template v-slot:default="row">
           <th scope="row">
-            {{ row.item.name }}
+            {{ row.item._id }}
           </th>
           <td>
-            {{ row.item.visitors }}
-          </td>
-          <td>
-            <div class="d-flex align-items-center">
-              <span class="mr-2">{{ row.item.progress }}%</span>
-              <base-progress
-                :type="row.item.progressType"
-                class="pt-0"
-                :show-percentage="false"
-                :value="row.item.progress"
-              />
-            </div>
+            {{ row.item.count }}
           </td>
         </template>
       </base-table>
@@ -43,10 +31,12 @@
   </div>
 </template>
 <script>
+import axios from "axios"
 export default {
   name: "social-traffic-table",
   data() {
     return {
+      topProducts: null,
       tableData: [
         {
           name: "Facebook",
@@ -81,6 +71,20 @@ export default {
       ],
     };
   },
+  methods: {
+    getTopProducts: function() {
+      axios
+      .get(process.env.VUE_APP_API + "statistics")
+      .then((response) => {
+        console.log(response.data)
+        this.topProducts = response.data.topProducts
+      })
+      
+    },
+  },
+  mounted() {
+    this.getTopProducts();
+  }
 };
 </script>
 <style></style>

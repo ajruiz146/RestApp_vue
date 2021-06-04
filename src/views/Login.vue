@@ -72,7 +72,7 @@ export default {
       .then((response) => {
         this.role = response.data.role
         this.token = response.data.token
-        if(this.role == "client" && this.token != "") {
+        if(this.role == "admin" && this.token != "") {
           this.$router.push('/');
           localStorage.token = this.token
         }

@@ -3,44 +3,42 @@
     <div class="card-header border-0">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="mb-0">where did you meet us from?</h3>
+          <h3 class="mb-0">Where did you meet us from?</h3>
         </div>
         <div class="col text-right">
-          <a href="#!" class="btn btn-sm btn-primary">See all</a>
+          <a @click="getTopAndVisitors()" href="javascript:void(0)" class="btn btn-sm btn-primary">Refresh</a>
         </div>
       </div>
     </div>
 
     <div class="table-responsive">
-      <base-table thead-classes="thead-light" :data="tableData">
+      <base-table thead-classes="thead-light" :data="referrals">
         <template v-slot:columns>
-          <th>Page name</th>
-          <th>Visitors</th>
-          <th>Unique users</th>
-          <th>Bounce rate</th>
+          <th>Media</th>
+          <th>Total</th>
+          <th>Percentage</th>
         </template>
 
         <template v-slot:default="row">
           <th scope="row">
-            {{ row.item.page }}
+            {{ row.item._id }}
           </th>
           <td>
-            {{ row.item.visitors }}
+            {{ row.item.count }}
           </td>
           <td>
-            {{ row.item.unique }}
-          </td>
-          <td>
-            <i
-              class="fas fa-arrow-up text-success mr-3"
-              :class="
-                row.item.bounceRateDirection === 'up'
-                  ? 'text-success'
-                  : 'text-danger'
-              "
-            >
-            </i>
-            {{ row.item.bounceRate }}
+            <div class="d-flex align-items-center">
+              
+              <base-progress
+                id="progress-meet"
+                style="margin-right: 20px"
+                :type="row.item.progressType"
+                class="pt-0"
+                :show-percentage="false"
+                :value="row.item.percentage"
+              />
+              <span class="mr-2">{{ row.item.percentage }}%</span>
+            </div>
           </td>
         </template>
       </base-table>
@@ -48,10 +46,12 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "page-visits-table",
   data() {
     return {
+      referrals: null,
       tableData: [
         {
           page: "/argon/",
@@ -91,6 +91,24 @@ export default {
       ],
     };
   },
+  methods: {
+    getTopAndVisitors: function() {
+      axios
+      .get(process.env.VUE_APP_API + "statistics")
+      .then((response) => {
+        console.log(response.data.referrals)
+        this.referrals = response.data.referrals
+      })
+      
+    },
+  },
+  mounted() {
+    this.getTopAndVisitors();
+  }
 };
 </script>
-<style></style>
+<style>
+.progress .bg-default {
+  background-color: #741922 !important;
+}
+</style>

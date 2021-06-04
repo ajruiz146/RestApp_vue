@@ -36,7 +36,7 @@
               </div>
               <p class="card-text">{{ item.description }}</p>
               <div class="cards-buttons">
-                <a href="javascript:void(0)" @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category)" id="editButton" data-toggle="modal" data-target="#productEdit"><img src="img/icons/icon_edit_red.svg" alt="icon-edit"></a>
+                <a href="javascript:void(0)" @click="updateModal(item.id, item.name, item.price, item.description, item.image_url, item.category, item.zone)" id="editButton" data-toggle="modal" data-target="#productEdit"><img src="img/icons/icon_edit_red.svg" alt="icon-edit"></a>
                 <a href="javascript:void(0)" @click="deleteModal(item.id, item.name)" data-toggle="modal" data-target="#productDelete"><img src="img/icons/icon_trash_red.svg" alt="icon-delete"></a>
               </div>
             </div>
@@ -88,10 +88,6 @@
                 <input type="text" class="form-control" id="create-description">
               </div>
               <div class="form-group">
-                <label for="modal-image_url">Product Image</label>
-                <input type="file" class="form-control" id="create-image_url">
-              </div>
-              <div class="form-group">
                 <label for="modal-price">Product Category</label>
                 <select id="create-product-select" class="form-select">
                   <option value="Sin Categoría">Select category</option>
@@ -99,6 +95,17 @@
                     {{ category.name }}
                   </option> 
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Product Zone</label>
+                <select id="create-zone" class="form-select">
+                  <option value="1">Bar</option>
+                  <option value="2">Kitchen</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="modal-image_url">Product Image</label>
+                <input type="file" class="form-control" id="create-image_url">
               </div>
             </form>
           </div>
@@ -143,16 +150,23 @@
                 <input type="text" class="form-control" id="modal-description">
               </div>
               <div class="form-group">
-                <label for="modal-image_url">Product Image</label>
-                <input type="file" class="form-control" id="modal-image_url">
-              </div>
-              <div class="form-group">
                 <label for="modal-price">Product Category</label>
                 <select id="update-product-select" class="form-select" v-model="selected">
-                  <option v-for="category in categories" :key="category.id" :v-bind:value="category.name">
+                  <option v-for="category in categories" :key="category._id" :v-bind:value="category.name">
                     {{ category.name }}
                   </option> 
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="modal-price">Product Zone</label>
+                <select id="update-zone" class="form-select">
+                  <option value="1">Bar</option>
+                  <option value="2">Kitchen</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="modal-image_url">Product Image</label>
+                <input type="file" class="form-control" id="modal-image_url">
               </div>
             </form>
           </div>
@@ -255,7 +269,8 @@ export default {
       let price = $('#modal-price').val();
       let description = $('#modal-description').val();
       let category = $("#update-product-select").val();
-      
+      let zone = $("#update-zone").val();
+      console.log("Zone", zone)
       axios
         .put(process.env.VUE_APP_API + "product/" + id, { 
           id: id,
@@ -263,7 +278,8 @@ export default {
           price: price,
           description: description,
           image_url: filename,
-          category: category
+          category: category,
+          zone: zone
         })
         .then(() => {
           this.getProducts()
@@ -271,13 +287,15 @@ export default {
           console.log(error);
         });
     },
-    updateModal: function(id, name, price, description, image_url, category) {
+    updateModal: function(id, name, price, description, image_url, category, zone) {
       $("#modal-id").val(id);
       $("#modal-name").val(name);
       $("#modal-price").val(price);
       $("#modal-description").val(description);
       $("#modal-previous-img").val(image_url);
+      console.log("LLega", category)
       $("#update-product-select").val(category);
+      $("#update-zone").val(zone);
     },
     deleteModal: function(id, name) {
       $("#delete-id").val(id);
@@ -319,6 +337,7 @@ export default {
       let price = $('#create-price').val();
       let description = $('#create-description').val();
       let category = $("#create-product-select").val();
+      let zone = $("create-zone").val();
       
       axios
         .post(process.env.VUE_APP_API + "product/create", {
@@ -326,7 +345,8 @@ export default {
           price: price,
           description: description,
           image_url: filename,
-          category: category
+          category: category,
+          zone: zone
         })
         .then(() => {
           this.getProducts()
@@ -335,7 +355,10 @@ export default {
         });
     },
     getCategories: function() {
-      axios.get(process.env.VUE_APP_API + "category").then((response) => this.categories = response.data);
+      axios.get(process.env.VUE_APP_API + "category").then((response) => {
+        this.categories = response.data
+        console.log(this.categories)
+      });
     }
   },
   mounted() {

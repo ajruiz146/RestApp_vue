@@ -57,7 +57,10 @@ export default {
 </script>
 
 <style scoped>
-@import url(https://fonts.googleapis.com/css?family=Varela+Round);
+/* @import url(https://fonts.googleapis.com/css?family=Varela+Round); */
+.row {
+  justify-content: center;
+}
 
 .page-item.active .page-link {
     z-index: 3;
@@ -101,11 +104,12 @@ select {
 
 .tables .card {
   overflow: hidden;
-    height: 300px;
+    height: 200px;
     margin: 0.7em 0.7em;
     padding: 0;
     box-shadow: 1px 1px 4px rgb(128 128 128 / 29%);
-    flex: 1 0 289px;
+    flex: 0 0 170px;
+    background: #d3d3d3a1;
 }
 
 .tables .need-waiter {
@@ -115,7 +119,7 @@ select {
 .tables .card-body {
   position: relative;
   z-index: 100;
-  background: url("../../../public/img/theme/table_texture.jpg") no-repeat center center;
+  background: url("../../../public/img/theme/table-370x400.png") no-repeat center center;
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -123,27 +127,32 @@ select {
 }
 
 .tables .card-title {
-  font-size: 100px;
-  text-align: center;
-  color: #172b4d;
-  text-shadow: 1px 1px 1px #0000005c;
+    font-size: 60px;
+    text-align: center;
+    color: #172b4d;
+    text-shadow: 2px 2px 1px #00000087;
+    margin-bottom: 5.25rem;
 }
 
 @keyframes shadow-alert {
   0% {
       box-shadow: 0px 0px 10px #741922;
+      border: 2px solid #741922;
   }
+
   20% {
       box-shadow: 0px 0px 20px #741922;
+      border: 3px solid #741922;
   }
+
   100% {
       box-shadow: 0px 0px 10px #741922;
+      border: 2px solid #741922;
   }
 }
-
-@media screen and (max-width: 710px) {
+@media screen and (max-width: 768px) {
   .tables .card {
-    width: 50%;
+    flex: 1 0 170px;
   }
 }
 </style>

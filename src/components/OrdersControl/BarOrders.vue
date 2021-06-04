@@ -115,11 +115,6 @@ export default {
 
 <style scoped>
     
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
-    
-    * {
-        font-family: 'Montserrat', sans-serif;
-    }
     h1 {
         text-align: center;
         margin-bottom: 30px;
@@ -133,17 +128,14 @@ export default {
     }
 
     .lists {
-        width: 50%;
         display: flex;
         justify-content: center;
         align-content: center;
     }
 
     ol {
-        counter-reset: li; /* Initiate a counter */
-        list-style: none; /* Remove default numbering */
-        *list-style: decimal; /* Keep using default numbering for IE6/7 */
-        font: 15px 'trebuchet MS', 'lucida sans';
+        counter-reset: li; 
+        list-style: none; 
         padding: 0;
         margin-bottom: 4em;
         text-shadow: 0 1px 0 rgba(255,255,255,.5);
@@ -157,7 +149,6 @@ export default {
     position: relative;
     display: block;
     padding: 1em 3em 1em 3em;
-    *padding: .4em;
     margin: .5em 0 .5em 2.5em;
     background: #ddd;
     color: #444;
@@ -209,10 +200,6 @@ export default {
         border-left-color: #fa8072;
     }
 
-    .products-interior {
-        font-size: 1.2em;
-    }
-
     @media screen and (max-width: 1170px) {
         .orders-container {
             flex-direction: column;
@@ -222,4 +209,29 @@ export default {
             min-width: 400px;
         }
     }
+
+    @media screen and (max-width: 620px) {
+        .rectangle-list a{
+            padding: .4em;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .products-interior {
+            font-size: 0.7em;
+        }
+
+        .rectangle-list a:before {
+            left: -1.5em;
+            margin-top: -0.7em;
+            height: 1.4em;
+            width: 1.4em;
+            line-height: 1.4em;
+        }
+
+        .rectangle-list a {
+            margin-left: 1.5em;
+        }
+    }
+    
 </style>

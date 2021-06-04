@@ -7,7 +7,8 @@
       :target="link.target"
       :href="'#' + link.path"
     >
-      <i :class="link.icon"></i>
+      <!--<i :class="link.icon"></i> -->
+      <img class="nav-bar-svg" :src="link.src" alt="">
       <span class="nav-link-text">{{ link.name }}</span>
     </router-link>
   </li>
@@ -53,3 +54,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .nav-bar-svg {
+    position: relative;
+    top: -1px;
+    width: 20px;
+    margin-right: 7px;
+  }
+</style>

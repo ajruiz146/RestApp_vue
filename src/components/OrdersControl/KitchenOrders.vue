@@ -41,16 +41,18 @@ export default {
   data() {
     return {
         pendings: [],
-        delivereds: []
+        delivereds: [],
+        timer: "",
     };
   },
   methods: {
     getPending: function() {
+        console.log("Entra")
       axios
       .get(process.env.VUE_APP_API + "order/kitchen/pending")
       .then((response) => {
         this.pendings = response.data
-      }) 
+      })
     },
     getDelivered: function() {
       axios
@@ -93,13 +95,23 @@ export default {
             } 
             this.delivereds[i].products = productsAux;
         }
+    },
+    cancelAutoUpdate () {
+        clearInterval(this.timer);
     }
   },
-  mounted() {
-    this.getPending();
-    this.getDelivered();
-  },
-  beforeMount() {
+    created () {
+        
+    },
+    mounted() {
+        this.getPending();
+        this.timer = setInterval(this.getPending, 5000);
+        this.getDelivered();
+    },
+    beforeUnmount () {
+      this.cancelAutoUpdate();
+    },
+    beforeMount() {
       /*
     if(!localStorage.token) {
       this.$router.push("/login")

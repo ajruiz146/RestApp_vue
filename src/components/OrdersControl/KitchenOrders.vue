@@ -6,7 +6,7 @@
                     <ol class="rectangle-list">
                         <h1>Pending</h1>
                         <li class="list-li" v-for="item in pendings" :key="item.id">
-                            <a href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
+                            <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
                                     <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
@@ -18,7 +18,7 @@
                     <ol class="rectangle-list delivered">
                         <h1>Delivered</h1>
                         <li class="list-li" v-for="item in delivereds" :key="item.id">
-                            <a href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
+                            <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
                                     <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
@@ -57,6 +57,7 @@ export default {
       .get(process.env.VUE_APP_API + "order/kitchen/delivered")
       .then((response) => {
         this.delivereds = response.data
+        this.cleanZones();
       }) 
     },
     updateOrders: function(id, delivered) {
@@ -69,6 +70,29 @@ export default {
             this.getPending()
             this.getDelivered()
         }) 
+    },
+    cleanZones: function() {
+        for (let i = 0; i < this.pendings.length; i++) {
+            let products = this.pendings[i].products
+            let productsAux = []
+            for (let j = 0; j < products.length; j++) {
+                if(products[j].zone == 2) {
+                    productsAux.push(products[j])
+                }
+            } 
+            this.pendings[i].products = productsAux;
+        }
+
+        for (let i = 0; i < this.delivereds.length; i++) {
+            let products = this.delivereds[i].products
+            let productsAux = []
+            for (let j = 0; j < products.length; j++) {
+                if(products[j].zone == 2) {
+                    productsAux.push(products[j])
+                }
+            } 
+            this.delivereds[i].products = productsAux;
+        }
     }
   },
   mounted() {

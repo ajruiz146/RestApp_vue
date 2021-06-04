@@ -47,4 +47,3 @@ $('#printPdf').click(function(){
     $(".footer").css("display", "block")
     return false;
 });
-

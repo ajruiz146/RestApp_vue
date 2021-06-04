@@ -6,7 +6,7 @@
                     <ol class="rectangle-list">
                         <h1>Pending</h1>
                         <li class="list-li" v-for="item in pendings" :key="item.id">
-                            <a href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
+                            <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
                                     <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
@@ -18,7 +18,7 @@
                     <ol class="rectangle-list delivered">
                         <h1>Delivered</h1>
                         <li class="list-li" v-for="item in delivereds" :key="item.id">
-                            <a href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
+                            <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.bar_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
                                     <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
@@ -48,15 +48,19 @@ export default {
       axios
       .get(process.env.VUE_APP_API + "order/bar/pending")
       .then((response) => {
-          console.log(response)
+        console.log(response)
+        this.cleanZones();
         this.pendings = response.data
+        
       }) 
     },
     getDelivered: function() {
       axios
       .get(process.env.VUE_APP_API + "order/bar/delivered")
       .then((response) => {
+        this.cleanZones();
         this.delivereds = response.data
+        
       }) 
     },
     updateOrders: function(id, delivered) {
@@ -68,7 +72,31 @@ export default {
         .then(() => {
             this.getPending()
             this.getDelivered()
+            
         }) 
+    },
+    cleanZones: function() {
+        for (let i = 0; i < this.pendings.length; i++) {
+            let products = this.pendings[i].products
+            let productsAux = []
+            for (let j = 0; j < products.length; j++) {
+                if(products[j].zone == 1) {
+                    productsAux.push(products[j])
+                }
+            } 
+            this.pendings[i].products = productsAux;
+        }
+
+        for (let i = 0; i < this.delivereds.length; i++) {
+            let products = this.delivereds[i].products
+            let productsAux = []
+            for (let j = 0; j < products.length; j++) {
+                if(products[j].zone == 1) {
+                    productsAux.push(products[j])
+                }
+            } 
+            this.delivereds[i].products = productsAux;
+        }
     }
   },
   mounted() {

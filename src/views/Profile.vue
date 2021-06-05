@@ -156,7 +156,25 @@ export default {
         $("#profile-lastName").val(this.user.lastName)
         $("#profile-email").val(this.user.email)
         $("#profile-role").val(this.user.role)
+      },
+      getUserStats: function() {
+        axios
+        .post(process.env.VUE_APP_API + "user/myUser", {}, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
+        })
+        .then((response) => {
+          response.data.role
+          if(response.data.role != "admin") {
+            this.$router.push("/login")
+          }
+          console.log(response)
+        })
       }
+    },
+    created() {
+    /*  this.getUserStats(); */
     },
     beforeMount(){
       this.getUser()

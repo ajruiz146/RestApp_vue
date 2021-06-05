@@ -107,8 +107,25 @@ export default {
         this.totalStaff = response.data.totalStaff
         this.totalUsers = response.data.totalUsers
       })
-      
     },
+    getUserStats: function() {
+      axios
+      .post(process.env.VUE_APP_API + "user/myUser", {}, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
+      .then((response) => {
+        response.data.role
+        if(response.data.role != "admin" || !localStorage.token) {
+          this.$router.push("/login")
+        }
+        console.log(response)
+      },() => { this.$router.push("/login") })
+    }
+  },
+  created() {
+    this.getUserStats();
   },
   mounted() {
     this.getStatistics()

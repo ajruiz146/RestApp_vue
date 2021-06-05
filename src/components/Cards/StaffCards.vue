@@ -1,9 +1,9 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <div class="flex-create">
+      <div class="flex-create reset-form" data-toggle="modal" data-target="#staffCreate">
         <h3 class="mb-0">Staff</h3>
-        <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#staffCreate"></i>
+        <i class="ni ni-fat-add"></i>
       </div>
 
       <div class="filters">
@@ -274,9 +274,21 @@ export default {
     },
     deleteStaff:function() {
       let id = $("#delete-staff-id").val()
-      axios
-      .delete(process.env.VUE_APP_API + 'user/' + id)
-      .then(() => {
+      axios.delete(process.env.VUE_APP_API + "user/deleteStaff/" + id, {
+        headers: {
+          "x-access-token": localStorage.token
+        },
+        data: {
+          where: {
+            field: this.fieldWhere,
+            value: this.value
+          },
+          contains: this.search,
+        }
+      }).then((response) => {
+        if(this.totalPages > response.data.pages) {
+            this.page = response.data.pages
+        }
         this.getStaff()
       })
     },

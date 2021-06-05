@@ -345,7 +345,10 @@ export default {
       let id = $("#delete-order-id").val()
       axios
       .delete(process.env.VUE_APP_API + "order/" + id)
-      .then(() => {
+      .then((response) => {
+        if(this.totalPages > response.data.pages) {
+          this.page = response.data.pages
+        }
         this.getOrders();
       })
     },

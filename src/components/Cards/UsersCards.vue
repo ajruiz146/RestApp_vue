@@ -261,11 +261,19 @@ export default {
     },
     deleteUser: function() {
       let id = $("#delete-user-id").val()
-      axios
-      .delete(process.env.VUE_APP_API + 'user/' + id)
-      .then(() => {
+      axios.delete(process.env.VUE_APP_API + "user/deleteUser/" + id, {
+        headers: {
+          "x-access-token": localStorage.token
+        },
+        data: {
+          contains: this.search
+        }
+      }).then((response) => {
+        if(this.totalPages > response.data.pages) {
+            this.page = response.data.pages
+        }
         this.getUsers()
-      })
+      });
     },
     createUser: function() {
       let name = $("#create-user-name").val()

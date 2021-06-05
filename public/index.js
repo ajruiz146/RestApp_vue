@@ -46,3 +46,7 @@ $('#printPdf').click(function(){
     $(".footer").css("display", "block")
     return false;
 });
+
+window.onbeforeunload = function() {
+    localStorage.removeItem("token");
+};

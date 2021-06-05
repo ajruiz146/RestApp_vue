@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     getAccess: function() {
-      
+      console.log("Entra")
       let email = $("#emailAccess").val()
       let password = $("#passwordAccess").val()
       console.log(email, password)
@@ -70,28 +70,10 @@ export default {
         password: password
       })
       .then((response) => {
+        console.log(response)
         this.role = response.data.role
         this.token = response.data.token
-        if(this.role == "admin" && this.token != "") {
-          this.$router.push('/');
-          localStorage.token = this.token
-        }
-      }) 
-    },
-    getUser: function() {
-      
-      let email = $("#emailAccess").val()
-      let password = $("#passwordAccess").val()
-      console.log(email, password)
-      axios
-      .post(process.env.VUE_APP_API + "auth/home", {
-        email: email,
-        password: password
-      })
-      .then((response) => {
-        this.role = response.data.role
-        this.token = response.data.token
-        if(this.role == "client" && this.token != "") {
+        if(this.role == "admin") {
           this.$router.push('/');
           localStorage.token = this.token
         }

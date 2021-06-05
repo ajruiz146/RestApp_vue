@@ -3,6 +3,14 @@
     <router-view />
   </div>
 </template>
+<script>
+export default {
+  name: "App",
+  beforeUnmount() {
+    localStorage.token = null
+  }
+};
+</script>
 
 <style>
 div.pagination {

@@ -256,22 +256,31 @@ export default {
         this.totalUsers = response.data.totalUsers
         this.lastMonthsIncomes = response.data.lastMonthsIncomes
         this.lastMonthsOrders = response.data.lastMonthsOrders
-        
+        console.log("Response", response)
         this.initBigChart(0)
         this.bigLineChart.allData = [
           [this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[1].total, this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[0].total],
         ]
         this.initBigChart(0)
       })
-      
     },
+    getUserStats: function() {
+      axios
+      .post(process.env.VUE_APP_API + "user/myUser", {}, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
+      .then((response) => {
+        response.data.role
+        if(response.data.role != "admin" || !localStorage.token) {
+          this.$router.push("/login")
+        }
+        console.log(response)
+      },() => { this.$router.push("/login") })
+    }
   },
   beforeMount() {
-    /*
-    if(!localStorage.token) {
-      this.$router.push("/login")
-    }
-    */
    this.getStatistics();
   },
   mounted() {
@@ -347,6 +356,9 @@ export default {
     );
     ordersChart.createChart(this.ordersChartID);
   },
+  created() {
+  /*  this.getUserStats(); */
+  }
 };
 </script>
 <style></style>

@@ -323,13 +323,26 @@ export default {
     },
     deleteProduct: function() {
       let id = $("#delete-id").val();
-      axios
-        .delete(process.env.VUE_APP_API + "product/" + id)
-        .then(() => {
-          this.getProducts()
-        }, (error) => {
-          console.log(error);
-        });
+      axios.delete(process.env.VUE_APP_API + "product/" + id, {
+        headers: {
+          "x-access-token": localStorage.token
+        },
+        data: {
+          where: {
+            field: this.fieldWhere,
+            value: this.value
+          },
+          contains: this.search,
+        }
+      })
+      .then((response) => {
+        if(this.totalPages > response.data.pages) {
+          this.page = response.data.pages
+        }
+        this.getProducts()
+      }, (error) => {
+        console.log(error);
+      });
     },
     createProduct: function() {
       if($("#create-image_url").val() != "") {

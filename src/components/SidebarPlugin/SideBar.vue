@@ -71,15 +71,15 @@
         <hr class="my-3" />
         <div class="special-links">
           <li class="nav-item">
-            <a href="#/kitchen" class="nav-link" target="_blank">Kitchen</a>
+            <a href="#/kitchen" class="nav-link">Kitchen</a>
           </li>
 
           <li class="nav-item">
-            <a href="#/bar" class="nav-link" target="_blank">Bar</a>
+            <a href="#/bar" class="nav-link">Bar</a>
           </li>
 
           <li class="nav-item">
-            <a href="#/qr" class="nav-link" target="_blank">QR Codes</a>
+            <a href="#/qr" class="nav-link">QR Codes</a>
           </li>
         </div>
       </div>

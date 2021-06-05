@@ -20,11 +20,32 @@
 <script>
 
 import QrGenerate from "@/components/OrdersControl/QrGenerate.vue";
+import axios from "axios"
 
 export default {
   components: {
     QrGenerate,
-  }
+  },
+  methods: {
+    getUserStats: function() {
+      axios
+      .post(process.env.VUE_APP_API + "user/myUser", {}, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
+      .then((response) => {
+        response.data.role
+        if(response.data.role != "admin" || !localStorage.token) {
+          this.$router.push("/login")
+        }
+        console.log(response)
+      },() => { this.$router.push("/login") })
+    }
+  },
+  created() {
+    this.getUserStats();
+  },
 }
 </script>
 

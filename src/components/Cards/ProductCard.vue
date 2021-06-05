@@ -47,35 +47,36 @@
           </div>
         </div>
       </div>
-      <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''"></div>
     </div>
-    <div class="pagination">
-      <div class="pagination justify-content-center mt-5">
-        <nav aria-label="...">
-          <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" @click="pageDown()">&lt;</a>
-                </li>
-                <li v-if="page > 2" class="page-item">
-                  <a class="page-link" @click="searchPage(1)">1</a>
-                </li>
-                <li v-if="page > 3" class="page-item">
-                  <a class="page-link">...</a>
-                </li>
-                <li v-for="index in totalPages" :key="index" :class="[index == page ? 'page-item active' : 'page-item', Math.abs(index - page) > 1 ? 'ds' : '']">
-                  <a class="page-link" @click="searchPage(index)">{{ index }}</a>
-                </li>
-                <li v-if="page < totalPages - 2" class="page-item">
-                  <a class="page-link">...</a>
-                </li>
-                <li v-if="page < totalPages - 1 " class="page-item">
-                  <a class="page-link" @click="searchPage(totalPages)">{{ totalPages }}</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" @click="pageUp()">&gt;</a>
-                </li>
-              </ul>
-        </nav>
+    <div class="card-footer d-flex justify-content-center" :class="type === 'dark' ? 'bg-transparent' : ''">
+      <div class="pagination">
+        <div class="pagination justify-content-center mt-5">
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" @click="pageDown()">&lt;</a>
+              </li>
+              <li v-if="page > 1" class="page-item">
+                <a class="page-link" @click="searchPage(1)">1</a>
+              </li>
+              <li v-if="page > 2" class="page-item">
+                <a class="page-link">...</a>
+              </li>
+              <li v-for="index in totalPages" :key="index" :class="[index == page ? 'page-item active' : 'page-item', Math.abs(index - page) > 0 ? 'ds' : '']">
+                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+              </li>
+              <li v-if="page < totalPages - 1" class="page-item">
+                <a class="page-link">...</a>
+              </li>
+              <li v-if="page < totalPages" class="page-item">
+                <a class="page-link" @click="searchPage(totalPages)">{{ totalPages }}</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" @click="pageUp()">&gt;</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
     <!-- Modals --> 
@@ -410,6 +411,8 @@ export default {
 .flex-create {
   display: flex;
   cursor: pointer;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .ds {
@@ -447,103 +450,7 @@ select {
 *, *:before, *:after {
   box-sizing: border-box;
 }
-/*
 
-body {
-  background: #383A3F;
-  font-family: "Varela Round", sans-serif;
-}
-
-.wrapper-products .card {
-  background: #1F2124;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-  border-radius: 5px;
-  margin: 50px 20px 20px 20px;
-  width: 21%;
-  margin: 2%;
-  padding: 20px;
-  text-align: center;
-  color: white;
-  float: left;
-  }
-
-.wrapper-products  .title {
-    font-size: 25px;
-  }
-
-.wrapper-products  .icon {
-    margin: 50px 0;
-    width: 100%;
-  }
-
-  .wrapper-products .icon svg path {
-    fill: #F6B352
-  }
-  .wrapper-products .icon svg {
-    width: 100px;
-    height: 100px;
-  }
-
-  .wrapper-products .features ul {
-    padding: 0;
-    margin: 20px 0 50px 0;
-    list-style-type: none;
-  }
-
-  .wrapper-products .features ul li {
-    margin: 10px 0;
-    font-size: 14px;
-  }
-
-  .wrapper-products .features ul li span {
-    border-bottom: 2px dotted #F6B352;
-  }
-
-  .wrapper-products .btn {
-    width: 45%;
-    display: block;
-    background: #F6B352;
-    color: white;
-    padding: 15px 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    box-shadow: rgba(0,0,0,0.9);
-    transition: all 200ms ease-in-out;
-    text-decoration: none;
-  }
-
-  .wrapper-products .btn :hover {
-    background: #F68657;
-  }
-
-  .wrapper-products .buttons {
-    display: flex;
-    justify-content: center;
-  }
-
-  .wrapper-products .product-image {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-  }
-
-  .wrapper-products .icon {
-    margin-top: 20px;
-    margin-bottom: 90px;
-  }
-
-  .wrapper-products label {
-    color: black !important;
-  }
-
-  @media screen and (max-width: 738px) {
-    .wrapper-products .card {
-      margin: 10px 20px;
-      width: calc(100% - 40px);
-    }
-  }
-*/
 .staff .card-img-top {
   height: 110px;
   width: 100%;
@@ -637,11 +544,40 @@ body {
   justify-content: space-evenly;
 }
 
-@media screen and (max-width: 710px) {
+@media screen and (max-width: 995px) {
+  .staff {
+    justify-content: center;
+  }
+  .staff .card {
+    flex: 1 0 260px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .card-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-header .filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-header .filters input, .card-header .filters select {
+    margin: 3px 3px;
+  }
+}
+
+@media screen and (max-width: 400px) {
   .staff .card {
     min-width: none;
     max-width: none;
     width: 100%;
   }
 }
+
+
+
 </style>

@@ -16,38 +16,40 @@
         </select>
       </div>
     </div>
-    <div class="card-body" style="overflow-x:auto;">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Last name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Created</th>
-            <th scope="col">Options</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr   
-          v-for="item in data" 
-          :key="item.id">
-            <td>{{ item.name }}</td>
-            <td>{{ item.lastName }}</td>
-            <td>{{ item.email }}</td>     
-            <td>{{ item.createdAt.substring(0, 10) }}</td>
-            <td>
-              <div class="dropdown">
-                <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
-                <div id="myDropdown" class="dropdown-content">
-                  <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="reset-form"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil reset-form"></i></a>
-                  <a href="javascript:void(0)" data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)"><i data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
+    <div class="card-body" >
+      <div class="responsive-table" style="overflow-x:auto;">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Last name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Created</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr   
+            v-for="item in data" 
+            :key="item.id">
+              <td>{{ item.name }}</td>
+              <td>{{ item.lastName }}</td>
+              <td>{{ item.email }}</td>     
+              <td>{{ item.createdAt.substring(0, 10) }}</td>
+              <td>
+                <div class="dropdown">
+                  <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
+                  <div id="myDropdown" class="dropdown-content">
+                    <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="reset-form"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil reset-form"></i></a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)"><i data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
+                  </div>
                 </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer d-flex justify-content-center" :class="type === 'dark' ? 'bg-transparent' : ''">
         <div class="pagination">
           <div class="pagination justify-content-center mt-5">
             <nav aria-label="...">
@@ -320,6 +322,8 @@ export default {
 .flex-create {
   display: flex;
   cursor: pointer;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .ds {
@@ -421,5 +425,22 @@ select {
 
 td {
   vertical-align: middle !important;
+}
+
+@media screen and (max-width: 650px) {
+  .card-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-header .filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-header .filters input, .card-header .filters select {
+    margin: 3px 3px;
+  }
 }
 </style>

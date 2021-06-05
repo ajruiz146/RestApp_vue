@@ -16,31 +16,12 @@
         <ul class="nav align-items-center d-md-none">
           <base-dropdown class="nav-item" position="right">
             <template v-slot:title>
-              <a
-                class="nav-link nav-link-icon"
-                href="#"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="ni ni-bell-55"></i>
-              </a>
-            </template>
-
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </base-dropdown>
-          <base-dropdown class="nav-item" position="right">
-            <template v-slot:title>
               <a class="nav-link" href="#" role="button">
                 <div class="media align-items-center">
                   <span class="avatar avatar-sm rounded-circle">
                     <img
                       alt="Image placeholder"
-                      src="img/theme/team-1-800x800.jpg"
+                      src="img/brand/single.png"
                     />
                   </span>
                 </div>
@@ -148,6 +129,10 @@ export default {
 </script>
 
 <style scoped>
+  .avatar {
+    background-color: white !important;
+  }
+
   .special-links {
     width: 100%;
     margin: 0;

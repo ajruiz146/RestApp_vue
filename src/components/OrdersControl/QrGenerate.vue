@@ -92,5 +92,20 @@ export default {
         width: 100%;
     }
 
+    .qr-list {
+        padding-left: 0;
+    }
+
+@media screen and (max-width: 500px) {
+    .qr-container {
+        width: 100%;
+        margin: 20px 5px
+    }
+
+    .qr-container img{
+        width: 100%;
+        margin: 0;
+    }
+}
 </style>
 

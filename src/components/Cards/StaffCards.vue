@@ -317,6 +317,8 @@ export default {
 .flex-create {
   display: flex;
   cursor: pointer;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 
@@ -448,11 +450,40 @@ select {
   font-size: 24px;
 }
 
-@media screen and (max-width: 710px) {
+
+@media screen and (max-width: 995px) {
+  .staff {
+    justify-content: center;
+  }
+  .staff .card {
+    flex: 1 0 260px;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .card-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card-header .filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-header .filters input, .card-header .filters select {
+    margin: 3px 3px;
+  }
+}
+
+@media screen and (max-width: 400px) {
   .staff .card {
     min-width: none;
     max-width: none;
     width: 100%;
   }
 }
+
+
 </style>

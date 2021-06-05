@@ -1,11 +1,12 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <h3 class="mb-0">Users</h3>
-      <div class="create-button">
+      <div class="flex-create">
+        <h3 class="mb-0">Users</h3>
         <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#userCreate"></i>
       </div>
       <div class="filters">
+        <input type="search" class="form-control form-control-sm" id="search-user" placeholder="Searh product" @keyup="contain()">
         <select class="form-select form-select-sm" @change="onChangeOrder($event)" name="" id="">
           <option value="">Order by</option>
           <option value="na">Name Asc</option>
@@ -206,6 +207,7 @@ export default {
     return {
       page: 1,
       data: [],
+      search: "",
     };
   },
   mixins: [paginate, filters],
@@ -225,6 +227,7 @@ export default {
           field: this.field,
           order: this.order
         },
+        contains: this.search,
       })
       .then(response => {
         this.data = response.data.object
@@ -293,6 +296,10 @@ export default {
     updateDeleteModal: function(id, name) {
       $("#delete-user-id").val(id)
       $("#delete-user-text").text("Are you sure to delete " + name)
+    },
+    contain: function() {
+      this.search = $("#search-user").val()
+      this.getUsers();
     }
   },
   mounted() {
@@ -309,6 +316,11 @@ export default {
 </script>
 
 <style scoped>
+
+.flex-create {
+  display: flex;
+  cursor: pointer;
+}
 
 .ds {
   display: none;
@@ -334,8 +346,9 @@ th {
 }
 
 .ni-fat-add {
-  vertical-align: middle;
-  margin-bottom: 3px;
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #741922;
 }
 
 .ni-bold-down {

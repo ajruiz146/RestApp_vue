@@ -14,29 +14,20 @@
             path: '/dashboard',
           }"
         />
-
-        <sidebar-item
-          :link="{
-            name: 'Products',
-            icon: 'ni ni-basket text-orange',
-            src: '../../../img/icons/icon_products.svg',
-            path: '/products',
-          }"
-        />
-        <sidebar-item
-          :link="{
-            name: 'Staff',
-            icon: 'ni ni-pin-3 text-orange',
-            src: '../../../img/icons/icon_staff.svg',
-            path: '/staff',
-          }"
-        />
         <sidebar-item
           :link="{
             name: 'Orders',
             icon: 'ni ni-single-02 text-yellow',
             src: '../../../img/icons/icon_orders.svg',
             path: '/orders',
+          }"
+        />
+        <sidebar-item
+          :link="{
+            name: 'Products',
+            icon: 'ni ni-basket text-orange',
+            src: '../../../img/icons/icon_products.svg',
+            path: '/products',
           }"
         />
         <sidebar-item
@@ -53,6 +44,14 @@
             icon: 'ni ni-bullet-list-67 text-red',
             src: '../../../img/icons/icon_users.svg',
             path: '/users',
+          }"
+        />
+        <sidebar-item
+          :link="{
+            name: 'Staff',
+            icon: 'ni ni-pin-3 text-orange',
+            src: '../../../img/icons/icon_staff.svg',
+            path: '/staff',
           }"
         />
       </template>

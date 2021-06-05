@@ -1,8 +1,8 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <h3 class="mb-0">Orders</h3>
-      <div class="create-button">
+      <div class="flex-create">
+        <h3 class="mb-0">Orders</h3>
         <i data-toggle="modal" data-target="#ordersCreate" class="ni ni-fat-add reset-form"></i>
       </div>
       <div class="filters">
@@ -36,7 +36,7 @@
               <div class="dropdown">
                 <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
                 <div id="myDropdown" class="dropdown-content">
-                  <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
+                  <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products, item.date)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
                   <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)" class="reset-form"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket reset-form"></i></a>
                 </div>
               </div>
@@ -104,6 +104,13 @@
                   <option v-bind:value="item.name" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
               </div>
+              <div class="form-group">
+                <label for="update-order-date">Date</label>
+                <div class="date-time-container">
+                  <input type="date" class="form-control" id="update-order-date">
+                  <input type="time" class="form-control" id="update-order-time">
+                </div>
+              </div>
               <div class="card-body" style="padding:0;">
                 <table class="table table-hover">
                   <thead>
@@ -159,6 +166,13 @@
                 <select id="create-order-user" class="form-select">
                   <option value="client" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
+              </div>
+              <div class="form-group">
+                <label for="create-order-date">Date</label>
+                <div class="date-time-container">
+                  <input type="date" class="form-control" id="create-order-date">
+                  <input type="time" class="form-control" id="create-order-time">
+                </div>
               </div>
               <div class="card-body" style="overflow-x:auto;">
                 <table class="table table-hover">
@@ -252,23 +266,31 @@ export default {
       })
     },
     createOrder: function() {
+      let date = $("#create-order-date").val()
+      let time = $("#create-order-time").val()
+      let dateTime = new Date(date + " " + time);
       this.countProducts()
       axios
       .post(process.env.VUE_APP_API + "order/create", {
         table: this.tableSelected,
         user: this.userSelected,
         total: this.total,
-        products: this.obtainProducts
+        products: this.obtainProducts,
+        date: dateTime,
       }, {
         headers: {
           "x-access-token": localStorage.token
         }
       })
-      .then(() => {
+      .then((response) => {
         this.getOrders();
+        console.log(response)
       })
     },
     updateOrder: function() {
+      let date = $("#update-order-date").val();
+      let time = $("#update-order-time").val();
+      let dateTime = new Date(date + " " + time);
       this.countProductsUpdate()
       let id = $("#update-order-id").val()
       axios
@@ -276,16 +298,28 @@ export default {
         table: this.tableSelected,
         user: this.userSelected,
         total: this.total,
-        products: this.obtainProducts
+        products: this.obtainProducts,
+        date: dateTime,
       })
       .then(() => {
         this.getOrders();
       })
     },
-    updateModal: function(id, user, table, products) {
+    updateModal: function(id, user, table, products, date) {
+      let dateLocal = new Date(date)
+      let currentHours = dateLocal.getHours();
+      let currentMinutes = dateLocal.getMinutes();
+      currentHours = ("0" + currentHours).slice(-2);
+      currentMinutes = ("0" + currentMinutes).slice(-2);
+      let time = currentHours+":"+currentMinutes;
+      console.log("Time", time)
+      let auxDate = date.substring(0, 10)
       $("#update-order-id").val(id)
       $("#update-order-table").val(table.table_number);
       $("#update-order-user").val(user.name);
+      $("#update-order-date").val(auxDate);
+      $("#update-order-time").val(time);
+      
       let inputClear = document.getElementsByClassName("products-input-update")
       for(let i = 0; i < inputClear.length; i ++) {
         for(let j = 0; j < products.length; j ++) {  
@@ -387,6 +421,19 @@ export default {
 </script>
 
 <style scoped>
+
+.flex-create {
+  display: flex;
+}
+
+.date-time-container {
+  display: flex;
+}
+
+.date-time-container input {
+  width: 50%;
+}
+
 .ds {
   display: none;
 }
@@ -419,8 +466,9 @@ th {
 }
 
   .ni-fat-add {
-    vertical-align: middle;
-    margin-bottom: 3px;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #741922;
   }
   
   .ni-bold-down {

@@ -8,7 +8,7 @@
                         <li class="list-li" v-for="item in pendings" :key="item.id">
                             <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
-                                    <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                    <span class="time">{{ getTime(item.date) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
                             </a>
                         </li>
@@ -20,7 +20,7 @@
                         <li class="list-li" v-for="item in delivereds" :key="item.id">
                             <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
-                                    <span class="time">{{ item.date.substring(11, 16) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                    <span class="time">{{ getTime(item.date) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
                             </a>
                         </li>
@@ -52,6 +52,7 @@ export default {
         .get(process.env.VUE_APP_API + "order/kitchen/pending")
         .then((response) => {
             this.pendings = response.data
+            console.log(response)
         })
         },
         getDelivered: function() {
@@ -79,6 +80,15 @@ export default {
             this.getPending();
             this.getDelivered();
         },
+        getTime: function(timeDate) {
+            let dateLocal = new Date(timeDate)
+            let currentHours = dateLocal.getHours();
+            let currentMinutes = dateLocal.getMinutes();
+            currentHours = ("0" + currentHours).slice(-2);
+            currentMinutes = ("0" + currentMinutes).slice(-2);
+            let time = currentHours+":"+currentMinutes;
+            return time
+        }
     },
     mounted() {
         this.getPending();

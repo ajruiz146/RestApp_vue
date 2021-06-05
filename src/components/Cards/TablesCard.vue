@@ -2,23 +2,13 @@
   <div class="card shadow">
     <div class="card-header bg-transparent">
       <h3 class="mb-0">Tables</h3>
-      <div class="create-button">
-        <i class="ni ni-fat-add"></i>
-      </div>
-      <div class="filters">
-        <select class="form-select form-select-sm">
-          <option value="">Select type</option>
-          <option value="">Bar</option>
-          <option value="">Kitchen</option>
-        </select>
-      </div>
     </div>
     <div class="card-body">
       <div class="wrapper">
         <div class="row tables">
           <!-- Inicio Card -->
           <!-- Esta es la carta de Staff por si quieres reutilizar partes, Te he traido abajo también el css -->
-          <div :class="table.need_waiter ?  'card need-waiter' : 'card'" style="width: 18rem" v-for="table in tables" :key="table._id">
+          <div :class="table.need_waiter ?  'card need-waiter' : 'card'" style="width: 18rem" v-for="table in tables" :key="table._id" @click="updateNeedWaiter(table._id)">
             <div class="card-body">
               <h2 class="card-title">{{ table.table_number }}</h2>
             </div>
@@ -42,12 +32,19 @@ export default {
   },
   methods: {
     getTables: function() {
-    axios
-      .get(process.env.VUE_APP_API + "table")
-      .then((response) => {
-        console.log(response)
-        this.tables = response.data
-      })
+      axios
+        .get(process.env.VUE_APP_API + "table")
+        .then((response) => {
+          console.log(response)
+          this.tables = response.data
+        })
+    },
+    updateNeedWaiter: function(id) {
+      axios
+        .post(process.env.VUE_APP_API + "table/turn/" + id)
+        .then(() => {
+          this.getTables();
+        })
     }
   },
   mounted() {
@@ -57,9 +54,13 @@ export default {
 </script>
 
 <style scoped>
-/* @import url(https://fonts.googleapis.com/css?family=Varela+Round); */
+
 .row {
   justify-content: center;
+}
+
+.card {
+  cursor: pointer;
 }
 
 .page-item.active .page-link {

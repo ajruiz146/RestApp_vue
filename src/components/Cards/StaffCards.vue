@@ -1,11 +1,13 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <h3 class="mb-0">Staff</h3>
-      <div class="create-button">
+      <div class="flex-create">
+        <h3 class="mb-0">Staff</h3>
         <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#staffCreate"></i>
       </div>
+
       <div class="filters">
+        <input type="search" class="form-control form-control-sm" id="search-staff" placeholder="Searh product" @keyup="contain()">
         <select class="form-select form-select-sm" @change="onChangeFilter($event)">
           <option value="">Select Staff</option>
           <option value="waiter">Waiter</option>
@@ -206,6 +208,7 @@ export default {
     return {
       page: 1,
       staff: [],
+      search: "",
     };
   },
   methods: {
@@ -221,6 +224,7 @@ export default {
           field: this.field,
           order: this.order
         },
+        contains: this.search,
       })
       .then((response) => {
         this.totalPages = response.data.pages
@@ -287,6 +291,10 @@ export default {
     updateModalDelete: function(id, name, role){
       $("#delete-staff-id").val(id)
       $("#delete-staff-text").text("Are you sure to delete " + name + " with role " + role + "?")
+    },
+    contain: function() {
+      this.search = $("#search-staff").val()
+      this.getStaff();
     }
   },
   mixins: [paginate, filters],
@@ -305,6 +313,12 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@400;500&display=swap");
+
+.flex-create {
+  display: flex;
+  cursor: pointer;
+}
+
 
 .ds {
   display: none;
@@ -425,8 +439,8 @@ select {
 }
 
 .staff .cards-buttons a img {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 }
 
 .staff .text-black {

@@ -1,9 +1,13 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <h3 class="mb-0">Products</h3>
-      <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#productCreate"></i>
+      <div class="flex-create" data-toggle="modal" data-target="#productCreate">
+        <h3 class="mb-0">Products</h3>
+        <i class="ni ni-fat-add reset-form" ></i>
+      </div>
+      
       <div class="filters">
+        <input type="search" class="form-control form-control-sm" id="search-product" placeholder="Searh product" @keyup="contain()">
         <select class="form-select form-select-sm" @change="onChangeFilter($event)" name="" id="">
           <option value="">Select type</option>
           <option value="s">Starters</option>
@@ -231,6 +235,7 @@ export default {
     return {
       page: 1,
       data: [],
+      search: "",
     }
   },
   methods: {
@@ -244,7 +249,8 @@ export default {
         where: {
           field: this.fieldWhere,
           value: this.value
-        }
+        },
+        contains: this.search,
       })
       .then((respuesta) => {
         this.data = respuesta.data.object
@@ -371,6 +377,10 @@ export default {
         this.categories = response.data
         console.log(this.categories)
       });
+    },
+    contain: function() {
+      this.search = $("#search-product").val()
+      this.getProducts();
     }
   },
   mounted() {
@@ -396,6 +406,11 @@ export default {
 
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
+.flex-create {
+  display: flex;
+  cursor: pointer;
+}
 
 .ds {
   display: none;
@@ -608,8 +623,8 @@ body {
 }
 
 .staff .cards-buttons a img {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
 }
 
 .staff .text-black {

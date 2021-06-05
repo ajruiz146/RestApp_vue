@@ -1,9 +1,9 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <div class="flex-create" data-toggle="modal" data-target="#productCreate">
+      <div class="flex-create reset-form" data-toggle="modal" data-target="#productCreate">
         <h3 class="mb-0">Products</h3>
-        <i class="ni ni-fat-add reset-form" ></i>
+        <i class="ni ni-fat-add" ></i>
       </div>
       
       <div class="filters">
@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <div class="card-footer d-flex justify-content-center" :class="type === 'dark' ? 'bg-transparent' : ''">
+    <div class="card-footer d-flex justify-content-center">
       <div class="pagination">
         <div class="pagination justify-content-center mt-5">
           <nav aria-label="...">
@@ -168,7 +168,7 @@
               </div>
               <div class="form-group">
                 <label for="modal-price">Product Category</label>
-                <select id="update-product-select" class="form-select" v-model="selected">
+                <select id="update-product-select" class="form-select">
                   <option v-for="category in categories" :key="category._id" :v-bind:value="category.name">
                     {{ category.name }}
                   </option> 
@@ -236,6 +236,8 @@ export default {
     return {
       page: 1,
       data: [],
+      categories: [],
+      totalPages: [],
       search: "",
     }
   },
@@ -289,7 +291,6 @@ export default {
       let description = $('#modal-description').val();
       let category = $("#update-product-select").val();
       let zone = $("#update-zone").val();
-      console.log("Zone", zone)
       axios
         .put(process.env.VUE_APP_API + "product/" + id, { 
           id: id,
@@ -312,7 +313,6 @@ export default {
       $("#modal-price").val(price);
       $("#modal-description").val(description);
       $("#modal-previous-img").val(image_url);
-      console.log("LLega", category)
       $("#update-product-select").val(category);
       $("#update-zone").val(zone);
     },
@@ -376,7 +376,6 @@ export default {
     getCategories: function() {
       axios.get(process.env.VUE_APP_API + "category").then((response) => {
         this.categories = response.data
-        console.log(this.categories)
       });
     },
     contain: function() {
@@ -430,6 +429,8 @@ select {
   cursor: pointer;
   font-size: 1.5em;
   color: #741922;
+  position: relative;
+  top: -1px;
 }
 
 .page-item.active .page-link {

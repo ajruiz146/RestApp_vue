@@ -1,9 +1,9 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <div class="flex-create">
+      <div data-toggle="modal" data-target="#ordersCreate" class="flex-create reset-form">
         <h3 class="mb-0">Orders</h3>
-        <i data-toggle="modal" data-target="#ordersCreate" class="ni ni-fat-add reset-form"></i>
+        <i class="ni ni-fat-add"></i>
       </div>
       <div class="filters">
         <select @change="onChangeOrder($event)" class="form-select form-select-sm" name="" id="">
@@ -38,7 +38,7 @@
                   <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
                   <div id="myDropdown" class="dropdown-content">
                     <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products, item.date)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)" class="reset-form"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket reset-form"></i></a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
                   </div>
                 </div>
               </td>
@@ -46,7 +46,7 @@
           </tbody>
         </table>
       </div>
-      <div class="card-footer d-flex justify-content-center" :class="type === 'dark' ? 'bg-transparent' : ''">
+      <div class="card-footer d-flex justify-content-center">
         <div class="pagination">
           <div class="pagination justify-content-center mt-5">
             <nav aria-label="...">
@@ -127,7 +127,7 @@
                       <td>{{ item.name }}</td>
                       <td>{{ item.price }}</td>
                       <td>
-                        <input type="number" id="products-input" class="products-input-update" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                        <input type="number" class="products-input-update" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
                       </td>
                     </tr>
                   </tbody>
@@ -190,7 +190,7 @@
                       <td>{{ item.name }}</td>
                       <td>{{ item.price }}</td>
                       <td>
-                        <input type="number" id="products-input" class="products-input" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                        <input type="number" class="products-input" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
                       </td>
                     </tr>
                   </tbody>
@@ -243,6 +243,7 @@ export default {
     return {
       page: 1,
       data: [],
+      users: [],
       tables: [],
       products: [],
       totalPages: [],
@@ -259,7 +260,11 @@ export default {
         sort: {
           field: this.field,
           order: this.order
-        },  
+        }  
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(response => {
         this.page = response.data.current
@@ -271,6 +276,9 @@ export default {
       let date = $("#create-order-date").val()
       let time = $("#create-order-time").val()
       let dateTime = new Date(date + " " + time);
+      if(dateTime == "Invalid Date") {
+        dateTime = Date.now();
+      }
       this.countProducts()
       axios
       .post(process.env.VUE_APP_API + "order/create", {
@@ -284,9 +292,8 @@ export default {
           "x-access-token": localStorage.token
         }
       })
-      .then((response) => {
+      .then(() => {
         this.getOrders();
-        console.log(response)
       })
     },
     updateOrder: function() {
@@ -314,7 +321,6 @@ export default {
       currentHours = ("0" + currentHours).slice(-2);
       currentMinutes = ("0" + currentMinutes).slice(-2);
       let time = currentHours+":"+currentMinutes;
-      console.log("Time", time)
       let auxDate = date.substring(0, 10)
       $("#update-order-id").val(id)
       $("#update-order-table").val(table.table_number);
@@ -411,8 +417,11 @@ export default {
     this.getTables();
     this.getProducts();
     this.getUsers();
+    
+
   },
-  beforeMount() {
+  beforeCreate() {
+
     /*
     if(!localStorage.token) {
       this.$router.push("/login")
@@ -470,12 +479,6 @@ th {
   margin: 0 auto;
 }
 
-  .ni-fat-add {
-    cursor: pointer;
-    font-size: 1.5em;
-    color: #741922;
-  }
-  
   .ni-bold-down {
     cursor: pointer;
   }
@@ -543,6 +546,8 @@ th {
   cursor: pointer;
   font-size: 1.5em;
   color: #741922;
+  position: relative;
+  top: -1px;
 }
 
 td {

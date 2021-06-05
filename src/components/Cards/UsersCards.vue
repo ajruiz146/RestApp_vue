@@ -1,9 +1,9 @@
 <template>
   <div class="card shadow">
     <div class="card-header bg-transparent">
-      <div class="flex-create">
+      <div class="flex-create reset-form" data-toggle="modal" data-target="#userCreate">
         <h3 class="mb-0">Users</h3>
-        <i class="ni ni-fat-add reset-form" data-toggle="modal" data-target="#userCreate"></i>
+        <i class="ni ni-fat-add"></i>
       </div>
       <div class="filters">
         <input type="search" class="form-control form-control-sm" id="search-user" placeholder="Searh product" @keyup="contain()">
@@ -40,7 +40,7 @@
                 <div class="dropdown">
                   <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
                   <div id="myDropdown" class="dropdown-content">
-                    <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="reset-form"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil reset-form"></i></a>
+                    <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil"></i></a>
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)"><i data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
                   </div>
                 </div>
@@ -49,7 +49,7 @@
           </tbody>
         </table>
       </div>
-      <div class="card-footer d-flex justify-content-center" :class="type === 'dark' ? 'bg-transparent' : ''">
+      <div class="card-footer d-flex justify-content-center">
         <div class="pagination">
           <div class="pagination justify-content-center mt-5">
             <nav aria-label="...">
@@ -93,7 +93,7 @@
               </button>
           </div>
           <div class="modal-body">
-            <form id="form-user-create">
+            <form id="form-user-update">
               <div class="form-group">
                 <input type="hidden" class="form-control" id="edit-user-id">
               </div>
@@ -209,6 +209,7 @@ export default {
     return {
       page: 1,
       data: [],
+      totalPages: [],
       search: "",
     };
   },
@@ -253,8 +254,7 @@ export default {
         password: password,
         role: role
       })
-      .then((response) => {
-        console.log(response)
+      .then(() => {
         this.getUsers()
       })
       
@@ -263,8 +263,7 @@ export default {
       let id = $("#delete-user-id").val()
       axios
       .delete(process.env.VUE_APP_API + 'user/' + id)
-      .then((response) => {
-        console.log(response)
+      .then(() => {
         this.getUsers()
       })
     },
@@ -282,8 +281,7 @@ export default {
         password: password,
         role: "client"
       })
-      .then((response) => {
-        console.log(response)
+      .then(() => {
         this.getUsers()
       })
     },
@@ -353,6 +351,8 @@ th {
   cursor: pointer;
   font-size: 1.5em;
   color: #741922;
+  position: relative;
+  top: -1px;
 }
 
 .ni-bold-down {
@@ -415,12 +415,6 @@ select {
 }
 .show {
   display: block;
-}
-
-.ni-fat-add {
-  cursor: pointer;
-  font-size: 1.5em;
-  color: #741922;
 }
 
 td {

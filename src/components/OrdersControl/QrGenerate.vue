@@ -12,8 +12,6 @@
                     </ol>
                 </div>
             </div>
-            
-            <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''"></div>
         </div>
         <div class="hide-left-sidebar"></div>
     </div>
@@ -36,7 +34,6 @@ export default {
       axios
       .get(process.env.VUE_APP_API + "table")
       .then((response) => {
-        console.log(response.data)
         this.tables = response.data
         this.getQr()
       }) 

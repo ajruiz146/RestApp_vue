@@ -35,7 +35,6 @@ export default {
       axios
         .get(process.env.VUE_APP_API + "table")
         .then((response) => {
-          console.log(response)
           this.tables = response.data
         })
     },
@@ -76,17 +75,6 @@ export default {
 
 .pagination {
   margin: 0 auto;
-}
-
-.ni-fat-add {
-  cursor: pointer;
-  font-size: 1.5em;
-  color: #741922;
-}
-
-.ni-fat-add {
-  vertical-align: middle;
-  margin-bottom: 3px;
 }
 
 .ni-bold-down {

@@ -27,7 +27,6 @@
                     </ol>
                 </div>
             </div>
-            <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''"></div>
         </div>
         <div class="hide-left-sidebar"></div>
     </div>
@@ -47,20 +46,18 @@ export default {
   },
     methods: {
         getPending: function() {
-            console.log("Entra")
-        axios
-        .get(process.env.VUE_APP_API + "order/kitchen/pending")
-        .then((response) => {
-            this.pendings = response.data
-            console.log(response)
-        })
+            axios
+            .get(process.env.VUE_APP_API + "order/kitchen/pending")
+            .then((response) => {
+                this.pendings = response.data
+            })
         },
         getDelivered: function() {
-        axios
-        .get(process.env.VUE_APP_API + "order/kitchen/delivered")
-        .then((response) => {
-            this.delivereds = response.data
-        }) 
+            axios
+            .get(process.env.VUE_APP_API + "order/kitchen/delivered")
+            .then((response) => {
+                this.delivereds = response.data
+            }) 
         },
         updateOrders: function(id, delivered) {
             delivered = !delivered

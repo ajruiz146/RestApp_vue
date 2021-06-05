@@ -1,9 +1,8 @@
-$(".save-button").on( "click", function() {
-    console.log("Entra")
+$('body').on('click', '.save-button', function() {
     $(".modal").modal('hide');
 });
 
-$(".reset-form").on( "click", function() {
+$('body').on('click', '.reset-form', function() {
     $("form").trigger("reset");
 });
 

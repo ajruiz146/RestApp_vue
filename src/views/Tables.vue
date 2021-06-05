@@ -100,7 +100,6 @@ export default {
       axios
       .get(process.env.VUE_APP_API + "statistics")
       .then((response) => {
-        console.log(response)
         this.totalIncomes = response.data.totalIncomes
         this.totalOrders = response.data.totalOrders
         this.totalStaff = response.data.totalStaff

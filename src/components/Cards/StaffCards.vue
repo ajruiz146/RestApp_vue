@@ -36,7 +36,7 @@
               <p class="card-text">{{ item.email }}</p>
               <p class="card-text">{{ item.role}}</p>
               <div class="cards-buttons">
-                <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#staffUpdate" class="reset-form"><img src="img/icons/icon_edit_red.svg" alt="icon-edit"></a>
+                <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#staffUpdate"><img src="img/icons/icon_edit_red.svg" alt="icon-edit"></a>
                 <a href="javascript:void(0)" @click="updateModalDelete(item._id, item.name, item.role)" data-toggle="modal" data-target="#staffDelete"><img @click="updateModalDelete(item._id, item.name)" data-toggle="modal" data-target="#staffDelete" src="img/icons/icon_trash_red.svg" alt="icon-delete"></a>
               </div>
             </div>
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="card-footer d-flex justify-content-end" :class="type === 'dark' ? 'bg-transparent' : ''">
+    <div class="card-footer d-flex justify-content-end">
       <div class="pagination">
         <div class="pagination justify-content-center mt-5">
           <nav aria-label="...">
@@ -208,6 +208,7 @@ export default {
     return {
       page: 1,
       staff: [],
+      totalPages: [],
       search: "",
     };
   },
@@ -247,8 +248,7 @@ export default {
         password: password,
         role: role
       })
-      .then((response) => {
-        console.log(response)
+      .then(() => {
         this.getStaff()
       })
     },
@@ -268,8 +268,7 @@ export default {
         password: password,
         role: role
       })
-      .then((response) => {
-        console.log(response)
+      .then(() => {
         this.getStaff()
       })
     },
@@ -345,11 +344,8 @@ export default {
   cursor: pointer;
   font-size: 1.5em;
   color: #741922;
-}
-
-.ni-fat-add {
-  vertical-align: middle;
-  margin-bottom: 3px;
+  position: relative;
+  top: -1px;
 }
 
 .ni-bold-down {

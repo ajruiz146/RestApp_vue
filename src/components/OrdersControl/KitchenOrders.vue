@@ -6,9 +6,17 @@
                     <ol class="rectangle-list">
                         <h1>Pending</h1>
                         <li class="list-li" v-for="item in pendings" :key="item.id">
+                            <div class="order-information">
+                                <div v-if="item.products[0]" class="table-number">
+                                    <span>{{ item.table.table_number }}</span>
+                                </div>
+                                <div v-if="item.products[0]" class="order-time">
+                                    <span>{{ getTime(item.date) }}</span>
+                                </div>
+                            </div>
                             <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
-                                    <span class="time">{{ getTime(item.date) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                    <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
                             </a>
                         </li>
@@ -18,9 +26,17 @@
                     <ol class="rectangle-list delivered">
                         <h1>Delivered</h1>
                         <li class="list-li" v-for="item in delivereds" :key="item.id">
+                            <div class="order-information">
+                                <div v-if="item.products[0]" class="table-number">
+                                    <span>{{ item.table.table_number }}</span>
+                                </div>
+                                <div v-if="item.products[0]" class="order-time">
+                                    <span>{{ getTime(item.date) }}</span>
+                                </div>
+                            </div>
                             <a v-if="item.products[0]" href="javascript:void(0)" @click="updateOrders(item._id, item.kitchen_delivered)">
                                 <div class="products-interior" v-for="product in item.products" :key="product.id">
-                                    <span class="time">{{ getTime(item.date) }}</span> | <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
+                                    <span class="amount">{{ product.amount }}</span> - <span class="name">{{ product.name }}</span>
                                 </div>     
                             </a>
                         </li>
@@ -116,6 +132,16 @@ export default {
         display: flex;
         justify-content: center;
         align-content: center;
+        width: 50%;
+    }
+
+    .rectangle-list {
+        width: 80%;
+    }
+
+    .rectangle-list a{
+        text-align: center;
+        min-width: 400px;
     }
 
     ol {
@@ -134,7 +160,6 @@ export default {
     position: relative;
     display: block;
     padding: 1em 3em 1em 3em;
-    margin: .5em 0 .5em 2.5em;
     background: #ddd;
     color: #444;
     text-decoration: none;
@@ -146,43 +171,73 @@ export default {
         background: #eee;
     }
 
-    .rectangle-list a:before{
-        content: counter(li);
-        counter-increment: li;
-        position: absolute;
-        left: -2.5em;
-        top: 50%;
-        margin-top: -1em;
-        background: #dc3545;
-        color: white;
-        height: 2em;
-        width: 2em;
-        line-height: 2em;
-        text-align: center;
-        font-weight: bold;
-    }
-
     .delivered a:before {
         background: #2dce89;
     }
-    .rectangle-list a:after{
+     .rectangle-list a:after{
         position: absolute;
         content: '';
         border: .5em solid transparent;
-        left: -1em;
+        left: 97%;
         top: 50%;
+        margin-top: -.5em;
+        transition: all .3s ease-out;
+    }
+    
+    .delivered a:after {
+        position: absolute;
+        content: '';
+        border: .5em solid transparent;
+        left: 0;
+        top: 50%;
+        transform: rotate(180deg);
         margin-top: -.5em;
         transition: all .3s ease-out;
     }
 
     .rectangle-list a:hover:after{
-        left: -.5em;
+        left: 100%;
         border-left-color: #2dce89;
     }
 
     .delivered a:hover:after{
-        left: -.5em;
+        left: -1em;
         border-left-color: #fa8072;
+    }
+
+    .table-number{
+        background: #741922 !important;
+        color: white;
+        height: 3em;
+        width: 3em;
+        line-height: 3em;
+        text-align: center;
+        font-weight: bold;
+        position: relative;
+    }
+    
+    .order-time {
+        background: #172b4d !important;
+        color: white;
+        height: 3em;
+        width: 4em;
+        line-height: 3em;
+        text-align: center;
+        font-weight: bold;
+        position: relative;
+        
+    }
+
+    .order-time, .table-number {
+        margin: 0 10px;
+        position: relative;
+        top: 15px;
+        z-index: 100;
+    }
+
+    .order-information {
+        display: flex;
+        justify-content: center;
     }
 
     @media screen and (max-width: 1170px) {
@@ -191,32 +246,31 @@ export default {
             align-items: center;
         }
         .lists {
-            min-width: 400px;
+            width: 100%;
+        }
+        .card-body {
+            padding: 0;
         }
     }
 
-    @media screen and (max-width: 620px) {
-        .rectangle-list a{
-            padding: .4em;
-        }
-    }
-
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 600px) {
         .products-interior {
-            font-size: 0.7em;
+            font-size: .8em;
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
         }
 
-        .rectangle-list a:before {
-            left: -1.5em;
-            margin-top: -0.7em;
-            height: 1.4em;
-            width: 1.4em;
-            line-height: 1.4em;
+        .list-li a {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
         }
 
-        .rectangle-list a {
-            margin-left: 1.5em;
+        .rectangle-list a{
+            text-align: center;
+            min-width: 0;
         }
+
     }
 
 </style>

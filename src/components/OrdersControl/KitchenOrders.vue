@@ -45,78 +45,49 @@ export default {
         timer: "",
     };
   },
-  methods: {
-    getPending: function() {
-        console.log("Entra")
-      axios
-      .get(process.env.VUE_APP_API + "order/kitchen/pending")
-      .then((response) => {
-        this.pendings = response.data
-      })
-    },
-    getDelivered: function() {
-      axios
-      .get(process.env.VUE_APP_API + "order/kitchen/delivered")
-      .then((response) => {
-        this.delivereds = response.data
-        this.cleanZones();
-      }) 
-    },
-    updateOrders: function(id, delivered) {
-        delivered = !delivered
+    methods: {
+        getPending: function() {
+            console.log("Entra")
         axios
-        .put(process.env.VUE_APP_API + "order/kitchen/toggle/" + id, {
-            kitchen_delivered: delivered
+        .get(process.env.VUE_APP_API + "order/kitchen/pending")
+        .then((response) => {
+            this.pendings = response.data
         })
-        .then(() => {
-            this.getPending()
-            this.getDelivered()
+        },
+        getDelivered: function() {
+        axios
+        .get(process.env.VUE_APP_API + "order/kitchen/delivered")
+        .then((response) => {
+            this.delivereds = response.data
         }) 
+        },
+        updateOrders: function(id, delivered) {
+            delivered = !delivered
+            axios
+            .put(process.env.VUE_APP_API + "order/kitchen/toggle/" + id, {
+                kitchen_delivered: delivered
+            })
+            .then(() => {
+                this.getPending()
+                this.getDelivered()
+            }) 
+        },
+        cancelAutoUpdate () {
+            clearInterval(this.timer);
+        },
+        refresh: function() {
+            this.getPending();
+            this.getDelivered();
+        },
     },
-    cleanZones: function() {
-        for (let i = 0; i < this.pendings.length; i++) {
-            let products = this.pendings[i].products
-            let productsAux = []
-            for (let j = 0; j < products.length; j++) {
-                if(products[j].zone == 2) {
-                    productsAux.push(products[j])
-                }
-            } 
-            this.pendings[i].products = productsAux;
-        }
-
-        for (let i = 0; i < this.delivereds.length; i++) {
-            let products = this.delivereds[i].products
-            let productsAux = []
-            for (let j = 0; j < products.length; j++) {
-                if(products[j].zone == 2) {
-                    productsAux.push(products[j])
-                }
-            } 
-            this.delivereds[i].products = productsAux;
-        }
-    },
-    cancelAutoUpdate () {
-        clearInterval(this.timer);
-    }
-  },
     mounted() {
         this.getPending();
-        //this.timer = setInterval(this.getPending, 5000);
         this.getDelivered();
+        this.timer = setInterval(this.refresh, 5000);
     },
-    /*
     beforeUnmount () {
-      this.cancelAutoUpdate();
+        this.cancelAutoUpdate();
     },
-    */
-    beforeMount() {
-      /*
-    if(!localStorage.token) {
-      this.$router.push("/login")
-    }
-    */
-  }
 };
 </script>
 

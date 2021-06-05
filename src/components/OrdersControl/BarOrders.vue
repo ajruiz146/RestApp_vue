@@ -37,79 +37,56 @@
 import axios from "axios";
 
 export default {
-  data() {
-    return {
-        pendings: [],
-        delivereds: []
-    };
-  },
-  methods: {
-    getPending: function() {
-      axios
-      .get(process.env.VUE_APP_API + "order/bar/pending")
-      .then((response) => {
-        console.log(response)
-        this.cleanZones();
-        this.pendings = response.data
-        
-      }) 
+    data() {
+        return {
+            pendings: [],
+            delivereds: []
+        };
     },
-    getDelivered: function() {
-      axios
-      .get(process.env.VUE_APP_API + "order/bar/delivered")
-      .then((response) => {
-        this.cleanZones();
-        this.delivereds = response.data
-        
-      }) 
-    },
-    updateOrders: function(id, delivered) {
-        delivered = !delivered
+    methods: {
+        getPending: function() {
         axios
-        .put(process.env.VUE_APP_API + "order/bar/toggle/" + id, {
-            bar_delivered: delivered
-        })
-        .then(() => {
-            this.getPending()
-            this.getDelivered()
-            
+        .get(process.env.VUE_APP_API + "order/bar/pending")
+        .then((response) => {
+            console.log(response)
+            this.pendings = response.data
         }) 
+        },
+        getDelivered: function() {
+        axios
+        .get(process.env.VUE_APP_API + "order/bar/delivered")
+        .then((response) => {
+            this.delivereds = response.data
+        }) 
+        },
+        updateOrders: function(id, delivered) {
+            delivered = !delivered
+            axios
+            .put(process.env.VUE_APP_API + "order/bar/toggle/" + id, {
+                bar_delivered: delivered
+            })
+            .then(() => {
+                this.getPending()
+                this.getDelivered()
+                
+            }) 
+        },
+        cancelAutoUpdate () {
+            clearInterval(this.timer);
+        },
+        refresh: function() {
+            this.getPending();
+            this.getDelivered();
+        },
     },
-    cleanZones: function() {
-        for (let i = 0; i < this.pendings.length; i++) {
-            let products = this.pendings[i].products
-            let productsAux = []
-            for (let j = 0; j < products.length; j++) {
-                if(products[j].zone == 1) {
-                    productsAux.push(products[j])
-                }
-            } 
-            this.pendings[i].products = productsAux;
-        }
-
-        for (let i = 0; i < this.delivereds.length; i++) {
-            let products = this.delivereds[i].products
-            let productsAux = []
-            for (let j = 0; j < products.length; j++) {
-                if(products[j].zone == 1) {
-                    productsAux.push(products[j])
-                }
-            } 
-            this.delivereds[i].products = productsAux;
-        }
-    }
-  },
-  mounted() {
-    this.getPending();
-    this.getDelivered();
-  },
-  beforeMount() {
-      /*
-    if(!localStorage.token) {
-      this.$router.push("/login")
-    }
-    */
-  }
+    mounted() {
+        this.getPending();
+        this.getDelivered();
+        this.timer = setInterval(this.refresh, 5000);
+    },
+    beforeUnmount () {
+        this.cancelAutoUpdate();
+    },
 };
 </script>
 

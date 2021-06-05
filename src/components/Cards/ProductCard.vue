@@ -49,16 +49,28 @@
       <div class="pagination justify-content-center mt-5">
         <nav aria-label="...">
           <ul class="pagination">
-            <li class="page-item">
-                <a class="page-link" @click="pageDown()">&lt;</a>
-            </li>
-            <li v-for="index in totalPages" :key="index" :class="index == page ? 'page-item active' : 'page-item'">
-                <a class="page-link" @click="searchPage(index)">{{ index }}</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" @click="pageUp()">&gt;</a>
-            </li>
-          </ul>
+                <li class="page-item">
+                  <a class="page-link" @click="pageDown()">&lt;</a>
+                </li>
+                <li v-if="page > 2" class="page-item">
+                  <a class="page-link" @click="searchPage(1)">1</a>
+                </li>
+                <li v-if="page > 3" class="page-item">
+                  <a class="page-link">...</a>
+                </li>
+                <li v-for="index in totalPages" :key="index" :class="[index == page ? 'page-item active' : 'page-item', Math.abs(index - page) > 1 ? 'ds' : '']">
+                  <a class="page-link" @click="searchPage(index)">{{ index }}</a>
+                </li>
+                <li v-if="page < totalPages - 2" class="page-item">
+                  <a class="page-link">...</a>
+                </li>
+                <li v-if="page < totalPages - 1 " class="page-item">
+                  <a class="page-link" @click="searchPage(totalPages)">{{ totalPages }}</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" @click="pageUp()">&gt;</a>
+                </li>
+              </ul>
         </nav>
       </div>
     </div>
@@ -384,6 +396,10 @@ export default {
 
 <style scoped>
 @import url(https://fonts.googleapis.com/css?family=Varela+Round);
+
+.ds {
+  display: none;
+}
 
 select {
     margin: 0 3px;

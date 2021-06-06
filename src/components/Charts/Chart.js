@@ -14,13 +14,11 @@ export const ordersChart = {
     axios
       .get(process.env.VUE_APP_API + "statistics")
       .then((response) => {
-        console.log(response);
-        
         lastMonthsOrders = response.data.lastMonthsOrders;
         new Chart(ctx, {
           type: "bar",
           data: {
-            labels: [lastMonthsOrders[0]._id, lastMonthsOrders[0]._id, lastMonthsOrders[0]._id, lastMonthsOrders[0]._id, lastMonthsOrders[0]._id],
+            labels: [lastMonthsOrders[0]?._id ?? "No data", lastMonthsOrders[1]?._id ?? "No data", lastMonthsOrders[2]?._id ?? "No data", lastMonthsOrders[3]?._id ?? "No data", lastMonthsOrders[4]?._id ?? "No data"],
             datasets: [
               {
                 label: "Sales",
@@ -28,7 +26,7 @@ export const ordersChart = {
                 borderWidth: 0,
                 pointRadius: 0,
                 backgroundColor: "#fb6340",
-                data: [lastMonthsOrders[0].count, lastMonthsOrders[0].count, lastMonthsOrders[0].count, lastMonthsOrders[0].count, lastMonthsOrders[1].count, lastMonthsOrders[0].count],
+                data: [lastMonthsOrders[0]?.count ?? 0, lastMonthsOrders[1]?.count ?? 0, lastMonthsOrders[2]?.count ?? 0, lastMonthsOrders[3]?.count ?? 0, lastMonthsOrders[4]?.count ?? 0],
                 maxBarThickness: 10,
               },
             ],

@@ -329,7 +329,6 @@ export default {
   display: flex;
   cursor: pointer;
   align-items: center;
-  margin-bottom: 15px;
 }
 
 

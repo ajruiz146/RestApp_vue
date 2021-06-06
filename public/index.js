@@ -47,6 +47,15 @@ $('#printPdf').click(function(){
     return false;
 });
 
+/*
 window.onbeforeunload = function() {
     localStorage.removeItem("token");
 };
+*/
+/*
+$(window).on("beforeunload", function() { 
+    console.log("Cerraria sesion")
+    alert("Cerraria sesion"); 
+    
+})
+*/

@@ -17,4 +17,12 @@ div.pagination {
   padding-bottom: 10px;
 }
 
+.filters input {
+  height: 24px !important;
+}
+
+.filters select {
+  height: 31px !important;
+}
+
 </style>

@@ -123,7 +123,6 @@ export default {
             headers: {
             "x-access-token": localStorage.token
           }}).then((response) => {
-            console.log(response)
               this.user = response.data
           }) 
       },
@@ -146,8 +145,7 @@ export default {
               headers: {
               "x-access-token": localStorage.token
             }
-          }).then((response) => {
-            console.log(response)
+          }).then(() => {
             this.getUser()
           }) 
       },
@@ -165,11 +163,9 @@ export default {
           }
         })
         .then((response) => {
-          response.data.role
           if(response.data.role != "admin") {
             this.$router.push("/login")
           }
-          console.log(response)
         })
       }
     },

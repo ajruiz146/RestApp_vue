@@ -102,23 +102,4 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
-  /*
-  axios
-  .post(process.env.VUE_APP_API + "user/myUser",{}, {
-    headers: {
-    "x-access-token": localStorage.token
-  }}).then((response) => {
-    console.log(response)
-    console.log(response)
-    if(response.data.role != "admin") {
-      router.push("/login")
-    }
-  }) 
-  
-  */
-
-  next();
-});
-
 export default router;

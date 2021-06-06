@@ -96,7 +96,6 @@ export default {
       axios
       .get(process.env.VUE_APP_API + "statistics")
       .then((response) => {
-        console.log(response.data.referrals)
         this.referrals = response.data.referrals
       })
       

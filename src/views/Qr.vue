@@ -35,11 +35,9 @@ export default {
         }
       })
       .then((response) => {
-        response.data.role
         if(response.data.role != "admin" || !localStorage.token) {
           this.$router.push("/login")
         }
-        console.log(response)
       },() => { this.$router.push("/login") })
     }
   },

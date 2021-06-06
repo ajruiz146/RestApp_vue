@@ -400,20 +400,6 @@ export default {
     this.getProducts();
     this.getCategories();
   },
-  beforeCreate() {
-    /*
-    axios
-    .post(process.env.VUE_APP_API + "user/myUser",{}, {
-      headers: {
-      "x-access-token": localStorage.token
-    }}).then((response) => {
-      console.log(response)
-      if(response.data.role != "client") {
-        this.$router.push("/login")
-      }
-    })
-    */
-  }
 };
 </script>
 
@@ -424,7 +410,6 @@ export default {
   display: flex;
   cursor: pointer;
   align-items: center;
-  margin-bottom: 15px;
 }
 
 .ds {

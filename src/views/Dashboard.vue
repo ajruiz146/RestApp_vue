@@ -11,8 +11,8 @@
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
+              <span :class="incomesFromLastMonth > 0 ? 'text-success' : 'text-danger'">
+                <i :class="incomesFromLastMonth > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ incomesFromLastMonth }}%
               </span>
               <span class="text-nowrap">Since last month</span>
             </template>
@@ -27,8 +27,8 @@
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
+              <span :class="ordersFromLastMonth > 0 ? 'text-success' : 'text-danger'">
+                <i :class="ordersFromLastMonth > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ ordersFromLastMonth }}%
               </span>
               <span class="text-nowrap">Since last month</span>
             </template>
@@ -43,8 +43,8 @@
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
+              <span :class="usersFromLastMonth > 0 ? 'text-success' : 'text-danger'">
+                <i :class="usersFromLastMonth > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ usersFromLastMonth }}%
               </span>
               <span class="text-nowrap">Since last month</span>
             </template>
@@ -169,6 +169,9 @@ export default {
       totalOrders: null,
       totalStaff: null,
       totalUsers: null,
+      incomesFromLastMonth: null,
+      ordersFromLastMonth: null,
+      usersFromLastMonth: null,
     };
   },
   methods: {
@@ -179,7 +182,7 @@ export default {
         {
           type: "line",
           data: {
-            labels: [this.lastMonthsIncomes[0]._id, this.lastMonthsIncomes[1]._id, this.lastMonthsIncomes[1]._id, "Aug", "Sep"],
+            labels: [this.lastMonthsIncomes[0]?._id ?? "No data", this.lastMonthsIncomes[1]?._id ?? "No data", this.lastMonthsIncomes[2]?._id ?? "No data", this.lastMonthsIncomes[3]?._id ?? "No data", this.lastMonthsIncomes[4]?._id ?? "No data"],
             datasets: [
               {
                 label: "Incomes",
@@ -254,12 +257,16 @@ export default {
         this.totalOrders = response.data.totalOrders
         this.totalStaff = response.data.totalStaff
         this.totalUsers = response.data.totalUsers
+        this.incomesFromLastMonth = response.data.incomesFromLastMonth
+        this.ordersFromLastMonth = response.data.ordersFromLastMonth
+        this.usersFromLastMonth = response.data.usersFromLastMonth
+
         this.lastMonthsIncomes = response.data.lastMonthsIncomes
         this.lastMonthsOrders = response.data.lastMonthsOrders
-        console.log("Response", response)
+      
         this.initBigChart(0)
         this.bigLineChart.allData = [
-          [this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[1].total, this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[0].total, this.lastMonthsIncomes[0].total],
+          [this.lastMonthsIncomes[0]?.total ?? 0, this.lastMonthsIncomes[1]?.total ?? 0, this.lastMonthsIncomes[2]?.total ?? 0, this.lastMonthsIncomes[3]?.total ?? 0, this.lastMonthsIncomes[4]?.total ?? 0],
         ]
         this.initBigChart(0)
       })
@@ -272,11 +279,9 @@ export default {
         }
       })
       .then((response) => {
-        response.data.role
         if(response.data.role != "admin" || !localStorage.token) {
           this.$router.push("/login")
         }
-        console.log(response)
       },() => { this.$router.push("/login") })
     }
   },

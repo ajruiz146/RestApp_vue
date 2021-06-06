@@ -76,7 +76,6 @@ export default {
       axios
       .get(process.env.VUE_APP_API + "statistics")
       .then((response) => {
-        console.log(response.data)
         this.topProducts = response.data.topProducts
       })
       

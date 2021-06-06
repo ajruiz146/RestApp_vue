@@ -63,7 +63,6 @@ export default {
         axios
         .get(process.env.VUE_APP_API + "order/bar/pending")
         .then((response) => {
-            console.log(response)
             this.pendings = response.data
         }) 
         },

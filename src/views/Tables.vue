@@ -1,6 +1,6 @@
 <template>
   <div>
-        <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
+    <base-header type="gradient-success" class="pb-6 pb-8 pt-5 pt-md-8">
       <div class="row">
         <div class="col-xl-3 col-lg-6">
           <stats-card
@@ -11,8 +11,8 @@
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 3.48%
+              <span :class="incomesFromLastMonth > 0 ? 'text-success' : 'text-danger'">
+                <i :class="incomesFromLastMonth > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ incomesFromLastMonth }}%
               </span>
               <span class="text-nowrap">Since last month</span>
             </template>
@@ -27,8 +27,8 @@
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
-              <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 12.18%
+              <span :class="ordersFromLastMonth > 0 ? 'text-success' : 'text-danger'">
+                <i :class="ordersFromLastMonth > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ ordersFromLastMonth }}%
               </span>
               <span class="text-nowrap">Since last month</span>
             </template>
@@ -43,8 +43,8 @@
             class="mb-4 mb-xl-0"
           >
             <template v-slot:footer>
-              <span class="text-danger mr-2">
-                <i class="fa fa-arrow-down"></i> 5.72%
+              <span :class="usersFromLastMonth > 0 ? 'text-success' : 'text-danger'">
+                <i :class="usersFromLastMonth > 0 ? 'fa fa-arrow-up' : 'fa fa-arrow-down'"></i> {{ usersFromLastMonth }}%
               </span>
               <span class="text-nowrap">Since last month</span>
             </template>
@@ -93,6 +93,9 @@ export default {
       totalOrders: null,
       totalStaff: null,
       totalUsers: null,
+      incomesFromLastMonth: null,
+      ordersFromLastMonth: null,
+      usersFromLastMonth: null,
     };
   },
   methods: {
@@ -104,6 +107,9 @@ export default {
         this.totalOrders = response.data.totalOrders
         this.totalStaff = response.data.totalStaff
         this.totalUsers = response.data.totalUsers
+        this.incomesFromLastMonth = response.data.incomesFromLastMonth
+        this.ordersFromLastMonth = response.data.ordersFromLastMonth
+        this.usersFromLastMonth = response.data.usersFromLastMonth
       })
     },
     getUserStats: function() {
@@ -114,11 +120,9 @@ export default {
         }
       })
       .then((response) => {
-        response.data.role
         if(response.data.role != "admin" || !localStorage.token) {
           this.$router.push("/login")
         }
-        console.log(response)
       },() => { this.$router.push("/login") })
     }
   },

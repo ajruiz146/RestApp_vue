@@ -33,14 +33,22 @@ export default {
   methods: {
     getTables: function() {
       axios
-        .get(process.env.VUE_APP_API + "table")
+        .get(process.env.VUE_APP_API + "table", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
         .then((response) => {
           this.tables = response.data
         })
     },
     updateNeedWaiter: function(id) {
       axios
-        .post(process.env.VUE_APP_API + "table/turn/" + id)
+        .post(process.env.VUE_APP_API + "table/turn/" + id, {}, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
         .then(() => {
           this.getTables();
         })

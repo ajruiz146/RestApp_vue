@@ -251,7 +251,11 @@ export default {
     },
     getStatistics: function() {
       axios
-      .get(process.env.VUE_APP_API + "statistics")
+      .get(process.env.VUE_APP_API + "statistics", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         this.totalIncomes = response.data.totalIncomes
         this.totalOrders = response.data.totalOrders

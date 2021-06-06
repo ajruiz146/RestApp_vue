@@ -67,6 +67,10 @@ export default {
       .post(process.env.VUE_APP_API + "auth/login", {
         email: email,
         password: password
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then((response) => {
         const role = response.data.role

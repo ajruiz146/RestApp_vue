@@ -74,7 +74,11 @@ export default {
   methods: {
     getTopProducts: function() {
       axios
-      .get(process.env.VUE_APP_API + "statistics")
+      .get(process.env.VUE_APP_API + "statistics", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         this.topProducts = response.data.topProducts
       })

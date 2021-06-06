@@ -12,7 +12,11 @@ export const ordersChart = {
     gradientStroke.addColorStop(1, chartColor);
     var lastMonthsOrders = null;
     axios
-      .get(process.env.VUE_APP_API + "statistics")
+      .get(process.env.VUE_APP_API + "statistics", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         lastMonthsOrders = response.data.lastMonthsOrders;
         new Chart(ctx, {

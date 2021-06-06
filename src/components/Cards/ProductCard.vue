@@ -254,6 +254,10 @@ export default {
           value: this.value
         },
         contains: this.search,
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then((respuesta) => {
         this.data = respuesta.data.object
@@ -278,11 +282,15 @@ export default {
       const formData = new FormData();
       formData.append("file", file);
       axios
-        .post(process.env.VUE_APP_API + "upload", formData)
-        .then((result) => {
-          filename = result.data.filename
-          this.updateProductValues(filename)
-        }, (error) => (console.log(error)));
+        .post(process.env.VUE_APP_API + "upload", formData, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
+      .then((result) => {
+        filename = result.data.filename
+        this.updateProductValues(filename)
+      }, (error) => (console.log(error)));
     },
     updateProductValues: function(filename) {
       let id = $('#modal-id').val();
@@ -300,6 +308,10 @@ export default {
           image_url: filename,
           category: category,
           zone: zone
+          }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
         })
         .then(() => {
           this.getProducts()
@@ -358,7 +370,11 @@ export default {
       const formData = new FormData();
       formData.append("file", file);
       axios
-        .post(process.env.VUE_APP_API + "upload", formData)
+        .post(process.env.VUE_APP_API + "upload", formData, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+        })
         .then((result) => {
           filename = result.data.filename
           this.createProductValues(filename)
@@ -379,6 +395,10 @@ export default {
           image_url: filename,
           category: category,
           zone: zone
+        }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
         })
         .then(() => {
           this.getProducts()
@@ -387,7 +407,11 @@ export default {
         });
     },
     getCategories: function() {
-      axios.get(process.env.VUE_APP_API + "category").then((response) => {
+      axios.get(process.env.VUE_APP_API + "category", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      }).then((response) => {
         this.categories = response.data
       });
     },

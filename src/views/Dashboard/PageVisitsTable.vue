@@ -94,7 +94,11 @@ export default {
   methods: {
     getTopAndVisitors: function() {
       axios
-      .get(process.env.VUE_APP_API + "statistics")
+      .get(process.env.VUE_APP_API + "statistics", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         this.referrals = response.data.referrals
       })

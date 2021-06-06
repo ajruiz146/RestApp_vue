@@ -231,6 +231,10 @@ export default {
           order: this.order
         },
         contains: this.search,
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(response => {
         this.data = response.data.object
@@ -253,6 +257,10 @@ export default {
         email: email,
         password: password,
         role: role
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(() => {
         this.getUsers()
@@ -288,6 +296,10 @@ export default {
         email: email,
         password: password,
         role: "client"
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(() => {
         this.getUsers()

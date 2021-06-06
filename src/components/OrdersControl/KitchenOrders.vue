@@ -63,14 +63,22 @@ export default {
     methods: {
         getPending: function() {
             axios
-            .get(process.env.VUE_APP_API + "order/kitchen/pending")
+            .get(process.env.VUE_APP_API + "order/kitchen/pending", {
+            headers: {
+                "x-access-token": localStorage.token
+                }
+            })
             .then((response) => {
                 this.pendings = response.data
             })
         },
         getDelivered: function() {
             axios
-            .get(process.env.VUE_APP_API + "order/kitchen/delivered")
+            .get(process.env.VUE_APP_API + "order/kitchen/delivered", {
+                headers: {
+                "x-access-token": localStorage.token
+                }
+            })
             .then((response) => {
                 this.delivereds = response.data
             }) 

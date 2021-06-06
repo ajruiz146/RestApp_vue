@@ -32,7 +32,11 @@ export default {
   methods: {
     getTables: function() {
       axios
-      .get(process.env.VUE_APP_API + "table")
+      .get(process.env.VUE_APP_API + "table", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         this.tables = response.data
         this.getQr()
@@ -91,6 +95,10 @@ export default {
 
     .qr-list {
         padding-left: 0;
+    }
+
+    #printPdf {
+        background-color: #32325d !important;
     }
 
 @media screen and (max-width: 500px) {

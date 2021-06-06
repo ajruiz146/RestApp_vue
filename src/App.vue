@@ -57,4 +57,8 @@ table .dropdown button{
 table .dropdown button:hover{
   color: #741922 !important;
 }
+
+td {
+  color: black !important;
+}
 </style>

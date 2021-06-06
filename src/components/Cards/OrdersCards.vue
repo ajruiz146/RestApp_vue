@@ -311,6 +311,10 @@ export default {
         total: this.total,
         products: this.obtainProducts,
         date: dateTime,
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(() => {
         this.getOrders();
@@ -346,7 +350,11 @@ export default {
     deleteOrder: function() {
       let id = $("#delete-order-id").val()
       axios
-      .delete(process.env.VUE_APP_API + "order/" + id)
+      .delete(process.env.VUE_APP_API + "order/" + id, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         if(this.totalPages > response.data.pages) {
           this.page = response.data.pages
@@ -356,14 +364,22 @@ export default {
     },
     getTables: function() {
       axios
-      .get(process.env.VUE_APP_API + "table",)
+      .get(process.env.VUE_APP_API + "table", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         this.tables = response.data
       })
     },
     getProducts: function() {
       axios
-      .post(process.env.VUE_APP_API + "product")
+      .post(process.env.VUE_APP_API + "product", {}, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then((response) => {
         this.products = response.data
       })
@@ -410,7 +426,11 @@ export default {
     },
     getUsers: function() {
       axios
-      .post(process.env.VUE_APP_API + "user")
+      .post(process.env.VUE_APP_API + "user",{}, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
       .then(response => {
         this.users = response.data
       })

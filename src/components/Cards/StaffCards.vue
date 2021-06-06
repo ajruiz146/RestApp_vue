@@ -226,6 +226,10 @@ export default {
           order: this.order
         },
         contains: this.search,
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then((response) => {
         this.totalPages = response.data.pages
@@ -247,6 +251,10 @@ export default {
         email: email,
         password: password,
         role: role
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(() => {
         this.getStaff()
@@ -267,6 +275,10 @@ export default {
         email: email,
         password: password,
         role: role
+      }, {
+        headers: {
+          "x-access-token": localStorage.token
+        }
       })
       .then(() => {
         this.getStaff()

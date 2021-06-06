@@ -6,10 +6,6 @@
       containerClasses="px-4 container"
       expand
     >
-      <!-- <router-link slot="brand" class="navbar-brand" to="/">
-                <img src="img/brand/white.png"/>
-            </router-link> -->
-
       <template v-slot="{ closeMenu }">
         <!-- Collapse header -->
         <div class="navbar-collapse-header d-md-none">
@@ -109,26 +105,16 @@
               </li>
               <li class="nav-item">
                 <a
-                  href="javascript:void(0)"
+                  href="https://www.ieszaidinvergeles.org/"
                   class="nav-link"
-                  
                   >About Us</a
                 >
               </li>
               <li class="nav-item">
                 <a
-                  href="javascript:void(0)"
+                  href="https://www.ieszaidinvergeles.org/blog/"
                   class="nav-link"
-                  
                   >Blog</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  href="javascript:void(0)"
-                  class="nav-link"
-                  
-                  >License</a
                 >
               </li>
             </ul>

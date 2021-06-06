@@ -61,14 +61,22 @@ export default {
     methods: {
         getPending: function() {
         axios
-        .get(process.env.VUE_APP_API + "order/bar/pending")
+        .get(process.env.VUE_APP_API + "order/bar/pending", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
         .then((response) => {
             this.pendings = response.data
         }) 
         },
         getDelivered: function() {
         axios
-        .get(process.env.VUE_APP_API + "order/bar/delivered")
+        .get(process.env.VUE_APP_API + "order/bar/delivered", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
         .then((response) => {
             this.delivereds = response.data
         }) 
@@ -78,6 +86,10 @@ export default {
             axios
             .put(process.env.VUE_APP_API + "order/bar/toggle/" + id, {
                 bar_delivered: delivered
+            }, {
+            headers: {
+                "x-access-token": localStorage.token
+                }
             })
             .then(() => {
                 this.getPending()

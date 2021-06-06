@@ -14,8 +14,8 @@
     <div class="table-responsive">
       <base-table thead-classes="thead-light" :data="topProducts">
         <template v-slot:columns>
-          <th>Referral</th>
-          <th>Visitors</th>
+          <th>Product</th>
+          <th>Request</th>
         </template>
 
         <template v-slot:default="row">

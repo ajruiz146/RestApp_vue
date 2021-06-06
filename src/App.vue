@@ -25,9 +25,36 @@ div.pagination {
   height: 31px !important;
 }
 
-li.nav-item:hover, li.nav-item:hover span{
+.nav-link-hover:hover {
   color: #741922 !important;
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 
+.btn {
+  background: #741922 !important;
+  background-color: #741922 !important;
+  border-color: #741922 !important;
+  color: white !important;
+}
+
+#myDropdown{
+  left: 0px;
+  top: 30px;
+}
+
+table .dropdown button{
+  background-color: transparent !important;
+  padding: 0!important;
+  padding-bottom: 5px !important;
+  color: #741922 !important;
+  position: relative;
+  top: -5px;
+  
+  font-size: 2em !important;
+  margin-bottom: 2px;
+}
+
+table .dropdown button:hover{
+  color: #741922 !important;
+}
 </style>

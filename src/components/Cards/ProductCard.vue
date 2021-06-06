@@ -7,7 +7,7 @@
       </div>
       
       <div class="filters">
-        <input type="search" class="form-control form-control-sm" id="search-product" placeholder="Searh product" @keyup="contain()">
+        <input type="search" class="form-control form-control-sm" id="search-product" placeholder="Search product" @keyup="contain()">
         <select class="form-select form-select-sm" @change="onChangeFilter($event)" name="" id="">
           <option value="">Select type</option>
           <option value="s">Starters</option>

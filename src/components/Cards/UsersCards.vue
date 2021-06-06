@@ -6,7 +6,7 @@
         <i class="ni ni-fat-add"></i>
       </div>
       <div class="filters">
-        <input type="search" class="form-control form-control-sm" id="search-user" placeholder="Searh product" @keyup="contain()">
+        <input type="search" class="form-control form-control-sm" id="search-user" placeholder="Search user" @keyup="contain()">
         <select class="form-select form-select-sm" @change="onChangeOrder($event)" name="" id="">
           <option value="">Order by</option>
           <option value="na">Name Asc</option>
@@ -40,8 +40,8 @@
                 <div class="dropdown">
                   <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
                   <div id="myDropdown" class="dropdown-content">
-                    <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit"><i @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" class="ni ni-ruler-pencil"></i></a>
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)"><i data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
+                    <a href="javascript:void(0)" @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit"><img @click="updateModal(item._id, item.name, item.lastName, item.email, item.role)" data-toggle="modal" data-target="#userEdit" src="img/icons/icon_edit_red.svg" alt="icon-edit"></a>
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#userDelete" @click="updateDeleteModal(item._id, item.name)"><img @click="updateDeleteModal(item._id, item.name)" data-toggle="modal" data-target="#userDelete" src="img/icons/icon_trash_red.svg" alt="icon-delete"></a>
                   </div>
                 </div>
               </td>

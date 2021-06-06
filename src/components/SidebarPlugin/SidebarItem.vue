@@ -3,7 +3,7 @@
     <router-link
       :to="link.path"
       @click="linkClick"
-      class="nav-link"
+      class="nav-link nav-link-hover"
       :target="link.target"
       :href="link.path"
     >

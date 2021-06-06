@@ -37,8 +37,10 @@
                 <div class="dropdown">
                   <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
                   <div id="myDropdown" class="dropdown-content">
-                    <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products, item.date)" data-toggle="modal" data-target="#orderUpdate"><i @click="updateModal(item._id, item.user, item.table, item.products)" data-toggle="modal" data-target="#orderUpdate" class="ni ni-ruler-pencil"></i></a>
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)"><i data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.name)" class="ni ni-basket"></i></a>
+                    <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products, item.date)" data-toggle="modal" data-target="#orderUpdate"><img src="img/icons/icon_edit_red.svg" alt="icon-edit" data-toggle="modal" data-target="#orderUpdate" @click="updateModal(item._id, item.user, item.table, item.products)"></a>
+                    
+                    
+                    <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)"><img @click="updateDeleteModal(item._id, item.name)" data-toggle="modal" data-target="#ordersDelete" src="img/icons/icon_trash_red.svg" alt="icon-delete"></a>
                   </div>
                 </div>
               </td>

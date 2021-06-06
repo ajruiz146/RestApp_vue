@@ -88,6 +88,10 @@ export default {
             axios
             .put(process.env.VUE_APP_API + "order/kitchen/toggle/" + id, {
                 kitchen_delivered: delivered
+            },{
+                headers: {
+                "x-access-token": localStorage.token
+                }
             })
             .then(() => {
                 this.getPending()

@@ -25,4 +25,9 @@ div.pagination {
   height: 31px !important;
 }
 
+li.nav-item:hover, li.nav-item:hover span{
+  color: #741922 !important;
+  transform: scale(1.02);
+}
+
 </style>

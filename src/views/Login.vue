@@ -35,7 +35,7 @@
 
             <base-checkbox class="custom-control-alternative" style="visibility: hidden;"></base-checkbox>
             <div class="text-center">
-              <button @click="getAccess()" class="btn btn-primary my-4">Sign in</button>
+              <a @click="getAccess()" class="btn btn-primary my-4">Sign in</a>
             </div>
           </form>
         </div>
@@ -60,6 +60,7 @@ export default {
   },
   methods: {
     getAccess: function() {
+      console.log("hola");
       let email = $("#emailAccess").val()
       let password = $("#passwordAccess").val()
       axios

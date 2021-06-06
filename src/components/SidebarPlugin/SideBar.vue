@@ -71,15 +71,15 @@
         <hr class="my-3" />
         <div class="special-links">
           <li class="nav-item">
-            <a href="#/kitchen" class="nav-link">Kitchen</a>
+            <a href="/kitchen" class="nav-link">Kitchen</a>
           </li>
 
           <li class="nav-item">
-            <a href="#/bar" class="nav-link">Bar</a>
+            <a href="/bar" class="nav-link">Bar</a>
           </li>
 
           <li class="nav-item">
-            <a href="#/qr" class="nav-link">QR Codes</a>
+            <a href="/qr" class="nav-link">QR Codes</a>
           </li>
         </div>
       </div>
@@ -146,7 +146,7 @@ export default {
     padding: .3em;
     margin: 5px 0;
     color: white;
-    text-align: center;
+    padding-left: 20px;
     font-size: .9em !important;
   }
 

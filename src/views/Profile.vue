@@ -87,12 +87,27 @@
                               <option value="client">Client</option>
                               <option value="kitchen">Kitchen</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="profile-password"><b>Password</b></label>
-                            <input type="password" class="form-control" id="profile-password">
+                            <small class="success-message" id="profile-change"></small>
+                            <small class="error-message" id="profile-change-error"></small>
                         </div>
                         <input type="button" @click="updateProfile()" value="Change Profile" class="btn btn-primary">
+                        <hr>
+                        <div class="form-group">
+                            <label for="last-password"><b>Last Password</b></label>
+                            <input type="password" class="form-control" id="last-password">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-password"><b>New Password</b></label>
+                            <input type="password" class="form-control" id="new-password">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password"><b>Confirm Password</b></label>
+                            <input type="password" class="form-control" id="confirm-password">
+                            <small id="password-change-alert" class="error-message"></small>
+                            <small id="password-correct-alert" class="success-message"></small>
+                        </div>
+                        <input type="button" @click="changePassword()" value="Change Password" class="btn btn-primary">
                     </div>
                 </div>
               </div>
@@ -146,7 +161,13 @@ export default {
               "x-access-token": localStorage.token
             }
           }).then(() => {
+            localStorage.role = role
             this.getUser()
+            $("#profile-change").text("Profile updated success");
+            $("#profile-change-error").text("");
+          }, () => {
+            $("#profile-change-error").text("Email registed yet");
+            $("#profile-change").text("");
           }) 
       },
       updateFields: function() {
@@ -154,6 +175,35 @@ export default {
         $("#profile-lastName").val(this.user.lastName)
         $("#profile-email").val(this.user.email)
         $("#profile-role").val(this.user.role)
+      },
+      changePassword: function() {
+        let last_password = $("#last-password").val()
+        let new_password = $("#new-password").val()
+        let confirm_password = $("#confirm-password").val()
+        console.log(new_password, confirm_password, last_password)
+        if(new_password === confirm_password) {
+          axios
+          .post(process.env.VUE_APP_API + "auth/changeMyPassword",
+            {
+              oldPassword: last_password,
+              newPassword: new_password,
+            }, 
+            {
+              headers: {
+              "x-access-token": localStorage.token
+            }
+          }).then(() => {
+            this.getUser()
+            $("#password-correct-alert").text("Password succesfully changed")
+            $("#password-change-alert").text("")
+          }, ()=> {
+            $("#password-change-alert").text("Wrong old password")
+            $("#password-correct-alert").text("")
+          })             
+        } else {
+          $("#password-change-alert").text("Passwords do not match")
+          $("#password-correct-alert").text("")
+        }
       },
       getUserStats: function() {
         axios
@@ -163,14 +213,15 @@ export default {
           }
         })
         .then((response) => {
-          if(response.data.role != "admin") {
-            this.$router.push("/login")
-          }
+          localStorage.role = response.data.role
+        },() => { 
+          localStorage.removeItem("role")
+          localStorage.removeItem("token")
         })
       }
     },
     created() {
-    /*  this.getUserStats(); */
+      this.getUserStats();
     },
     beforeMount(){
       this.getUser()

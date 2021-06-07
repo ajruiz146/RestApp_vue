@@ -4,6 +4,9 @@
       <h3 class="mb-0">Tables</h3>
     </div>
     <div class="card-body">
+      <div v-if="success" class="alert alert-success" role="alert">
+        Success operation!
+      </div>
       <div class="wrapper">
         <div class="row tables">
           <!-- Inicio Card -->
@@ -27,7 +30,8 @@ import axios from "axios";
 export default {
   data() {
     return {
-      tables: []
+      tables: [],
+      success: 0,
     };
   },
   methods: {
@@ -40,6 +44,7 @@ export default {
       })
         .then((response) => {
           this.tables = response.data
+          setTimeout(this.defaultAlerts, 3000);
         })
     },
     updateNeedWaiter: function(id) {
@@ -50,9 +55,13 @@ export default {
         }
       })
         .then(() => {
-          this.getTables();
+          this.getTables()
+          this.success = 1
         })
-    }
+    },
+    defaultAlerts: function() {
+      this.success = 0
+    },
   },
   mounted() {
     this.getTables()

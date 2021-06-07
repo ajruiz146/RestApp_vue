@@ -31,7 +31,9 @@
               v-model="model.password"
               id="passwordAccess"
             >
+            
             </base-input>
+            <small id="credential-error"></small>
 
             <base-checkbox class="custom-control-alternative" style="visibility: hidden;"></base-checkbox>
             <div class="text-center">
@@ -54,13 +56,12 @@ export default {
     return {
       model: {
         role: null,
-        token: null
+        token: null,
       },
     };
   },
   methods: {
     getAccess: function() {
-      console.log("hola");
       let email = $("#emailAccess").val()
       let password = $("#passwordAccess").val()
       axios
@@ -77,16 +78,28 @@ export default {
         const token = response.data.token
         if(role == "admin") {
           localStorage.token = token
+          localStorage.role = role
           this.$router.push('/');
         }else {
+          localStorage.removeItem("token")
+          localStorage.removeItem("role")
+          this.error = "Credential error"
           this.$router.push('/login');
+          $("#credential-error").text("Credential error")
         }
       })
       .catch(() => {
         localStorage.removeItem("token")
+        localStorage.removeItem("role")
+        $("#credential-error").text("Credential error")
       }) 
     },
   }
 };
 </script>
-<style></style>
+<style scoped>
+  #credential-error {
+    color: red;
+    font-size: .8em !important;
+  }
+</style>

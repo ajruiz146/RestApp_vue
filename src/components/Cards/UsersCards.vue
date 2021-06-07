@@ -17,6 +17,15 @@
       </div>
     </div>
     <div class="card-body" >
+      <div v-if="success" class="alert alert-success" role="alert">
+        Success operation!
+      </div>
+      <div v-if="error" class="alert alert-danger" role="alert">
+        Email already taken!
+      </div>
+      <div v-if="info" class="alert alert-warning" role="alert">
+        Insert correct values on fields
+      </div>
       <div class="responsive-table" style="overflow-x:auto;">
         <table class="table table-hover">
           <thead>
@@ -211,6 +220,9 @@ export default {
       data: [],
       totalPages: [],
       search: "",
+      success: 0,
+      error: 0,
+      info: 0,
     };
   },
   mixins: [paginate, filters],
@@ -240,6 +252,7 @@ export default {
         this.data = response.data.object
         this.page = response.data.current
         this.totalPages = response.data.pages
+        setTimeout(this.defaultAlerts, 3000);
       })
     },
     updateUser: function() {
@@ -249,23 +262,30 @@ export default {
       let email = $("#edit-user-email").val()
       let password = $("#edit-user-password").val()
       let role = $("#edit-user-role").val()
-      
-      axios
-      .put(process.env.VUE_APP_API + 'user/' + id, {
-        name: name,
-        lastName: lastName,
-        email: email,
-        password: password,
-        role: role
-      }, {
-        headers: {
-          "x-access-token": localStorage.token
-        }
-      })
-      .then(() => {
+      if(this.checkModal(name, lastName, email, password, "update")) {
+        axios
+        .put(process.env.VUE_APP_API + 'user/' + id, {
+          name: name,
+          lastName: lastName,
+          email: email,
+          password: password,
+          role: role
+        }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
+        })
+        .then(() => {
+          this.getUsers()
+          this.success = 1
+        }, () => {
+          this.getUsers()
+          this.error = 1
+        })
+      } else {
         this.getUsers()
-      })
-      
+        this.info = 1
+      }
     },
     deleteUser: function() {
       let id = $("#delete-user-id").val()
@@ -281,6 +301,7 @@ export default {
             this.page = response.data.pages
         }
         this.getUsers()
+        this.success = 1
       });
     },
     createUser: function() {
@@ -288,22 +309,30 @@ export default {
       let lastName = $("#create-user-lastName").val()
       let email = $("#create-user-email").val()
       let password = $("#create-user-password").val()
-
-      axios
-      .post(process.env.VUE_APP_API + "auth/signup", {
-        name: name,
-        lastName: lastName,
-        email: email,
-        password: password,
-        role: "client"
-      }, {
-        headers: {
-          "x-access-token": localStorage.token
-        }
-      })
-      .then(() => {
+      if(this.checkModal(name, lastName, email, password, "create")) {
+        axios
+        .post(process.env.VUE_APP_API + "auth/signup", {
+          name: name,
+          lastName: lastName,
+          email: email,
+          password: password,
+          role: "client"
+        }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
+        })
+        .then(() => {
+          this.getUsers()
+          this.success = 1
+        }, () => {
+          this.getUsers()
+          this.error = 1
+        })
+      } else {
         this.getUsers()
-      })
+        this.info = 1
+      }
     },
     updateModal: function(id, name, lastName, email, role) {
       $("#edit-user-id").val(id)
@@ -320,18 +349,30 @@ export default {
     contain: function() {
       this.search = $("#search-user").val()
       this.getUsers();
+    },
+    defaultAlerts: function() {
+      this.success = 0
+      this.error = 0
+      this.info = 0
+    },
+    checkModal: function(name, lastName, email, password, mode) {
+      let status = true
+      if(name == "") {
+        status = false
+      } else if(lastName == "") {
+        status = false
+      } else if(email == "") {
+        status = false
+      } else if(password == "" && mode == "create") {
+        status = false
+      }
+      console.log(name, lastName,)
+      return status
     }
   },
   mounted() {
     this.getUsers()
   },
-  beforeMount() {
-    /*
-    if(!localStorage.token) {
-      this.$router.push("/login")
-    }
-    */
-  }
 };
 </script>
 

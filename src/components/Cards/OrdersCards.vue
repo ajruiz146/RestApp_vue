@@ -16,6 +16,12 @@
       </div>
     </div>
     <div class="card-body" >
+      <div v-if="success" class="alert alert-success" role="alert">
+        Success operation!
+      </div>
+      <div v-if="info" class="alert alert-warning" role="alert">
+        Insert correct values on fields
+      </div>
       <div class="responsive-table" style="overflow-x:auto; width: 100%">
         <table class="table table-hover">
           <thead>
@@ -98,21 +104,21 @@
               </div>
               <div class="form-group">
                 <label for="update-order-table">Table</label>
-                <select id="update-order-table" class="form-select">
+                <select id="update-order-table" class="form-select" required>
                   <option v-bind:value="item.table_number" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="update-order-user">User</label>
-                <select id="update-order-user" class="form-select">
+                <select id="update-order-user" class="form-select" required>
                   <option v-bind:value="item.name" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="update-order-date">Date</label>
                 <div class="date-time-container">
-                  <input type="date" class="form-control" id="update-order-date">
-                  <input type="time" class="form-control" id="update-order-time">
+                  <input type="date" class="form-control" id="update-order-date" required>
+                  <input type="time" class="form-control" id="update-order-time" required>
                 </div>
               </div>
               <div class="card-body" style="padding:0;">
@@ -161,13 +167,13 @@
               </div>
               <div class="form-group">
                 <label for="create-order-table">Table</label>
-                <select id="create-order-table" class="form-select">
+                <select id="create-order-table" class="form-select" required>
                   <option value="client" v-for="item in tables" :key="item.id" :data-id="item._id">{{ item.table_number }}</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="create-order-user">User</label>
-                <select id="create-order-user" class="form-select">
+                <select id="create-order-user" class="form-select" required>
                   <option value="client" v-for="item in users" :key="item.id" :data-id="item._id">{{ item.name }}</option>
                 </select>
               </div>
@@ -249,6 +255,8 @@ export default {
       tables: [],
       products: [],
       totalPages: [],
+      success: 0,
+      info: 0
     };
   },
   methods: {
@@ -272,6 +280,7 @@ export default {
         this.page = response.data.current
         this.totalPages = response.data.pages
         this.data = response.data.object
+        setTimeout(this.defaultAlerts, 3000);
       })
     },
     createOrder: function() {
@@ -282,21 +291,28 @@ export default {
         dateTime = Date.now();
       }
       this.countProducts()
-      axios
-      .post(process.env.VUE_APP_API + "order/create", {
-        table: this.tableSelected,
-        user: this.userSelected,
-        total: this.total,
-        products: this.obtainProducts,
-        date: dateTime,
-      }, {
-        headers: {
-          "x-access-token": localStorage.token
-        }
-      })
-      .then(() => {
+      if(this.checkModal()) {
+        axios
+        .post(process.env.VUE_APP_API + "order/create", {
+          table: this.tableSelected,
+          user: this.userSelected,
+          total: this.total,
+          products: this.obtainProducts,
+          date: dateTime,
+        }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
+        })
+        .then(() => {
+          this.success = 1
+          this.getOrders();
+        })
+      } else {
         this.getOrders();
-      })
+        this.info = 1
+      }
+      
     },
     updateOrder: function() {
       let date = $("#update-order-date").val();
@@ -304,21 +320,28 @@ export default {
       let dateTime = new Date(date + " " + time);
       this.countProductsUpdate()
       let id = $("#update-order-id").val()
-      axios
-      .put(process.env.VUE_APP_API + "order/" + id, {
-        table: this.tableSelected,
-        user: this.userSelected,
-        total: this.total,
-        products: this.obtainProducts,
-        date: dateTime,
-      }, {
-        headers: {
-          "x-access-token": localStorage.token
-        }
-      })
-      .then(() => {
+      if(this.checkModal()) {
+        axios
+        .put(process.env.VUE_APP_API + "order/" + id, {
+          table: this.tableSelected,
+          user: this.userSelected,
+          total: this.total,
+          products: this.obtainProducts,
+          date: dateTime,
+        }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
+        })
+        .then(() => {
+          this.success = 1
+          this.getOrders()
+        })
+      } else {
         this.getOrders();
-      })
+        this.info = 1
+      }
+      
     },
     updateModal: function(id, user, table, products, date) {
       let dateLocal = new Date(date)
@@ -359,6 +382,7 @@ export default {
         if(this.totalPages > response.data.pages) {
           this.page = response.data.pages
         }
+        this.success = 1
         this.getOrders();
       })
     },
@@ -395,7 +419,7 @@ export default {
           product.zone = allProducts[i].dataset.zone,
           product.price = allProducts[i].dataset.price,
           product.amount = allProducts[i].value
-          total += (parseInt(allProducts[i].dataset.price) * allProducts[i].value)
+          total += (parseFloat(allProducts[i].dataset.price).toFixed(2) * allProducts[i].value)
           products.push(product)
         }
       }
@@ -415,7 +439,7 @@ export default {
           product.zone = allProducts[i].dataset.zone,
           product.price = allProducts[i].dataset.price,
           product.amount = allProducts[i].value
-          total += (parseInt(allProducts[i].dataset.price) * allProducts[i].value)
+          total += (parseFloat(allProducts[i].dataset.price).toFixed(2) * allProducts[i].value)
           products.push(product)
         }
       }
@@ -434,6 +458,18 @@ export default {
       .then(response => {
         this.users = response.data
       })
+    },
+    defaultAlerts: function() {
+      this.success = 0
+      this.info = 0
+    },
+    checkModal:function() {      
+      let status = false;
+      if(this.total > 0) {
+        status = true
+      }
+
+      return status;
     }
   },
   mixins: [paginate, filters],
@@ -442,21 +478,16 @@ export default {
     this.getTables();
     this.getProducts();
     this.getUsers();
-    
-
   },
-  beforeCreate() {
-
-    /*
-    if(!localStorage.token) {
-      this.$router.push("/login")
-    }
-    */
-  }
 };
 </script>
 
 <style scoped>
+
+.modal-content .card-body {
+    padding-left: 0;
+    padding-right: 0;
+}
 
 .flex-create {
   display: flex;

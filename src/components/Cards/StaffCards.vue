@@ -24,6 +24,15 @@
       </div>
     </div>
     <div class="card-body">
+      <div v-if="success" class="alert alert-success" role="alert">
+        Success operation!
+      </div>
+      <div v-if="error" class="alert alert-danger" role="alert">
+        Email already taken!
+      </div>
+      <div v-if="info" class="alert alert-warning" role="alert">
+        Insert correct values on fields
+      </div>
       <div class="wrapper">
         <div class="row staff">
           <div class="card" style="width: 18rem" v-for="item in staff" :key="item._id">
@@ -210,6 +219,9 @@ export default {
       staff: [],
       totalPages: [],
       search: "",
+      success: 0,
+      error: 0,
+      info: 0
     };
   },
   methods: {
@@ -235,6 +247,7 @@ export default {
         this.totalPages = response.data.pages
         this.page = response.data.current
         this.staff = response.data.object
+        setTimeout(this.defaultAlerts, 3000);
       }) 
     },
     createStaff: function() {
@@ -243,22 +256,30 @@ export default {
       let email = $("#create-staff-email").val()
       let password = $("#create-staff-password").val()
       let role = $("#create-staff-role").val()
-
-      axios
-      .post(process.env.VUE_APP_API + "auth/signup", {
-        name: name,
-        lastName: lastName,
-        email: email,
-        password: password,
-        role: role
-      }, {
-        headers: {
-          "x-access-token": localStorage.token
-        }
-      })
-      .then(() => {
+      if(this.checkModal(name, lastName, email, password, role, "create")) {
+        axios
+        .post(process.env.VUE_APP_API + "auth/signup", {
+          name: name,
+          lastName: lastName,
+          email: email,
+          password: password,
+          role: role
+        }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
+        })
+        .then(() => {
+          this.getStaff()
+          this.success = 1
+        }, () => {
+          this.getStaff()
+          this.error = 1
+        })
+      } else {
         this.getStaff()
-      })
+        this.info = 1
+      }
     },
     updateStaff: function() {
       let id = $("#update-staff-id").val()
@@ -267,22 +288,31 @@ export default {
       let email = $("#update-staff-email").val()
       let password = $("#update-staff-password").val()
       let role = $("#update-staff-role").val()
-
+      if(this.checkModal(name, lastName, email, password, role, "update")) {
       axios
-      .put(process.env.VUE_APP_API + "user/" + id, {
-        name: name,
-        lastName: lastName,
-        email: email,
-        password: password,
-        role: role
-      }, {
-        headers: {
-          "x-access-token": localStorage.token
-        }
-      })
-      .then(() => {
+        .put(process.env.VUE_APP_API + "user/" + id, {
+          name: name,
+          lastName: lastName,
+          email: email,
+          password: password,
+          role: role
+        }, {
+          headers: {
+            "x-access-token": localStorage.token
+          }
+        })
+        .then(() => {
+          this.getStaff()
+          this.success = 1
+        }, () => {
+          this.getStaff()
+          this.error = 1
+        })
+      } else {
         this.getStaff()
-      })
+        this.info = 1
+      }
+      
     },
     deleteStaff:function() {
       let id = $("#delete-staff-id").val()
@@ -302,6 +332,7 @@ export default {
             this.page = response.data.pages
         }
         this.getStaff()
+        this.success = 1
       })
     },
     updateModal: function(id, name, lastName, email, role) {
@@ -318,19 +349,33 @@ export default {
     contain: function() {
       this.search = $("#search-staff").val()
       this.getStaff();
+    },
+    defaultAlerts: function() {
+      this.success = 0
+      this.error = 0
+      this.info = 0
+    },
+    checkModal: function(name, lastName, email, password, role, mode) {
+      let status = true
+      if(name == "") {
+        status = false
+      } else if(lastName == "") {
+        status = false
+      } else if(email == "") {
+        status = false
+      } else if(password == "" && mode == "create") {
+        status = false
+      } else if(role == "") {
+        status = false
+      }
+  
+      return status
     }
   },
   mixins: [paginate, filters],
   mounted() {
     this.getStaff();
   },
-  beforeMount() {
-    /*
-    if(!localStorage.token) {
-      this.$router.push("/login")
-    }
-    */
-  }
 };
 </script>
 

@@ -15,7 +15,6 @@ import Qr from "../views/Qr.vue";
 import Profile from "../views/Profile.vue";
 
 import Login from "../views/Login.vue";
-import Register from "../views/Register.vue";
 
 //import axios from "axios";
 
@@ -29,51 +28,101 @@ const routes = [
         path: "/dashboard",
         name: "dashboard",
         components: { default: Dashboard },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/products",
         name: "products",
         components: { default: Products },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/staff",
         name: "staff",
         components: { default: Staff },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/orders",
         name: "orders",
         components: { default: Orders },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/tables",
         name: "tables",
         components: { default: Tables },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/users",
         name: "users",
         components: { default: Users },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/kitchen",
         name: "kitchen",
         components: { default: Kitchen },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/bar",
         name: "bar",
         components: { default: Bar },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/qr",
         name: "qr",
         components: { default: Qr },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
       {
         path: "/profile",
         name: "profile",
         components: { default: Profile },
+        beforeEnter: (to, from, next) => {
+          if(!localStorage.token || localStorage.role != "admin")
+            router.push("/login")
+          next();
+        }
       },
     ],
   },
@@ -86,11 +135,6 @@ const routes = [
         path: "/login",
         name: "login",
         components: { default: Login },
-      },
-      {
-        path: "/register",
-        name: "register",
-        components: { default: Register },
       },
     ],
   },

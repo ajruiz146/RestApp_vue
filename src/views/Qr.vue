@@ -35,10 +35,11 @@ export default {
         }
       })
       .then((response) => {
-        if(response.data.role != "admin" || !localStorage.token) {
-          this.$router.push("/login")
-        }
-      },() => { this.$router.push("/login") })
+        localStorage.role = response.data.role
+      },() => { 
+        localStorage.removeItem("role")
+        localStorage.removeItem("token")
+      })
     }
   },
   created() {

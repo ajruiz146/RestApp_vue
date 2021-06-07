@@ -27,7 +27,7 @@ export default {
     BarOrders,
   },
   methods: {
-    getUserStats: function() {
+        getUserStats: function() {
       axios
       .post(process.env.VUE_APP_API + "user/myUser", {}, {
         headers: {
@@ -35,11 +35,11 @@ export default {
         }
       })
       .then((response) => {
-        if(response.data.role != "admin" || !localStorage.token) {
-          this.$router.push("/login")
-        }
-      },
-      () => { this.$router.push("/login") })
+        localStorage.role = response.data.role
+      },() => { 
+        localStorage.removeItem("role")
+        localStorage.removeItem("token")
+      })
     }
   },
   created() {

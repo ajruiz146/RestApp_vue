@@ -5,7 +5,6 @@
         <h3 class="mb-0">Products</h3>
         <i class="ni ni-fat-add" ></i>
       </div>
-      
       <div class="filters">
         <input type="search" class="form-control form-control-sm" id="search-product" placeholder="Search product" @keyup="contain()">
         <select class="form-select form-select-sm" @change="onChangeFilter($event)" name="" id="">
@@ -25,6 +24,12 @@
       </div>
     </div>
     <div class="card-body">
+      <div v-if="success" class="alert alert-success" role="alert">
+        Success operation!
+      </div>
+      <div v-if="info" class="alert alert-warning" role="alert">
+        Insert correct values on fields
+      </div>
       <div class="wrapper wrapper-products" v-if="data">
         <div class="row staff">
           <div class="card" style="width: 18rem" v-for="item in data" :key="item._id">
@@ -98,7 +103,7 @@
               </div>
               <div class="form-group">
                 <label for="modal-price">Product Price</label>
-                <input type="text" class="form-control" id="create-price">
+                <input type="number" class="form-control" id="create-price">
               </div>
               <div class="form-group">
                 <label for="modal-description">Product Description</label>
@@ -160,7 +165,7 @@
               </div>
               <div class="form-group">
                 <label for="modal-price">Product Price</label>
-                <input type="text" class="form-control" id="modal-price">
+                <input type="number" class="form-control" id="modal-price">
               </div>
               <div class="form-group">
                 <label for="modal-description">Product Description</label>
@@ -239,6 +244,8 @@ export default {
       categories: [],
       totalPages: [],
       search: "",
+      success: 0,
+      info: 0,
     }
   },
   methods: {
@@ -263,17 +270,23 @@ export default {
         this.data = respuesta.data.object
         this.totalPages = respuesta.data.pages
         this.page = respuesta.data.current
+        setTimeout(this.defaultAlerts, 3000);
       }, (error) => {
         console.log(error);
       });
     },
     updateProduct: function() {
-      if($("#modal-image_url").val() != "") {
-        this.uploadFile()
+      if(this.checkModalUpdate()) {
+        if($("#modal-image_url").val() != "") {
+          this.uploadFile()
+        } else {
+          let img = $("#modal-previous-img").val()
+          let imgAux = img.split("/");
+          this.updateProductValues(imgAux[imgAux.length - 1])
+        }
       } else {
-        let img = $("#modal-previous-img").val()
-        let imgAux = img.split("/");
-        this.updateProductValues(imgAux[imgAux.length - 1])
+        this.getProducts()
+        this.info = 1
       }
     },
     uploadFile: function() {
@@ -314,6 +327,7 @@ export default {
           }
         })
         .then(() => {
+          this.success = 1
           this.getProducts()
         }, (error) => {
           console.log(error);
@@ -352,16 +366,22 @@ export default {
           this.page = response.data.pages
         }
         this.getProducts()
+        this.success = 1
       }, (error) => {
         console.log(error);
       });
     },
     createProduct: function() {
-      if($("#create-image_url").val() != "") {
-        this.createUploadFile()
+      if(this.checkModal()) {
+        if($("#create-image_url").val() != "") {
+          this.createUploadFile()
+          } else {
+          let img = 'default'
+          this.createProductValues(img)
+        }
       } else {
-        let img = 'default'
-        this.createProductValues(img)
+        this.getProducts()
+        this.info = 1
       }
     },
     createUploadFile: function() {
@@ -385,8 +405,8 @@ export default {
       let price = $('#create-price').val();
       let description = $('#create-description').val();
       let category = $("#create-product-select").val();
-      let zone = $("create-zone").val();
-      
+      let zone = $("#create-zone").val();
+      console.log("Name", name)
       axios
         .post(process.env.VUE_APP_API + "product/create", {
           name: name,
@@ -401,6 +421,7 @@ export default {
           }
         })
         .then(() => {
+          this.success = 1
           this.getProducts()
         }, (error) => {
           console.log(error);
@@ -418,6 +439,51 @@ export default {
     contain: function() {
       this.search = $("#search-product").val()
       this.getProducts();
+    },
+    defaultAlerts: function() {
+      this.success = 0
+      this.info = 0
+    },
+    checkModal:function() {
+      let name = $('#create-name').val();
+      let price = $('#create-price').val();
+      let description = $('#create-description').val();
+      let category = $("#create-product-select").val();
+      let zone = $("#create-zone").val();
+      let status = true;
+      if(name == "") {
+        status = false
+      } else if(price == "") {
+        status = false
+      } else if(description == "") {
+        status = false
+      } else if(category == "") {
+        status = false
+      } else if(zone == "") {
+        status = false
+      }
+      return status;
+    },
+    checkModalUpdate:function() {      
+      let name = $('#modal-name').val();
+      let price = $('#modal-price').val();
+      let description = $('#modal-description').val();
+      let category = $("#update-product-select").val();
+      let zone = $("#update-zone").val();
+
+      let status = true;
+      if(name == "") {
+        status = false
+      } else if(price == "") {
+        status = false
+      } else if(description == "") {
+        status = false
+      } else if(category == "") {
+        status = false
+      } else if(zone == "") {
+        status = false
+      }
+      return status;
     }
   },
   mounted() {

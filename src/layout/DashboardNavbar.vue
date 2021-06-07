@@ -63,8 +63,9 @@ export default {
       this.showMenu = !this.showMenu;
     },
     logout: function() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("admin");
       this.$router.push("/login")
-      localStorage.removeItem('token');
     }
   },
 };

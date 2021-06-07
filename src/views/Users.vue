@@ -60,9 +60,8 @@
           >
             <template v-slot:footer>
               <span class="text-success mr-2">
-                <i class="fa fa-arrow-up"></i> 54.8%
               </span>
-              <span class="text-nowrap">Since last month</span>
+              <span class="text-nowrap"></span>
             </template>
           </stats-card>
         </div>
@@ -116,7 +115,7 @@ export default {
         this.usersFromLastMonth = response.data.usersFromLastMonth
       })
     },    
-    getUserStats: function() {
+        getUserStats: function() {
       axios
       .post(process.env.VUE_APP_API + "user/myUser", {}, {
         headers: {
@@ -124,10 +123,11 @@ export default {
         }
       })
       .then((response) => {
-        if(response.data.role != "admin" || !localStorage.token) {
-          this.$router.push("/login")
-        }
-      },() => { this.$router.push("/login") })
+        localStorage.role = response.data.role
+      },() => { 
+        localStorage.removeItem("role")
+        localStorage.removeItem("token")
+      })
     }
   },
   created() {

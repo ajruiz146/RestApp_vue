@@ -38,14 +38,13 @@ div.pagination {
 }
 
 #myDropdown{
-  left: 0px;
-  top: -11px;
-  
+  left: 35px;
+  top: -16px;
+  box-shadow: none !important;
 }
 
-.dropdown-content a {
-  padding: 5px 0 !important;
-  width: 100%;
+.dropdown-content img {
+  display: flex;
 }
 
 table .dropdown button{
@@ -68,5 +67,8 @@ td {
   color: black !important;
 }
 
+table {
+  overflow: hidden !important;
+}
 
 </style>

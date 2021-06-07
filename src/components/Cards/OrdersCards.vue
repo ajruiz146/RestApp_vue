@@ -44,8 +44,6 @@
                   <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
                   <div id="myDropdown" class="dropdown-content">
                     <a href="javascript:void(0)" @click="updateModal(item._id, item.user, item.table, item.products, item.date)" data-toggle="modal" data-target="#orderUpdate"><img src="img/icons/icon_edit_red.svg" alt="icon-edit" data-toggle="modal" data-target="#orderUpdate" @click="updateModal(item._id, item.user, item.table, item.products)"></a>
-                    
-                    
                     <a href="javascript:void(0)" data-toggle="modal" data-target="#ordersDelete" @click="updateDeleteModal(item._id, item.user.email)"><img @click="updateDeleteModal(item._id, item.name)" data-toggle="modal" data-target="#ordersDelete" src="img/icons/icon_trash_red.svg" alt="icon-delete"></a>
                   </div>
                 </div>
@@ -121,7 +119,7 @@
                   <input type="time" class="form-control" id="update-order-time" required>
                 </div>
               </div>
-              <div class="card-body" style="padding:0;">
+              <div class="card-body" style="overflow-x:auto;">
                 <table class="table table-hover">
                   <thead>
                     <tr>

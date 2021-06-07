@@ -112,9 +112,9 @@ export default {
         this.totalOrders = response.data.totalOrders
         this.totalStaff = response.data.totalStaff
         this.totalUsers = response.data.totalUsers
-        this.incomesFromLastMonth = response.data.incomesFromLastMonth
-        this.ordersFromLastMonth = response.data.ordersFromLastMonth
-        this.usersFromLastMonth = response.data.usersFromLastMonth
+        this.incomesFromLastMonth = response.data.incomesFromLastMonth.toFixed(2)
+        this.ordersFromLastMonth = response.data.ordersFromLastMonth.toFixed(2)
+        this.usersFromLastMonth = response.data.usersFromLastMonth.toFixed(2)
       })
     },
     getUserStats: function() {

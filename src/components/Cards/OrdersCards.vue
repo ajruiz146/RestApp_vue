@@ -38,7 +38,7 @@
               <td>{{ item.user.email }}</td>
               <td>{{ item.date.substring(0, 10) }}</td>
               <td>{{ item.table.table_number }}</td>
-              <td>{{ item.total }}</td>
+              <td>{{ item.total.toFixed(2) + " $" }}</td>
               <td>
                 <div class="dropdown">
                   <button @click="dropMenu($event)" :data-id="item.id" class="drop-button">&mldr;</button>
@@ -133,7 +133,7 @@
                   <tbody>
                     <tr v-for="item in products" :key="item._id">
                       <td>{{ item.name }}</td>
-                      <td>{{ item.price }}</td>
+                      <td>{{ item.price.toFixed(2) }}</td>
                       <td>
                         <input type="number" class="products-input-update" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
                       </td>

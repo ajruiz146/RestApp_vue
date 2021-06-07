@@ -43,6 +43,10 @@ div.pagination {
   box-shadow: none !important;
 }
 
+#myDropdown a {
+  width: 40px;
+}
+
 .dropdown-content img {
   display: flex;
 }

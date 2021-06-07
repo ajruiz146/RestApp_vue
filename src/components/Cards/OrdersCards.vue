@@ -181,7 +181,7 @@
                 <label for="create-order-date">Date</label>
                 <div class="date-time-container">
                   <input type="date" class="form-control" id="create-order-date">
-                  <input type="time" class="form-control" id="create-order-time">
+                  <input type="time" class="form-control" max="16:00" id="create-order-time">
                 </div>
               </div>
               <div class="card-body" style="overflow-x:auto;">
@@ -470,6 +470,21 @@ export default {
       }
 
       return status;
+    },
+    today: function() {
+      let today = new Date();
+      let dd = today.getDate()
+      let mm = today.getMonth()+1
+      let yyyy = today.getFullYear()
+      if(dd<10){
+        dd="0"+dd
+      } 
+      if(mm<10){
+        mm="0"+mm
+      }
+      today = yyyy+"-"+mm+"-"+dd
+      document.getElementById("create-order-date").setAttribute("max", today);
+      document.getElementById("update-order-date").setAttribute("max", today);
     }
   },
   mixins: [paginate, filters],
@@ -478,6 +493,7 @@ export default {
     this.getTables();
     this.getProducts();
     this.getUsers();
+    this.today();
   },
 };
 </script>

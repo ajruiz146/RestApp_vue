@@ -18,6 +18,8 @@ export default {
                 this.waiter();
             } else if(event.target.value == "bar"){
                 this.bar();
+            } else if(event.target.value == "admin"){
+                this.admin();
             }
         },
         nameAsc() {
@@ -59,6 +61,12 @@ export default {
         bar() {
             this.fieldWhere = 'role'
             this.value = 'bar'
+            this.page = 1;
+            this.getStaff();
+        },
+        admin() {
+            this.fieldWhere = 'role'
+            this.value = 'admin'
             this.page = 1;
             this.getStaff();
         }

@@ -12,6 +12,7 @@
           <option value="">Select Staff</option>
           <option value="waiter">Waiter</option>
           <option value="kitchen">Kitchen</option>
+          <option value="admin">Admin</option>
           <option value="bar">Bar</option>
         </select>
         <select class="form-select form-select-sm" @change="onChangeOrder($event)">

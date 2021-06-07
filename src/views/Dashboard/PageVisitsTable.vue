@@ -37,7 +37,7 @@
                 :show-percentage="false"
                 :value="row.item.percentage"
               />
-              <span class="mr-2">{{ row.item.percentage }}%</span>
+              <span class="mr-2">{{ row.item.percentage.toFixed(2) }}%</span>
             </div>
           </td>
         </template>

@@ -36,7 +36,7 @@
               <span>My profile</span>
             </router-link>
             <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
+            <a @click="logout()" href="javascript:void(0)" class="dropdown-item">
               <i class="ni ni-user-run"></i>
               <span>Logout</span>
             </a>
@@ -118,6 +118,11 @@ export default {
     },
     showSidebar() {
       this.$sidebar.displaySidebar(true);
+    },
+    logout: function() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      this.$router.push("/login")
     },
   },
   beforeUnmount() {

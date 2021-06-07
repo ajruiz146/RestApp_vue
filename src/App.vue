@@ -39,7 +39,13 @@ div.pagination {
 
 #myDropdown{
   left: 0px;
-  top: 30px;
+  top: -11px;
+  
+}
+
+.dropdown-content a {
+  padding: 5px 0 !important;
+  width: 100%;
 }
 
 table .dropdown button{
@@ -61,4 +67,6 @@ table .dropdown button:hover{
 td {
   color: black !important;
 }
+
+
 </style>

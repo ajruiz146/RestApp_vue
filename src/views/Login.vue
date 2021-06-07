@@ -20,6 +20,7 @@
               addon-left-icon="ni ni-email-83"
               v-model="model.email"
               id="emailAccess"
+              @keyup.enter="getAccess()"
             >
             </base-input>
 
@@ -30,6 +31,7 @@
               addon-left-icon="ni ni-lock-circle-open"
               v-model="model.password"
               id="passwordAccess"
+              @keyup.enter="getAccess()"
             >
             
             </base-input>
@@ -86,12 +88,14 @@ export default {
           this.error = "Credential error"
           this.$router.push('/login');
           $("#credential-error").text("Credential error")
+          $("#passwordAccess").text("")
         }
       })
       .catch(() => {
         localStorage.removeItem("token")
         localStorage.removeItem("role")
         $("#credential-error").text("Credential error")
+        $("#passwordAccess").val("")
       }) 
     },
   }

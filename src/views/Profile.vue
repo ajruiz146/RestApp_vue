@@ -147,6 +147,7 @@ export default {
         let email = $("#profile-email").val()
         let role = $("#profile-role").val()
         let password = $("#profile-password").val()
+        if(this.checkUpdate(name, lastName, email)) {
         axios
           .put(process.env.VUE_APP_API + "user/" + this.user._id,
             {
@@ -169,6 +170,7 @@ export default {
             $("#profile-change-error").text("Email registed yet");
             $("#profile-change").text("");
           }) 
+        }
       },
       updateFields: function() {
         $("#profile-name").val(this.user.name)
@@ -204,6 +206,9 @@ export default {
           $("#password-change-alert").text("Passwords do not match")
           $("#password-correct-alert").text("")
         }
+        $("#last-password").val("")
+        $("#new-password").val("")
+        $("#confirm-password").val("")
       },
       getUserStats: function() {
         axios
@@ -218,6 +223,23 @@ export default {
           localStorage.removeItem("role")
           localStorage.removeItem("token")
         })
+      },
+      checkUpdate: function(name, lastName, email) {
+        let status = true
+        let small = "<small class='small-control'>Insert a valid value</small>"
+        $(".small-control").remove();
+        $(".success-message").text("");
+        if(name == "") {
+          status = false
+          $("#profile-name").after(small)
+        }else if(lastName == "") {
+          status = false
+          $("#profile-lastName").after(small)
+        }else if(email == "") {
+          status = false
+          $("#profile-email").after(small)
+        }
+        return status
       }
     },
     created() {
@@ -228,7 +250,7 @@ export default {
     },
     updated() {
       this.updateFields()
-    }
+    },
 };
 </script>
 <style scoped> 

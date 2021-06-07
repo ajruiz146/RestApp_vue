@@ -107,7 +107,7 @@ export default {
         }
       })
       .then((response) => {
-        this.totalIncomes = response.data.totalIncomes
+        this.totalIncomes = response.data.totalIncomes.toFixed(2)
         this.totalOrders = response.data.totalOrders
         this.totalStaff = response.data.totalStaff
         this.totalUsers = response.data.totalUsers

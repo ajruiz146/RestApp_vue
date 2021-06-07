@@ -64,7 +64,7 @@ export default {
     },
     logout: function() {
       localStorage.removeItem("token");
-      localStorage.removeItem("admin");
+      localStorage.removeItem("role");
       this.$router.push("/login")
     }
   },

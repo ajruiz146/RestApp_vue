@@ -19,7 +19,6 @@
             <p class="text-white mt-0 mb-5">
               This is your profile page. You can see your information and change your profile
             </p>
-            <a href="javascript:void(0)" class="btn btn-info">Log Out</a>
           </div>
         </div>
       </div>

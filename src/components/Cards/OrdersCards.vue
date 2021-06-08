@@ -119,6 +119,12 @@
                   <input type="time" class="form-control" id="update-order-time" required>
                 </div>
               </div>
+              <ul class="products-types">
+                <li :class="selection == 1 ? 'active-item products-types-item' : 'products-types-item'" id="type-drinks" @click="selectTable(1)">Drinks</li>
+                <li :class="selection == 2 ? 'active-item products-types-item' : 'products-types-item'" id="type-starters" @click="selectTable(2)">Starters</li>
+                <li :class="selection == 3 ? 'active-item products-types-item' : 'products-types-item'" id="type-main" @click="selectTable(3)">Main course</li>
+                <li :class="selection == 4 ? 'active-item products-types-item' : 'products-types-item'" id="type-desserts" @click="selectTable(4)">Desserts</li>
+              </ul>
               <div class="card-body" style="overflow-x:auto;">
                 <table class="table table-hover">
                   <thead>
@@ -128,8 +134,35 @@
                       <th scope="col">Amount</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr v-for="item in products" :key="item._id">
+                  <tbody :class="selection == 1 ? '' : 'ds'">
+                    <tr v-for="item in drinks" :key="item._id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.price.toFixed(2) }}</td>
+                      <td>
+                        <input type="number" class="products-input-update" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody :class="selection == 2 ? '' : 'ds'">
+                    <tr v-for="item in starters" :key="item._id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.price.toFixed(2) }}</td>
+                      <td>
+                        <input type="number" class="products-input-update" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody :class="selection == 3 ? '' : 'ds'">
+                    <tr v-for="item in mains" :key="item._id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.price.toFixed(2) }}</td>
+                      <td>
+                        <input type="number" class="products-input-update" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody :class="selection == 4 ? '' : 'ds'">
+                    <tr v-for="item in desserts" :key="item._id">
                       <td>{{ item.name }}</td>
                       <td>{{ item.price.toFixed(2) }}</td>
                       <td>
@@ -182,6 +215,12 @@
                   <input type="time" class="form-control" max="16:00" id="create-order-time">
                 </div>
               </div>
+              <ul class="products-types">
+                <li :class="selection == 1 ? 'active-item products-types-item' : 'products-types-item'" id="type-drinks" @click="selectTable(1)">Drinks</li>
+                <li :class="selection == 2 ? 'active-item products-types-item' : 'products-types-item'" id="type-starters" @click="selectTable(2)">Starters</li>
+                <li :class="selection == 3 ? 'active-item products-types-item' : 'products-types-item'" id="type-main" @click="selectTable(3)">Main course</li>
+                <li :class="selection == 4 ? 'active-item products-types-item' : 'products-types-item'" id="type-desserts" @click="selectTable(4)">Desserts</li>
+              </ul>
               <div class="card-body" style="overflow-x:auto;">
                 <table class="table table-hover">
                   <thead>
@@ -191,8 +230,35 @@
                       <th scope="col">Amount</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr v-for="item in products" :key="item._id">
+                  <tbody :class="selection == 1 ? '' : 'ds'">
+                    <tr v-for="item in drinks" :key="item._id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.price }}</td>
+                      <td>
+                        <input type="number" class="products-input" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody :class="selection == 2 ? '' : 'ds'">
+                    <tr v-for="item in starters" :key="item._id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.price }}</td>
+                      <td>
+                        <input type="number" class="products-input" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody :class="selection == 3 ? '' : 'ds'">
+                    <tr v-for="item in mains" :key="item._id">
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.price }}</td>
+                      <td>
+                        <input type="number" class="products-input" :data-name="item.name" :data-price="item.price" :data-zone="item.zone" min="0">
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody :class="selection == 4 ? '' : 'ds'">
+                    <tr v-for="item in desserts" :key="item._id">
                       <td>{{ item.name }}</td>
                       <td>{{ item.price }}</td>
                       <td>
@@ -254,7 +320,14 @@ export default {
       products: [],
       totalPages: [],
       success: 0,
-      info: 0
+      info: 0,
+
+      drinks: [],
+      starters: [],
+      mains: [],
+      desserts: [],
+      selection: 1,
+
     };
   },
   methods: {
@@ -342,13 +415,14 @@ export default {
       
     },
     updateModal: function(id, user, table, products, date) {
+      $("form").trigger("reset")
       let dateLocal = new Date(date)
       let currentHours = dateLocal.getHours();
       let currentMinutes = dateLocal.getMinutes();
       currentHours = ("0" + currentHours).slice(-2);
       currentMinutes = ("0" + currentMinutes).slice(-2);
       let time = currentHours+":"+currentMinutes;
-      let auxDate = date.substring(0, 10)
+      let auxDate = date?.substring(0, 10)
       $("#update-order-id").val(id)
       $("#update-order-table").val(table.table_number);
       $("#update-order-user").val(user.name);
@@ -403,12 +477,25 @@ export default {
         }
       })
       .then((response) => {
+        this.drinks = response.data.filter(obj => {
+          return obj.category === "Drinks"
+        })
+        this.starters = response.data.filter(obj => {
+          return obj.category === "Starters"
+        })
+        this.mains = response.data.filter(obj => {
+          return obj.category === "Main course"
+        })
+        this.desserts = response.data.filter(obj => {
+          return obj.category === "Desserts"
+        })
         this.products = response.data
       })
     },
     countProducts: function() {
       let products = [];
       let allProducts = document.getElementsByClassName("products-input");
+      
       var total = 0;
       for(let i = 0; i < allProducts.length; i++) {
         if(allProducts[i].value > 0) {
@@ -422,6 +509,7 @@ export default {
         }
       }
       this.obtainProducts = products;
+      console.log(this.obtainProducts)
       this.total = total;
       this.userSelected = $("#create-order-user :selected").data("id");
       this.tableSelected = $("#create-order-table :selected").data("id");
@@ -483,7 +571,10 @@ export default {
       today = yyyy+"-"+mm+"-"+dd
       document.getElementById("create-order-date").setAttribute("max", today);
       document.getElementById("update-order-date").setAttribute("max", today);
-    }
+    }, 
+    selectTable: function(table) {
+      this.selection = table
+    },
   },
   mixins: [paginate, filters],
   mounted() {
@@ -497,6 +588,36 @@ export default {
 </script>
 
 <style scoped>
+
+.ds {
+  display: none;
+}
+
+.active-item {
+  background: #741922;
+  color: white;
+}
+
+.products-types {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.products-types li {
+  padding: 0 10px;
+  border: 1px solid #741922;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: .9em;
+  cursor: pointer;
+}
+
+.products-types li:hover {
+  background: #741922;
+  color: white;
+}
 
 .modal-content .card-body {
     padding-left: 0;

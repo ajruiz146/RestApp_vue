@@ -62,9 +62,16 @@ export default {
     defaultAlerts: function() {
       this.success = 0
     },
+    cancelAutoUpdate () {
+      clearInterval(this.timer);
+    },
   },
   mounted() {
     this.getTables()
+    this.timer = setInterval(this.getTables, 5000);
+  },
+  beforeUnmount () {
+    this.cancelAutoUpdate();
   },
 };
 </script>

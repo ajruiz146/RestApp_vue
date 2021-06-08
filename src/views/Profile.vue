@@ -182,7 +182,6 @@ export default {
         let last_password = $("#last-password").val()
         let new_password = $("#new-password").val()
         let confirm_password = $("#confirm-password").val()
-        console.log(new_password, confirm_password, last_password)
         if(new_password === confirm_password) {
           axios
           .post(process.env.VUE_APP_API + "auth/changeMyPassword",

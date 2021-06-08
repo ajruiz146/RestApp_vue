@@ -406,7 +406,6 @@ export default {
       let description = $('#create-description').val();
       let category = $("#create-product-select").val();
       let zone = $("#create-zone").val();
-      console.log("Name", name)
       axios
         .post(process.env.VUE_APP_API + "product/create", {
           name: name,

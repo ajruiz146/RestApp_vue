@@ -366,7 +366,6 @@ export default {
       } else if(password == "" && mode == "create") {
         status = false
       }
-      console.log(name, lastName,)
       return status
     }
   },

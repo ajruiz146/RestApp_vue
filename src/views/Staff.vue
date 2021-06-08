@@ -129,14 +129,38 @@ export default {
         localStorage.removeItem("role")
         localStorage.removeItem("token")
       })
-    }
+    },
+    refreshStatistics: function() {
+      axios
+      .get(process.env.VUE_APP_API + "statistics", {
+        headers: {
+          "x-access-token": localStorage.token
+        }
+      })
+      .then((response) => {
+        this.totalIncomes = response.data.totalIncomes.toFixed(2)
+        this.totalOrders = response.data.totalOrders
+        this.totalStaff = response.data.totalStaff
+        this.totalUsers = response.data.totalUsers
+        this.incomesFromLastMonth = response.data.incomesFromLastMonth.toFixed(2)
+        this.ordersFromLastMonth = response.data.ordersFromLastMonth.toFixed(2)
+        this.usersFromLastMonth = response.data.usersFromLastMonth.toFixed(2)
+      })
+    },
+    cancelAutoUpdate () {
+      clearInterval(this.timer);
+    },
   },
   created() {
     this.getUserStats();
   },
   mounted() {
     this.getStatistics()
-  }
+    this.timer = setInterval(this.refreshStatistics, 5000);
+  },
+  beforeUnmount () {
+    this.cancelAutoUpdate();
+  },
 }
 </script>
 

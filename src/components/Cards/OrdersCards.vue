@@ -509,7 +509,6 @@ export default {
         }
       }
       this.obtainProducts = products;
-      console.log(this.obtainProducts)
       this.total = total;
       this.userSelected = $("#create-order-user :selected").data("id");
       this.tableSelected = $("#create-order-table :selected").data("id");

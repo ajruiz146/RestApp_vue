@@ -376,7 +376,7 @@ export default {
         if($("#create-image_url").val() != "") {
           this.createUploadFile()
           } else {
-          let img = 'default'
+          let img = 'default_image_product.png'
           this.createProductValues(img)
         }
       } else {
